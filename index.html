@@ -8,12 +8,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
 	
-						@font-face {
-			  font-family: '方正筑紫A圆体R';
-			  font-style: normal;
-			  font-weight: 400;
-			  src: local('Inter'), url('/方正筑紫A圆体R.ttf') format('truetype');
-			}
         /* 全局样式 */
         :root {
             --primary-color: #42a5f5;
@@ -36,8 +30,8 @@
         }
 
         body {
-			font-family: '方正筑紫A圆体R', 方正筑紫A圆体R;
-           /* font-family: 'Inter', sans-serif;*/
+			 /*font-family: '方正筑紫A圆体R', 方正筑紫A圆体R;*/
+           font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
             background-color: var(--background-color);
@@ -664,7 +658,7 @@ a:active {
 <div class="mode-container">
         <button class="mode-toggle" id="modeToggle">
             <span class="material-icons">dark_mode</span>
-            夜间模式
+          夜
         </button>
     </div>
 
@@ -1047,7 +1041,7 @@ a:active {
         // 检查 localStorage 中的模式设置
         if (localStorage.getItem('dark-mode') === 'enabled') {
             body.classList.add('dark-mode');
-            modeToggle.innerHTML = '<span class="material-icons">light_mode</span> 白天模式';
+            modeToggle.innerHTML = '<span class="material-icons">light_mode</span>昼';
         }
 
         // 切换模式
@@ -1056,10 +1050,10 @@ a:active {
 
             if (body.classList.contains('dark-mode')) {
                 localStorage.setItem('dark-mode', 'enabled');
-                modeToggle.innerHTML = '<span class="material-icons">light_mode</span> 白天模式';
+                modeToggle.innerHTML = '<span class="material-icons">light_mode</span>昼';
             } else {
                 localStorage.setItem('dark-mode', 'disabled');
-                modeToggle.innerHTML = '<span class="material-icons">dark_mode</span> 夜间模式';
+                modeToggle.innerHTML = '<span class="material-icons">dark_mode</span> 夜';
             }
         });
     </script>
