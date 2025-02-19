@@ -7,6 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
+		@font-face {
+    font-family: '方正筑紫A圆体R'; /* 自定义字体名称 */
+    src: url('方正筑紫A圆体R.ttf') format('truetype'); /* 字体文件路径 */
+    font-weight: normal;
+    font-style: normal;
+}
         /* 全局样式 */
         :root {
             --primary-color: #6200ee;
@@ -29,7 +35,8 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+			font-family: 'CustomFont', sans-serif;
+           /* font-family: 'Inter', sans-serif;*/
             margin: 0;
             padding: 0;
             background-color: var(--background-color);
@@ -335,6 +342,7 @@ a:active {
 
         /* 播放列表 */
         .playlist-section {
+			scrollbar-width: none;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             padding: 15px;
@@ -680,7 +688,107 @@ a:active {
 						
 					</p>
 				</div>
-
+					<div class="card1">
+					<h2>动画网站</h2>
+					<p>
+						<a href="https://www.age.tv/" target="_blank">AGE动漫</a><br>
+						<a href="https://www.yinghua8.net/" target="_blank">樱花动漫</a><br>
+						<a href="https://www.clicli.cc/" target="_blank">Clicli弹幕网</a><br>
+						<a href="https://www.233dm.com/" target="_blank">233动漫</a><br>
+						<a href="https://www.imandaow.com/" target="_blank">漫岛TV</a><br>
+						
+					</p>
+				</div>
+					<div class="card1">
+					<h2>在线工具</h2>
+					<p>
+						<a href="https://wordcount.com/zh/" target="_blank">字数统计</a><br>
+						<a href="https://md.openwrite.cn/" target="_blank">微信MD在线编辑</a><br>
+						<a href="https://cn.unithelper.com/" target="_blank">单位换算</a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						
+					</p>
+				</div>
+					<div class="card1">
+					<h2></h2>
+					<p>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						
+					</p>
+				</div>
+					<div class="card1">
+					<h2></h2>
+					<p>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						
+					</p>
+				</div>
+				<div class="card1">
+					<h2></h2>
+					<p>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						
+					</p>
+				</div>
+				<div class="card1">
+					<h2></h2>
+					<p>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						
+					</p>
+				</div>
+				<div class="card1">
+					<h2></h2>
+					<p>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						
+					</p>
+				</div>
+				<div class="card1">
+					<h2></h2>
+					<p>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						
+					</p>
+				</div>
+				<div class="card1">
+					<h2></h2>
+					<p>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						<a href="" target="_blank"></a><br>
+						
+					</p>
+				</div>
+					
+					
 			</div>
 			
 			
@@ -788,21 +896,46 @@ a:active {
             {
                 title: "君の知らない物語",
                 artist: "supercell",
-                src: "music/01.flac",
+                src: "music/01.mp3",
                 cover: "image/01.jpg"
             },
             {
                 title: "声嘶力竭",
                 artist: "美波",
-                src: "music/02.flac",
+                src: "music/02.mp3",
                 cover: "image/02.jpg"
             },
             {
                 title: "鸟之诗",
                 artist: "Lia",
-                src: "music/03.flac",
+                src: "music/03.mp3",
                 cover: "image/03.jpg"
-            }
+            },
+			 {
+                title: "Aoharu Band Arrange",
+                artist: "Blue Archive",
+                src: "music/04.mp3",
+                cover: "image/04.jpg"
+            },
+			 {
+                title: "美しきもの",
+                artist: "Sound Horizon",
+                src: "music/05.mp3",
+                cover: "image/0506.jpg"
+            },
+			 {
+                title: "朝と夜の物語",
+                artist: "Sound Horizon",
+                src: "music/06.mp3",
+                cover: "image/0506.jpg"
+            },
+			{
+                title: "azure",
+                artist: "TrySail",
+                src: "music/07.mp3",
+                cover: "image/07.jpg"
+            },
+			
         ];
         
          let currentTrack = 0;
