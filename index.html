@@ -7,12 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-		@font-face {
-    font-family: '方正筑紫A圆体R'; /* 自定义字体名称 */
-    src: url('/方正筑紫A圆体R.ttf') format('truetype'); /* 字体文件路径 */
-    font-weight: normal;
-    font-style: normal;
-}
+	
+						@font-face {
+			  font-family: '方正筑紫A圆体R';
+			  font-style: normal;
+			  font-weight: 400;
+			  src: local('Inter'), url('/方正筑紫A圆体R.ttf') format('truetype');
+			}
         /* 全局样式 */
         :root {
             --primary-color: #6200ee;
@@ -35,7 +36,7 @@
         }
 
         body {
-			font-family: '方正筑紫A圆体R', sans-serif;
+			font-family: '方正筑紫A圆体R', 方正筑紫A圆体R;
            /* font-family: 'Inter', sans-serif;*/
             margin: 0;
             padding: 0;
@@ -173,8 +174,8 @@
         /* 夜间模式切换容器 */
         .mode-container {
             position: fixed;
-            top: 80px;
-            right: 20px;
+            bottom: 70px;
+            right: 10px;
             z-index: 1000;
         }
 
@@ -518,6 +519,144 @@ a:active {
 			color: #F1D7FF;
             text-decoration: underline;
         }
+		 /* 搜索 */
+        .search-container {
+			margin: auto;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        /* 搜索框容器 */
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* 缩小间距 */
+            position: relative;
+        }
+
+        /* 搜索引擎选择按钮 */
+        #engineButton {
+            padding: 10px 12px; /* 缩小内边距 */
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap; /* 防止文字换行 */
+        }
+
+        #engineButton:hover {
+            background: var(--hover-color);
+        }
+
+        /* 搜索输入框 */
+        #searchInput {
+            flex: 1;
+            padding: 10px 12px; /* 缩小内边距 */
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            font-size: 14px; /* 缩小字体 */
+            outline: none;
+            background: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            min-width: 0; /* 防止溢出 */
+        }
+
+        #searchInput:focus {
+            border-color: var(--hover-color);
+            box-shadow: 0 0 8px rgba(66, 165, 245, 0.3);
+        }
+
+        /* 搜索按钮 */
+        #searchButton {
+            padding: 10px 16px; /* 缩小内边距 */
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px; /* 缩小字体 */
+            transition: all 0.3s ease;
+            white-space: nowrap; /* 防止文字换行 */
+        }
+
+        #searchButton:hover {
+            background: var(--hover-color);
+            transform: translateY(-1px);
+        }
+
+        /* 引擎选择下拉菜单 */
+        .engine-dropdown {
+            position: absolute;
+            left: 0;
+            top: 50px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            z-index: 100;
+            display: none;
+            width: 160px;
+        }
+
+        .engine-dropdown.show {
+            display: block;
+        }
+
+        .engine-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .engine-item:hover {
+            background: rgba(66, 165, 245, 0.1);
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 600px) {
+            .search-container {
+                padding: 20px;
+            }
+
+            .search-box {
+                gap: 6px; /* 进一步缩小间距 */
+            }
+
+            #engineButton {
+                padding: 8px 10px; /* 进一步缩小内边距 */
+                font-size: 12px; /* 缩小字体 */
+            }
+
+            #searchInput {
+                padding: 8px 10px; /* 进一步缩小内边距 */
+                font-size: 12px; /* 缩小字体 */
+            }
+
+            #searchButton {
+                padding: 8px 12px; /* 进一步缩小内边距 */
+                font-size: 12px; /* 缩小字体 */
+            }
+
+            .engine-dropdown {
+                width: 120px; /* 缩小下拉菜单宽度 */
+                font-size: 12px; /* 缩小字体 */
+            }
+        }
     </style>
 </head>
 <body>
@@ -536,6 +675,7 @@ a:active {
             <a href="#" data-page="home">首页</a>
             <a href="#" data-page="about">资源</a>
             <a href="#" data-page="contact">音乐</a>
+			<a href="#" data-page="so">搜索</a>
         </div>
     </div>
 
@@ -614,7 +754,7 @@ a:active {
 
         <!-- 网址页面 -->
         <div id="about" class="page">
-
+				
 				<div class="card-grid1">
 				<!-- 示例卡片 -->
 				<div class="card1">
@@ -840,7 +980,40 @@ a:active {
             </div>
         </div>
         </div>
-    
+    <div id="so" class="page">
+		<div class="search-container">
+		
+        <h1 style="color: var(--primary-color); margin-bottom: 30px;">清新搜索</h1>
+        <div class="search-box">
+            <button id="engineButton">
+                
+                百度 ▼
+            </button>
+            <input type="text" id="searchInput" placeholder="输入关键词...">
+            <button id="searchButton">搜索</button>
+            <div class="engine-dropdown" id="engineDropdown">
+                <div class="engine-item" data-engine="baidu">
+                    
+                    百度
+                </div>
+                <div class="engine-item" data-engine="google">
+                    
+                    Google
+                </div>
+                <div class="engine-item" data-engine="bing">
+                    
+                    Bing
+                </div>
+                <div class="engine-item" data-engine="duckduckgo">
+                    
+                    DuckDuckGo
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+	</div>
  
     <!-- JavaScript -->
 <script>
@@ -1044,6 +1217,56 @@ a:active {
         // 初始化
         initPlaylist();
         playTrack(0);
+    </script>
+	<script>
+        // 搜索引擎配置
+        const engines = {
+            baidu: "https://www.baidu.com/s?wd=",
+            google: "https://www.google.com/search?q=",
+            bing: "https://www.bing.com/search?q=",
+            duckduckgo: "https://duckduckgo.com/?q=",
+            
+        };
+
+        let currentEngine = "baidu";
+
+        // 切换搜索引擎
+        document.querySelectorAll('.engine-item').forEach(item => {
+            item.addEventListener('click', () => {
+                currentEngine = item.dataset.engine;
+                document.getElementById('engineButton').innerHTML = `
+                    
+                    ${item.textContent.trim()} ▼
+                `;
+                document.getElementById('engineDropdown').classList.remove('show');
+            });
+        });
+
+        // 显示/隐藏引擎选择菜单
+        document.getElementById('engineButton').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('engineDropdown').classList.toggle('show');
+        });
+
+        // 点击页面其他区域隐藏菜单
+        document.addEventListener('click', () => {
+            document.getElementById('engineDropdown').classList.remove('show');
+        });
+
+        // 搜索功能
+        document.getElementById('searchButton').addEventListener('click', () => {
+            const query = document.getElementById('searchInput').value.trim();
+            if (query) {
+                window.open(engines[currentEngine] + encodeURIComponent(query), '_blank');
+            }
+        });
+
+        // 回车键搜索
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('searchButton').click();
+            }
+        });
     </script>
 </body>
 </html>
