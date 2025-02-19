@@ -1,794 +1,529 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
+
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joyin的主页</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>山羊の前端小窝</title>
     <style>
-        /* 全局样式 */
-        :root {
-            --primary-color: #6200ee;
-            --background-color: #f0f2f5;
-            --text-color: #1c1c1c;
-            --card-background: rgba(255, 255, 255, 0.9);
-            --footer-background: rgba(255, 255, 255, 0.9);
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        body.dark-mode {
-            --primary-color: #bb86fc;
-            --background-color: #1c1c1c;
-            --text-color: #ffffff;
-            --card-background: rgba(40, 40, 40, 0.9);
-            --footer-background: rgba(40, 40, 40, 0.9);
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
+        * {
             padding: 0;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            margin: 0;
         }
 
-        /* 容器 */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
 
-        /* 顶部头像 */
-        .header {
-            text-align: center;
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-
-        .header img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 4px solid #fff;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .header img:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-color);
-            margin-top: 20px;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            color: var(--text-color);
-            max-width: 600px;
-            margin: 20px auto;
-            line-height: 1.6;
-        }
-
-        /* 卡片 */
-        .card {
-            background-color: var(--card-background);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow);
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        /* 标题 */
-        h2 {
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: var(--text-color);
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-
-        /* 段落 */
-        p {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: var(--text-color);
-        }
-/* 按钮*/
-	
-       
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, var(--primary-color), #3700b3);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: var(--shadow);
-        }
-
-        .button:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .button:active {
-            transform: translateY(0);
-            box-shadow: var(--shadow);
-        }
-
-		
-        /* 导航栏 */
-        .navbar {
-            background-color: var(--card-background);
-            backdrop-filter: blur(10px);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .navbar a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            margin-left: 20px;
-            transition: color 0.3s ease;
-        }
-
-        .navbar a:hover {
-            color: var(--primary-color);
-        }
-
-        /* 夜间模式切换容器 */
-        .mode-container {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            z-index: 1000;
-        }
-
-        /* 夜间模式切换按钮 */
-        .mode-toggle {
-            background-color: var(--card-background);
-            border: none;
-            color: var(--text-color);
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            gap: 8px;
-            padding: 10px 15px;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .mode-toggle:hover {
-            background-color: var(--primary-color);
-            color: #fff;
-            transform: translateY(-2px);
-        }
-
-        /* 页面切换 */
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-    body,td,th {
-    font-family: Inter, sans-serif;
-}
-a:link {
-    text-decoration: none;
-}
-a:visited {
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: none;
-}
-a:active {
-    text-decoration: none;
-}
-		
-		/* From Uiverse.io by adamgiebl */ 
-.button2 {
-  font-family: inherit;
-  font-size: 20px;
-  background: royalblue;
-  color: white;
-  padding: 0.7em 1em;
-  padding-left: 0.9em;
-  display: flex;
-  align-items: center;
-  border: none;
-  border-radius: 16px;
-  overflow: hidden;
-  transition: all 0.2s;
-  cursor: pointer;
-}
-
-.button2 span {
-  display: block;
-  margin-left: 0.3em;
-  transition: all 0.3s ease-in-out;
-}
-
-.button2 svg {
-  display: block;
-  transform-origin: center center;
-  transition: transform 0.3s ease-in-out;
-}
-
-.button2:hover .svg-wrapper {
-  animation: fly-1 0.6s ease-in-out infinite alternate;
-}
-
-.button2:hover svg {
-  transform: translateX(1.2em) rotate(45deg) scale(1.1);
-}
-
-.button2:hover span {
-  transform: translateX(5em);
-}
-
-.button2:active {
-  transform: scale(0.95);
-}
-
-@keyframes fly-1 {
-  from {
-    transform: translateY(0.1em);
-  }
-
-  to {
-    transform: translateY(-0.1em);
-  }
-}
-
-	/*music*/	
-	  /* 音乐播放器布局 */
-        .music-container {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* 播放器主体 */
-        .player-card {
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            padding: 30px;
+        #scene {
+            background-color: rgb(145, 151, 242);
             position: relative;
             overflow: hidden;
+            width: 100%;
         }
 
-        .blur-background {
+        .layer {
+            pointer-events: none;
+        }
+
+        h2 {
+            font-size: 18px;
+            width: 90%;
+        }
+
+        .col {
+            display: inline-block;
+            float: left;
+            overflow: hidden;
+            position: relative;
+            width: 12.5%;
+            pointer-events: all;
+            overflow: initial;
+            margin: 0 0 30px;
+        }
+
+        .layer.main {
+            width: 150%;
             position: absolute;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        .col a {
+            display: block;
+            margin: 15px;
+            overflow: hidden;
+            box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.37);
+        }
+
+        .col a .hover {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            bottom: -15px;
+            left: 15px;
+            z-index: 1;
+            color: white;
+        }
+
+        .col a .hover:after {
+            content: '';
+            position: absolut;
             top: 0;
             left: 0;
+            z-index: 1;
             width: 100%;
             height: 100%;
+            display: block;
+            background: rgb(130, 146, 236);
+            opacity: 0;
+            transition: 0.35s ease;
+        }
+
+        .col a .hover:hover:after {
+            opacity: 0.85;
+            transition: 0.35s ease;
+        }
+
+        .align-bottom {
+            position: absolute;
+            width: 100%;
+            bottom: 0%;
+            z-index: 2;
+            padding: 15px 20px;
+        }
+
+        .bg-img {
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
             background-size: cover;
-            background-position: center;
-            filter: blur(30px);
-            z-index: -1;
-            opacity: 0.8;
+            background-position: 50% 50%;
         }
 
-        /* 播放控制 */
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
+        @media only screen and (max-width:1200px) {
+            .layer .col {
+                width: 16%;
+            }
         }
 
-        .control-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: none;
-            background: var(--primary-color);
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .control-btn:hover {
-            transform: scale(1.1);
-        }
-
-        /* 播放列表 */
-        .playlist-card {
-            background: var(--card-background);
-            border-radius: 16px;
-            padding: 20px;
-            max-height: 600px;
-            overflow-y: auto;
-        }
-
-        .playlist-item {
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .playlist-item:hover {
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        .playlist-item.active {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        /* 进度条 */
-        .progress-container {
-            width: 100%;
-            height: 4px;
-            background: rgba(0, 0, 0, 0.1);
-            margin: 20px 0;
-            cursor: pointer;
-        }
-
-        #progress {
-            height: 100%;
-            background: var(--primary-color);
-            width: 0%;
-            transition: width 0.1s linear;
-        }
-
-        /* 音量控制 */
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        #volumeSlider {
-            width: 120px;
-            height: 4px;
-            accent-color: var(--primary-color);
-        }
-		
-		
-		
-		
-		
-		 h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1c1c1c;
-            margin-bottom: 20px;
-        }
-
-        /* 卡片布局 */
-        .card-grid1 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .card1 {
-            background-color: var(--card-background);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card1:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        .card1 h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-color);
-            margin-top: 0;
-        }
-
-        .card1 p {
-            font-size: 1rem;
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-
-        .card1 a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .card1 a:hover {
-            text-decoration: underline;
+        @media only screen and (max-width:650px) {
+            .layer .col {
+                width: 25%;
+            }
         }
     </style>
 </head>
+
 <body>
-    <!-- 夜间模式切换容器 -->
-<div class="mode-container">
-        <button class="mode-toggle" id="modeToggle">
-            <span class="material-icons">dark_mode</span>
-            夜间模式
-        </button>
-    </div>
 
-    <!-- 导航栏 -->
-    <div class="navbar">
-        <span>我的个人主页</span>
-        <div>
-            <a href="#" data-page="home">首页</a>
-            <a href="#" data-page="about">资源</a>
-            <a href="#" data-page="contact">音乐</a>
+    <section id="scene" data-scalar-y="150.0" data-scalar-x="100.0">
+        <div class="layer main" data-depth="1.0">
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>起风了 風立ちぬ (2013)</h2>
+                        </div>
+                    </div>
+                    <div class="bg-img" style="background-image:url(./1.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>千与千寻 千と千尋の神隠し (2001)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./2.jpg);">
+
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>哈尔的移动城堡 ハウルの動く城 (2004)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./3.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>魔女宅急便 魔女の宅急便 (1989)</h2>
+                        </div>
+                    </div>
+                    <div class="bg-img" style="background-image:url(./4.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>龙猫 となりのトトロ (1988)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./5.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>崖上的波妞 崖の上のポニョ (2008)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./6.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>借东西的小人阿莉埃蒂 借りぐらしのアリエッティ (2010)</h2>
+                        </div>
+                    </div>
+                    <div class="bg-img" style="background-image:url(./7.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>风之谷 風の谷のナウシカ (1984)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./8.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>幽灵公主 もののけ姫 (1997)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./9.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>萤火虫之墓 火垂るの墓 (1988)</h2>
+                        </div>
+                    </div>
+                    <div class="bg-img" style="background-image:url(./10.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>大鱼海棠 (2016)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./11.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>你的名字。 君の名は。 (2016)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./12.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>言叶之庭 言の葉の庭 (2013)</h2>
+                        </div>
+                    </div>
+                    <div class="bg-img" style="background-image:url(./13.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>秒速5厘米 秒速5センチメートル (2007)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./14.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>铃芽之旅 すずめの戸締まり (2022)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./15.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>天气之子 天気の子 (2019)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./16.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>飞屋环游记 Up (2009)</h2>
+                        </div>
+                    </div>
+                    <div class="bg-img" style="background-image:url(./17.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>萤火之森 蛍火の杜へ (2011)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./18.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>侧耳倾听 耳をすませば (1995)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./19.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>穿越时空的少女 時をかける少女 (2006)</h2>
+                        </div>
+                    </div>
+                    <div class="bg-img" style="background-image:url(./20.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>魔发奇缘 Tangled (2010)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./21.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>鬼妈妈 Coraline (2009)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./22.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>魁拔之十万火急 (2011)</h2>
+                        </div>
+                    </div>
+                    <div class="bg-img" style="background-image:url(./23.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>哆啦A梦：伴我同行 STAND BY ME ドラえもん (2014)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./24.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>给桃子的信 ももへの手紙 (2011)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./25.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>罗小黑战记 (2019)</h2>
+                        </div>
+                    </div>
+                    <div class="bg-img" style="background-image:url(./26.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>最终幻想7：圣子降临 ファイナルファンタジーⅦ アドベントチルドレン (2005)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./27.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>藏獒多吉 (2011)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./28.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>意外的幸运签 カラフル (2010)</h2>
+                        </div>
+                    </div>
+                    <div class="bg-img" style="background-image:url(./29.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>鬼灭之刃 柱众会议・蝶屋敷篇 鬼滅の刃 柱合会議・蝶屋敷編 (2020)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./30.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>十万个冷笑话 (2014)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./31.jpg);">
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#">
+                    <div class="hover">
+                        <div class="pad align-bottom">
+                            <h2>猫和老鼠：魔法戒指 Tom and Jerry: The Magic Ring (2002)</h2>
+                        </div>
+
+                    </div>
+                    <div class="bg-img" style="background-image:url(./32.jpg);">
+                    </div>
+                </a>
+            </div>
         </div>
-    </div>
+    </section>
+    <!-- 导入插件 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/2.1.3/parallax.min.js"></script>
 
-    
-    <!-- 页面内容 -->
-    <div class="container">
-        <!-- 首页 -->
-        <div id="home" class="page active">
-			<!-- 顶部头像 -->
-				<div class="header">
-				  <a href="https://github.com/JoyinJoester" target="_blank"><img src="image/cfa71fe042f69a6d0c31ef76e58f3fb.jpg" alt="Takagi"></a>
-					<h1>欢迎来到我的个人主页</h1>
-					<p>
-						Joyin的个人主页
-					</p>
-				</div>
-
-            <div class="card">
-                <h2>我的项目</h2>
-                <p>以下是我最近<del>没完成</del>正在做的一些项目：</p>
-                <ul>
-                    <li>Let-your-GCC-fly-</li>
-                    <li>好像我没有做什么了</li>
-                    
-                </ul>
-                <a href="https://github.com/JoyinJoester?tab=repositories" class="button" target="_blank">查看全部项目</a>
-            </div>
-
-            <div class="card">
-                <h2>最新动态</h2>
-                <p>📅 2025年02月：发布了我的博客(没有服务器啊，算了放github托管吧)</p>
-                <p>📅 2024年12月：获得荣誉勋章被何同学拉黑</p>
-                <p>📅 2021年08月：放弃学习的时间去做浏览器，成功没考上高中</p>
-            </div>
-			<div class="card">
-                <h2>关于我</h2>
-                <p>2006年被评为年度美国时代周刊风云人物<br>2008年感动中国组委会大奖获得者<br>2019年获得年度地球卫士奖<br>2022年奥林匹克杯获得者</p>
-            </div>
-
-            <div class="card">
-                <h2>我的技能</h2>
-                <p>✅ 前端开发：HTML、CSS、JavaScript<del>(这个我可以用AI跑)</del></p>
-                <p>✅ 编程工具：VScode、Godot、vim</p>
-                <p>✅ 设计工具：Adobe&nbsp;Photoshop、Adobe XD、RPGMaker</p>
-            </div>
-			
-			 <div class="card">
-                <h2>联系我</h2>
-                <p>如果你有任何问题或建议，欢迎通过以下方式联系我：</p>
-                <p><a href="mailto:joyin8888@outlook.com">
-				<button class="button2">
-				  <div class="svg-wrapper-1">
-					<div class="svg-wrapper">
-					  <svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						width="24"
-						height="24"
-					  >
-						<path fill="none" d="M0 0h24v24H0z"></path>
-						<path
-						  fill="currentColor"
-						  d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-						></path>
-					  </svg>
-					</div>
-				  </div>
-				  <span>Send Email</span>
-				</button>
-</a></p>
-                
-            </div>
-        </div>
-		
-</div>
-
-        <!-- 网址页面 -->
-        <div id="about" class="page">
-    
-			<div class="card-grid1">
-            <!-- 示例卡片 -->
-            <div class="card1">
-                <h2>技术资源</h2>
-                <p>
-                    <a href="https://github.com" target="_blank">GitHub</a> - 全球最大的代码托管平台。<br>
-                    <a href="https://stackoverflow.com" target="_blank">Stack Overflow</a> - 程序员问答社区。<br>
-                    <a href="https://developer.mozilla.org" target="_blank">MDN Web Docs</a> - Web 开发文档。<br>
-					<a href="https://www.csdn.net/" target="_blank">CSDN</a> - 傻逼:CSDN<br>
-					
-                </p>
-            </div>
-
-            <div class="card1">
-                <h2>系统下载</h2>
-                <p>
-                    <a href="https://hellowindows.cn/" target="_blank">HelloWindows</a> - Windows系统iso下载。<br>
-                    <a href="https://archlinux.org/" target="_blank">Arch</a> - Arch神教。<br>
-                    <a href="https://www.debian.org/" target="_blank">Debian</a> - Debian发行版下载。<br>
-					<a href="https://ubuntu.com/download" target="_blank">Ubuntu</a> - 知名的debian发行版。
-                
-				</p>
-            </div>
-
-            <div class="card1">
-                <h2>设计工具</h2>
-                <p>
-                    <a href="https://www.figma.com" target="_blank">Figma</a> - 在线设计工具。<br>
-                    <a href="https://www.adobe.com" target="_blank">Adobe Creative Cloud</a> - 创意设计套件。<br>
-                    <a href="https://www.canva.com" target="_blank">Canva</a> - 简单易用的设计工具。
-                </p>
-            </div>
-
-            <div class="card1">
-                <h2>学习平台</h2>
-                <p>
-                    <a href="https://store.steampowered.com/about/" target="_blank">Steam</a> - 思题目刷题大全<br>
-                    <a href="https://store.epicgames.com/zh-CN/" target="_blank">Epic</a> - 艾派克学习平台。<br>
-                    <a href="https://www.gog.com/galaxy" target="_blank">GOG</a> - 吉欧吉单词听写。
-                </p>
-            </div>
-        </div>
-			
-			
-</div>
-
-        <!-- 音乐页面 -->
-        <div id="contact" class="page">
-      <div class="music-container">
-            <!-- 播放器主体 -->
-            <div class="player-card">
-                <div class="blur-background" id="blurBackground"></div>
-                <div class="song-info">
-                    <h2 id="songTitle">选择歌曲开始播放</h2>
-                    <p id="artist">-</p>
-                </div>
-                <div class="progress-container">
-                    <div id="progress"></div>
-                </div>
-                <div class="controls">
-                    <button class="control-btn" id="prevBtn">⏮</button>
-                    <button class="control-btn" id="playPauseBtn">▶</button>
-                    <button class="control-btn" id="nextBtn">⏭</button>
-                </div>
-                <div class="volume-control">
-                    <span class="material-icons">volume_up</span>
-                    <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
-                </div>
-            </div>
-
-            <!-- 播放列表 -->
-            <div class="playlist-card">
-                <h3>播放列表</h3>
-                <div id="playlist"></div>
-            </div>
-        </div>
-
-        </div>
-    
- 
-    <!-- JavaScript -->
-<script>
-        // 获取所有导航链接
-        const navLinks = document.querySelectorAll('.navbar a');
-        // 获取所有页面
-        const pages = document.querySelectorAll('.page');
-
-        // 为每个导航链接添加点击事件
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault(); // 阻止默认跳转行为
-
-                // 获取目标页面的 ID
-                const targetPage = link.getAttribute('data-page');
-
-                // 隐藏所有页面
-                pages.forEach(page => {
-                    page.classList.remove('active');
-                });
-
-                // 显示目标页面
-                document.getElementById(targetPage).classList.add('active');
-            });
-        });
-
-        // 夜间模式切换
-        const modeToggle = document.getElementById('modeToggle');
-        const body = document.body;
-
-        // 检查 localStorage 中的模式设置
-        if (localStorage.getItem('dark-mode') === 'enabled') {
-            body.classList.add('dark-mode');
-            modeToggle.innerHTML = '<span class="material-icons">light_mode</span> 白天模式';
+    <script>
+        // 使用库
+        //定义一个名为 makeWinHeight 的函数，用于设置窗口高度和项目高度
+        var makeWinHeight = function () {
+            //获取窗口高度
+            var vh = $(window).height();
+            //将项目高度设置为窗口高度的一半
+            var projects = vh / 2;
+            //设置 id 为 scene 和 class 为 layer main 的元素的高度为窗口高度
+            $('#scene, .layer.main').height(vh);
+            //设置 id 为 scene 中 class 为 col 的元素的高度为项目高度，并将其子元素 a 的高度也设置为项目高度
+            $('#scene .col a, #scene .col').height(projects);
         }
-
-        // 切换模式
-        modeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('dark-mode', 'enabled');
-                modeToggle.innerHTML = '<span class="material-icons">light_mode</span> 白天模式';
-            } else {
-                localStorage.setItem('dark-mode', 'disabled');
-                modeToggle.innerHTML = '<span class="material-icons">dark_mode</span> 夜间模式';
-            }
+        //在文档加载完成后执行 makeWinHeight 函数，以设置窗口高度和项目高度
+        $(document).ready(function () {
+            makeWinHeight();
         });
-    </script>
-	<script>
-        // 音乐列表（假设音乐文件存放在 /music/ 文件夹中）
-        const musicList = [
-            {
-                title: "君の知らない物語",
-                artist: "supercell",
-                src: "music/01.flac",
-                cover: "image/01.jpg"
-            },
-            {
-                title: "声嘶力竭",
-                artist: "美波",
-                src: "music/02.flac",
-                cover: "image/02.jpg"
-            },
-            {
-                title: "鸟之诗",
-                artist: "Lia",
-                src: "music/03.flac",
-                cover: "image/03.jpg"
-            }
-        ];
-        
-        let currentTrack = 0;
-        const audio = new Audio();
-        let isPlaying = false;
-
-        // DOM元素
-        const elements = {
-            playPauseBtn: document.getElementById('playPauseBtn'),
-            prevBtn: document.getElementById('prevBtn'),
-            nextBtn: document.getElementById('nextBtn'),
-            songTitle: document.getElementById('songTitle'),
-            artist: document.getElementById('artist'),
-            progress: document.getElementById('progress'),
-            playlist: document.getElementById('playlist'),
-            volumeSlider: document.getElementById('volumeSlider'),
-            blurBackground: document.getElementById('blurBackground')
-        };
-
-        // 初始化播放列表
-        function initPlaylist() {
-            musicList.forEach((track, index) => {
-                const item = document.createElement('div');
-                item.className = 'playlist-item';
-                item.innerHTML = `
-                    <div>${track.title}</div>
-                    <div style="font-size:0.8em;opacity:0.7">${track.artist}</div>
-                `;
-                item.addEventListener('click', () => playTrack(index));
-                elements.playlist.appendChild(item);
-            });
-        }
-
-        // 播放指定曲目
-        function playTrack(index) {
-            currentTrack = index;
-            const track = musicList[currentTrack];
-            
-            audio.src = track.src;
-            elements.songTitle.textContent = track.title;
-            elements.artist.textContent = track.artist;
-            elements.blurBackground.style.backgroundImage = `url(${track.cover})`;
-            
-            // 更新播放列表样式
-            document.querySelectorAll('.playlist-item').forEach((item, i) => {
-                item.classList.toggle('active', i === currentTrack);
-            });
-        }
-
-        // 播放/暂停控制
-        elements.playPauseBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                audio.pause();
-            } else {
-                audio.play();
-            }
-            isPlaying = !isPlaying;
-            elements.playPauseBtn.textContent = isPlaying ? '⏸' : '▶';
+        //在窗口大小变化时，重新执行 makeWinHeight 函数以更新窗口高度和项目高度
+        $(window).resize(function () {
+            makeWinHeight();
         });
-
-        // 上一首
-        elements.prevBtn.addEventListener('click', () => {
-            currentTrack = (currentTrack - 1 + musicList.length) % musicList.length;
-            playTrack(currentTrack);
-            if (isPlaying) audio.play();
-        });
-
-        // 下一首
-        elements.nextBtn.addEventListener('click', () => {
-            currentTrack = (currentTrack + 1) % musicList.length;
-            playTrack(currentTrack);
-            if (isPlaying) audio.play();
-        });
-
-        // 音量控制
-        elements.volumeSlider.addEventListener('input', (e) => {
-            audio.volume = e.target.value;
-        });
-
-        // 进度条控制
-        document.querySelector('.progress-container').addEventListener('click', (e) => {
-            const rect = e.target.getBoundingClientRect();
-            const pos = (e.clientX - rect.left) / rect.width;
-            audio.currentTime = pos * audio.duration;
-        });
-
-        // 自动更新进度条
-        audio.addEventListener('timeupdate', () => {
-            const progress = (audio.currentTime / audio.duration) * 100 || 0;
-            elements.progress.style.width = `${progress}%`;
-        });
-
-        // 歌曲结束自动下一首
-        audio.addEventListener('ended', () => {
-            currentTrack = (currentTrack + 1) % musicList.length;
-            playTrack(currentTrack);
-            audio.play();
-        });
-
-        // 初始化
-        initPlaylist();
-        playTrack(0); // 加载第一首但不自动播放
+        var scene = document.getElementById('scene');
+        var parallax = new Parallax(scene);
     </script>
 </body>
+
 </html>
