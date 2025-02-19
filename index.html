@@ -13,6 +13,7 @@
             --primary-color: #42a5f5;
             --background-color: #f0f2f5;
             --text-color: #2d3436;
+			--text1-color: #ffffff;
             --card-background: rgba(255, 255, 255, 0.9);
             --footer-background: rgba(255, 255, 255, 0.9);
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -23,6 +24,7 @@
             --primary-color: #bb86fc;
             --background-color: #1c1c1c;
             --text-color: #ffffff;
+			--text1-color: #2d3436;
             --card-background: rgba(40, 40, 40, 0.9);
             --footer-background: rgba(40, 40, 40, 0.9);
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -594,6 +596,7 @@ a:active {
         .engine-dropdown {
             position: absolute;
             left: 0;
+			color: black;
             top: 50px;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 8px;
@@ -976,7 +979,6 @@ a:active {
         </div>
     <div id="so" class="page">
 		<div class="search-container">
-		
         <h1 style="color: var(--primary-color); margin-bottom: 30px;">氢搜</h1>
         <div class="search-box">
             <button id="engineButton">
@@ -1056,6 +1058,7 @@ a:active {
                 modeToggle.innerHTML = '<span class="material-icons">dark_mode</span> 夜';
             }
         });
+	
     </script>
 	<script>
         // 音乐列表（假设音乐文件存放在 /music/ 文件夹中）
