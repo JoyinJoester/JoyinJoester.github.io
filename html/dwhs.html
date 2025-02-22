@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单位换算器</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #42a5f5;
+            --background-color: #f8f9fa;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-color: #2d3436;
+            --text1-color: #2d3436;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode {
+            --primary-color: #81d4fa;
+            --background-color: #263238;
+            --card-bg: rgba(38, 50, 56, 0.9);
+            --text-color: #eceff1;
+            --text-color: #2d3436;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .converter-group {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        input{
+            width: 92%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text-color);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+           
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text1-color);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 8px var(--primary-color);
+        }
+
+        .unit-type-selector {
+            margin-bottom: 20px;
+        }
+
+        .result-card {
+            background: rgba(66, 165, 245, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .control-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            padding: 10px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .converter-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .converter-group > span {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2 style="color: var(--primary-color); text-align: center;">全能单位换算器</h2>
+            
+            <select class="unit-type-selector" id="unitType">
+                <option value="length">长度</option>
+                <option value="area">面积</option>
+                <option value="volume">体积</option>
+                <option value="weight">重量</option>
+                <option value="temperature">温度</option>
+                <option value="power">功率</option>
+                <option value="force">力</option>
+                <option value="time">时间</option>
+                <option value="data">数据存储</option>
+                <option value="density">密度</option>
+                <option value="bandwidth">宽带</option>
+                <option value="angle">角度</option>
+                <option value="conductivity">电导率</option>
+                <option value="capacitance">电容</option>
+            </select>
+
+            <div class="converter-group">
+                <div>
+                    <input type="number" id="inputValue" placeholder="输入数值" step="any">
+                    <select id="fromUnit"></select>
+                </div>
+                <span class="material-icons">swap_horiz</span>
+                <div>
+                    <div class="result-card">
+                        <div id="resultValue">0</div>
+                        <select id="toUnit"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="control-buttons">
+        <button class="icon-btn" id="homeButton">
+            <span class="material-icons">home</span>
+        </button>
+        <button class="icon-btn" id="modeToggle">
+            <span class="material-icons">dark_mode</span>
+        </button>
+    </div>
+
+    <script>
+        // 单位换算数据
+const unitData = {
+    length: [
+        { name: '米', symbol: 'm', factor: 1 },
+        { name: '千米', symbol: 'km', factor: 1000 },
+        { name: '厘米', symbol: 'cm', factor: 0.01 },
+        { name: '毫米', symbol: 'mm', factor: 0.001 },
+        { name: '英寸', symbol: 'in', factor: 0.0254 },
+        { name: '英尺', symbol: 'ft', factor: 0.3048 },
+        { name: '码', symbol: 'yd', factor: 0.9144 }
+    ],
+    area: [
+        { name: '平方米', symbol: 'm²', factor: 1 },
+        { name: '平方千米', symbol: 'km²', factor: 1e6 },
+        { name: '公顷', symbol: 'ha', factor: 10000 },
+        { name: '平方英尺', symbol: 'ft²', factor: 0.092903 },
+        { name: '平方英里', symbol: 'mi²', factor: 2.59e6 },
+        { name: '亩', symbol: 'mu', factor: 666.667 }
+    ],
+    volume: [
+        { name: '立方米', symbol: 'm³', factor: 1 },
+        { name: '升', symbol: 'L', factor: 0.001 },
+        { name: '毫升', symbol: 'mL', factor: 0.000001 },
+        { name: '加仑(美)', symbol: 'gal', factor: 0.00378541 },
+        { name: '立方英尺', symbol: 'ft³', factor: 0.0283168 }
+    ],
+    weight: [
+        { name: '千克', symbol: 'kg', factor: 1 },
+        { name: '克', symbol: 'g', factor: 0.001 },
+        { name: '吨', symbol: 't', factor: 1000 },
+        { name: '磅', symbol: 'lb', factor: 0.453592 },
+        { name: '盎司', symbol: 'oz', factor: 0.0283495 }
+    ],
+    temperature: [
+        { name: '摄氏度', symbol: '°C' },
+        { name: '华氏度', symbol: '°F' },
+        { name: '开尔文', symbol: 'K' }
+    ],
+    power: [
+        { name: '瓦特', symbol: 'W', factor: 1 },
+        { name: '千瓦', symbol: 'kW', factor: 1000 },
+        { name: '兆瓦', symbol: 'MW', factor: 1e6 },
+        { name: '吉瓦', symbol: 'GW', factor: 1e9 },
+        { name: '马力', symbol: 'hp', factor: 745.7 }
+    ],
+    force: [
+        { name: '牛顿', symbol: 'N', factor: 1 },
+        { name: '千牛顿', symbol: 'kN', factor: 1000 },
+        { name: '磅力', symbol: 'lbf', factor: 4.44822 },
+        { name: '达因', symbol: 'dyn', factor: 1e-5 }
+    ],
+    time: [
+        { name: '秒', symbol: 's', factor: 1 },
+        { name: '分钟', symbol: 'min', factor: 60 },
+        { name: '小时', symbol: 'h', factor: 3600 },
+        { name: '天', symbol: 'd', factor: 86400 },
+        { name: '周', symbol: 'wk', factor: 604800 },
+        { name: '月', symbol: 'mo', factor: 2.628e6 },
+        { name: '年', symbol: 'yr', factor: 3.154e7 },
+        { name: '世纪', symbol: 'century', factor: 3.154e9 }
+    ],
+    data: [
+        { name: '比特', symbol: 'b', factor: 1 },
+        { name: '字节', symbol: 'B', factor: 8 },
+        { name: '千字节', symbol: 'KB', factor: 8192 },
+        { name: '兆字节', symbol: 'MB', factor: 8388608 },
+        { name: '吉字节', symbol: 'GB', factor: 8589934592 },
+        { name: '太字节', symbol: 'TB', factor: 8796093022208 },
+        { name: '拍字节', symbol: 'PB', factor: 9007199254740992 },
+        { name: '艾字节', symbol: 'EB', factor: 9223372036854775808 },
+        { name: '泽字节', symbol: 'ZB', factor: 9444732965739290427392 },
+        { name: '尧字节', symbol: 'YB', factor: 9671406556917033397649408 }
+    ],
+    density: [
+        { name: '千克每立方米', symbol: 'kg/m³', factor: 1 },
+        { name: '克每立方厘米', symbol: 'g/cm³', factor: 1000 },
+        { name: '磅每立方英尺', symbol: 'lb/ft³', factor: 16.0185 },
+        { name: '磅每立方英寸', symbol: 'lb/in³', factor: 27679.9 }
+    ],
+    bandwidth: [
+        { name: '比特每秒', symbol: 'bps', factor: 1 },
+        { name: '千比特每秒', symbol: 'kbps', factor: 1000 },
+        { name: '兆比特每秒', symbol: 'Mbps', factor: 1e6 },
+        { name: '吉比特每秒', symbol: 'Gbps', factor: 1e9 },
+        { name: '太比特每秒', symbol: 'Tbps', factor: 1e12 }
+    ],
+    angle: [
+        { name: '度', symbol: '°', factor: 1 },
+        { name: '弧度', symbol: 'rad', factor: 57.2958 },
+        { name: '毫弧度', symbol: 'mrad', factor: 0.0572958 },
+        { name: '微弧度', symbol: 'μrad', factor: 0.0000572958 }
+    ],
+    conductivity: [
+        { name: '西门子每米', symbol: 'S/m', factor: 1 },
+        { name: '毫西门子每米', symbol: 'mS/m', factor: 0.001 },
+        { name: '微西门子每米', symbol: 'μS/m', factor: 1e-6 }
+    ],
+    capacitance: [
+        { name: '法拉', symbol: 'F', factor: 1 },
+        { name: '毫法', symbol: 'mF', factor: 1e-3 },
+        { name: '微法', symbol: 'μF', factor: 1e-6 },
+        { name: '纳法', symbol: 'nF', factor: 1e-9 },
+        { name: '皮法', symbol: 'pF', factor: 1e-12 }
+    ]
+};
+        // 元素引用
+        const unitType = document.getElementById('unitType');
+        const fromUnit = document.getElementById('fromUnit');
+        const toUnit = document.getElementById('toUnit');
+        const inputValue = document.getElementById('inputValue');
+        const resultValue = document.getElementById('resultValue');
+
+        // 初始化单位选项
+        function populateUnits() {
+            const type = unitType.value;
+            const units = unitData[type];
+            
+            const createOptions = (selectElement) => {
+                selectElement.innerHTML = units.map(unit => 
+                    `<option value="${unit.symbol}">${unit.name} (${unit.symbol})</option>`
+                ).join('');
+            };
+
+            createOptions(fromUnit);
+            createOptions(toUnit);
+            
+            // 温度换算特殊处理
+            if (type === 'temperature') {
+                fromUnit.value = '°C';
+                toUnit.value = '°F';
+            }
+        }
+
+        // 温度换算函数
+        function convertTemperature(value, from, to) {
+            let celsius = value;
+            if (from === '°F') celsius = (value - 32) * 5/9;
+            if (from === 'K') celsius = value - 273.15;
+
+            if (to === '°C') return celsius;
+            if (to === '°F') return (celsius * 9/5) + 32;
+            if (to === 'K') return celsius + 273.15;
+        }
+
+            // 执行换算
+        function performConversion() {
+            const type = unitType.value;
+            const input = parseFloat(inputValue.value);
+            if (isNaN(input)) return;
+
+            const from = fromUnit.value;
+            const to = toUnit.value;
+
+            if (type === 'temperature') {
+                resultValue.textContent = convertTemperature(input, from, to).toFixed(2);
+                return;
+            }
+
+            const fromFactor = unitData[type].find(u => u.symbol === from).factor;
+            const toFactor = unitData[type].find(u => u.symbol === to).factor;
+            const result = input * fromFactor / toFactor;
+            resultValue.textContent = result.toFixed(6);
+        }
+        // 事件监听
+        unitType.addEventListener('change', () => {
+            populateUnits();
+            performConversion();
+        });
+
+        [fromUnit, toUnit, inputValue].forEach(element => {
+            element.addEventListener('input', performConversion);
+        });
+
+        // 初始化
+        populateUnits();
+        performConversion();
+
+        // 夜间模式切换
+const modeToggle = document.getElementById('modeToggle');
+const body = document.body;
+
+// 检查 localStorage 中的模式设置
+if (localStorage.getItem('dark-mode') === 'enabled') {
+    body.classList.add('dark-mode');
+    modeToggle.innerHTML = '<span class="material-icons">light_mode</span> 昼';
+}
+
+            // 切换模式
+            modeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('dark-mode', 'enabled');
+                    modeToggle.innerHTML = '<span class="material-icons">light_mode</span> 昼';
+                } else {
+                    localStorage.setItem('dark-mode', 'disabled');
+                    modeToggle.innerHTML = '<span class="material-icons">dark_mode</span> 夜';
+                }
+            });
+        // 跳转到主页
+        homeButton.addEventListener('click', () => {
+            window.location.href = '../index.html';
+        });
+    </script>
+</body>
+</html>
