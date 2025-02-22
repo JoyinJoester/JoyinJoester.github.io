@@ -14,20 +14,20 @@
             --background-color: #f0f2f5;
             --text-color: #2d3436;
 			--text1-color: #ffffff;
-            --card-background: rgba(255, 255, 255, 0.9);
+            --card-bg: rgba(255, 255, 255, 0.9);
             --footer-background: rgba(255, 255, 255, 0.9);
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
         body.dark-mode {
-            --primary-color: #bb86fc;
-            --background-color: #1c1c1c;
+            --primary-color: #81d4fa;
+            --background-color: #263238;
             --text-color: #ffffff;
 			--text1-color: #2d3436;
-            --card-background: rgba(40, 40, 40, 0.9);
-            --footer-background: rgba(40, 40, 40, 0.9);
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --card-bg: rgba(38, 50, 56, 0.9);
+            --footer-background: rgba(38, 50, 56, 0.9);
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
             --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
         }
 
@@ -86,7 +86,7 @@
 
         /* 卡片 */
         .card {
-            background-color: var(--card-background);
+            background-color: var(--card-bg);
             border-radius: 16px;
             backdrop-filter: blur(10px);
             box-shadow: var(--shadow);
@@ -94,7 +94,15 @@
             margin-bottom: 20px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
+        .card3 {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
         .card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-hover);
@@ -143,7 +151,7 @@
 		
         /* 导航栏 */
         .navbar {
-            background-color: var(--card-background);
+            background-color: var(--card-bg);
             backdrop-filter: blur(10px);
             padding: 15px 20px;
             display: flex;
@@ -177,7 +185,7 @@
 
         /* 夜间模式切换按钮 */
         .mode-toggle {
-            background-color: var(--card-background);
+            background-color: var(--card-bg);
             border: none;
             color: var(--text-color);
             cursor: pointer;
@@ -479,10 +487,10 @@ a:active {
         }
 
         .card1 {
-            background-color: var(--card-background);
+            background-color: var(--card-bg);
             backdrop-filter: blur(10px);
             border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
             padding: 20px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -517,6 +525,8 @@ a:active {
         }
 		 /* 搜索 */
         .search-container {
+			margin-top: 500px;
+			position: relative;
 			margin: auto;
             background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(20px);
@@ -654,6 +664,11 @@ a:active {
                 font-size: 12px; /* 缩小字体 */
             }
         }
+        .card3 a{
+            color: #F776A8;
+            text-decoration: none;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -718,7 +733,12 @@ a:active {
                 <p>✅ 编程工具：VScode、Godot、vim</p>
                 <p>✅ 设计工具：Adobe&nbsp;Photoshop、Adobe XD、RPGMaker</p>
             </div>
-			
+			<div class="card3">
+                <h2>站点内置工具</h2>
+                <p><a href="html/ljjh.html">链接净化</a></p>
+                <p><a href="html/zstj.html">字数统计</a></p>
+                <p></p>
+            </div>
 			 <div class="card">
                 <h2>联系我</h2>
                 <p>如果你有任何问题或建议，欢迎通过以下方式联系我：</p>
@@ -1001,10 +1021,27 @@ a:active {
                     Bing
                 </div>
                 <div class="engine-item" data-engine="duckduckgo">
-                    
                     DuckDuckGo
                 </div>
                 
+                <div class="engine-item" data-engine="CSDN">
+                    CSDN
+                </div>
+                <div class="engine-item" data-engine="GitHub">
+                    GitHub
+                </div>
+                <div class="engine-item" data-engine="bokeyuan">
+                    博客园
+                </div>
+                <div class="engine-item" data-engine="yinghua">
+                    樱花动漫
+                </div>
+                <div class="engine-item" data-engine="yandex">
+                    yandex
+                </div>
+                <div class="engine-item" data-engine="mengniang">
+                    萌娘百科
+                </div>
             </div>
         </div>
     </div>
@@ -1222,7 +1259,12 @@ a:active {
             google: "https://www.google.com/search?q=",
             bing: "https://www.bing.com/search?q=",
             duckduckgo: "https://duckduckgo.com/?q=",
-            
+            CSDN: "https://so.csdn.net/so/search?q=",
+            github: "https://github.com/search?q=",
+            bokeyuan: "https://zzk.cnblogs.com/s?w=",
+            yinghua: "https://www.yinghua8.net/lookfor.html?wd=",
+            yandex: "https://yandex.com/search/?text=",
+            mengniang: "https://zh.moegirl.org.cn/index.php?search="
         };
 
         let currentEngine = "baidu";
