@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链接净化工具</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #42a5f5;
+            --background-color: #f8f9fa;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-color: #2d3436;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode {
+            --primary-color: #81d4fa;
+            --background-color: #263238;
+            --card-bg: rgba(38, 50, 56, 0.9);
+            --text-color: #eceff1;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 800px;
+            width: 90%;
+            padding: 20px;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        /* 输入区域 */
+        .input-group {
+            position: relative;
+            margin: 30px;
+        }
+
+        #inputLink {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text-color);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        #inputLink:focus {
+            outline: none;
+            box-shadow: 0 0 8px var(--primary-color);
+        }
+
+        /* 按钮样式 */
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            margin-left: 30px;
+            margin-right: auto;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(66, 165, 245, 0.1);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* 控制按钮 */
+        .control-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            padding: 10px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        @media (max-width: 480px) {
+    /* 移动端优化样式 */
+}
+    </style>
+</head>
+<body>
+    <!-- 主内容 -->
+    <div class="container">
+        <div class="card">
+            <h2 style="color: var(--primary-color); text-align: center;">链接净化工具</h2>
+            <div class="input-group">
+                <input type="text" id="inputLink" 
+                       placeholder="输入需要处理的链接...">
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-primary" id="openLinkBtn">
+                    <span class="material-icons">open_in_new</span>
+                    打开链接
+                </button>
+                <button class="btn btn-secondary" id="copyBtn">
+                    <span class="material-icons">content_copy</span>
+                    复制结果
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右下角控制按钮 -->
+    <div class="control-buttons">
+        <button class="icon-btn" id="homeButton">
+            <span class="material-icons">home</span>
+        </button>
+        <button class="icon-btn" id="modeToggle">
+            <span class="material-icons">dark_mode</span>
+        </button>
+    </div>
+
+    <script>
+        // 元素获取
+        const openLinkBtn = document.getElementById('openLinkBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const inputLink = document.getElementById('inputLink');
+        const darkModeBtn = document.getElementById('darkModeBtn');
+        const homeButton = document.getElementById('homeButton');
+
+        // 白名单模式正则表达式
+        const whitelist = /[a-zA-Z0-9\-._~:\/?#[\]@!$&'()*+,;=%]/g;
+
+        // 处理函数
+        function processLink() {
+            const original = inputLink.value;
+            // 白名单模式：仅保留指定字符
+            const result = (original.match(whitelist) || []).join('');
+            inputLink.value = result;
+            return result;
+        }
+
+        // 打开链接
+        openLinkBtn.addEventListener('click', () => {
+            const processedLink = processLink();
+            if (processedLink) {
+                window.open(processedLink, '_blank');
+            } else {
+                alert('请输入有效的链接！');
+            }
+        });
+
+        // 复制结果
+        copyBtn.addEventListener('click', () => {
+            const processedLink = processLink();
+            if (processedLink) {
+                navigator.clipboard.writeText(processedLink);
+                alert('链接已复制到剪贴板！');
+            } else {
+                alert('请输入有效的链接！');
+            }
+        });
+// 夜间模式切换
+const modeToggle = document.getElementById('modeToggle');
+const body = document.body;
+
+// 检查 localStorage 中的模式设置
+if (localStorage.getItem('dark-mode') === 'enabled') {
+    body.classList.add('dark-mode');
+    modeToggle.innerHTML = '<span class="material-icons">light_mode</span> 昼';
+}
+
+// 切换模式
+modeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+
+    if (body.classList.contains('dark-mode')) {
+        localStorage.setItem('dark-mode', 'enabled');
+        modeToggle.innerHTML = '<span class="material-icons">light_mode</span> 昼';
+    } else {
+        localStorage.setItem('dark-mode', 'disabled');
+        modeToggle.innerHTML = '<span class="material-icons">dark_mode</span> 夜';
+    }
+});
+        // 跳转到主页
+        homeButton.addEventListener('click', () => {
+            window.location.href = '../index.html';
+        });
+
+
+        // 自动处理输入
+        inputLink.addEventListener('input', processLink);
+    </script>
+</body>
+</html>

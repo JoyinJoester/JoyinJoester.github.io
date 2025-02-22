@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字符统计工具</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #42a5f5;
+            --background-color: #f8f9fa;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-color: #2d3436;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode {
+            --primary-color: #81d4fa;
+            --background-color: #263238;
+            --card-bg: rgba(38, 50, 56, 0.9);
+            --text-color: #eceff1;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            padding: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .input-group {
+            margin:7px;
+            margin-right: 40px;
+        }
+
+        #textInput {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text-color);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            resize: vertical;
+        }
+
+        #textInput:focus {
+            outline: none;
+            box-shadow: 0 0 8px var(--primary-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: rgba(66, 165, 245, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .control-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            padding: 10px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        @media (max-width: 480px) {
+    /* 移动端优化样式 */
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2 style="color: var(--primary-color); text-align: center;">字符统计工具</h2>
+            <div class="input-group">
+                <textarea id="textInput" placeholder="请输入要统计的文字内容..."></textarea>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">汉字数量</div>
+                    <div class="stat-value" id="chineseCount">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">英文字符</div>
+                    <div class="stat-value" id="englishCount">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">中文标点</div>
+                    <div class="stat-value" id="chinesePunctuationCount">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">英文标点</div>
+                    <div class="stat-value" id="englishPunctuationCount">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">英文单词</div>
+                    <div class="stat-value" id="wordCount">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">数字数量</div>
+                    <div class="stat-value" id="numberCount">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="control-buttons">
+        <button class="icon-btn" id="homeButton">
+            <span class="material-icons">home</span>
+        </button>
+        <button class="icon-btn" id="modeToggle">
+            <span class="material-icons">dark_mode</span>
+        </button>
+    </div>
+
+    <script>
+        // 统计规则配置
+        const patterns = {
+            chinese: /[\u4e00-\u9fa5]/g,                        // 汉字
+            english: /[A-Za-z]/g,                              // 英文字母
+            chinesePunctuation: /[\u3000-\u303F\uff00-\uffef]/g, // 中文标点符号
+            englishPunctuation: /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, // 英文标点
+            numbers: /\d/g,                                    // 数字
+            words: /\b[a-zA-Z]+\b/g                            // 英文单词
+        }
+
+        // 元素获取
+        const textInput = document.getElementById('textInput');
+        const counters = {
+            chineseCount: document.getElementById('chineseCount'),
+            englishCount: document.getElementById('englishCount'),
+            chinesePunctuationCount: document.getElementById('chinesePunctuationCount'),
+            englishPunctuationCount: document.getElementById('englishPunctuationCount'),
+            wordCount: document.getElementById('wordCount'),
+            numberCount: document.getElementById('numberCount')
+        }
+
+        // 主统计函数
+        function updateStatistics() {
+            const text = textInput.value;
+            
+            // 基础统计
+            const stats = {
+                chinese: (text.match(patterns.chinese) || []).length,
+                english: (text.match(patterns.english) || []).length,
+                chinesePunctuation: (text.match(patterns.chinesePunctuation) || []).length,
+                englishPunctuation: (text.match(patterns.englishPunctuation) || []).length,
+                numbers: (text.match(patterns.numbers) || []).length,
+                words: (text.match(patterns.words) || []).length
+            }
+
+            // 更新显示
+            counters.chineseCount.textContent = stats.chinese;
+            counters.englishCount.textContent = stats.english;
+            counters.chinesePunctuationCount.textContent = stats.chinesePunctuation;
+            counters.englishPunctuationCount.textContent = stats.englishPunctuation;
+            counters.wordCount.textContent = stats.words;
+            counters.numberCount.textContent = stats.numbers;
+        }
+
+        // 事件监听
+        textInput.addEventListener('input', updateStatistics);
+// 夜间模式切换
+const modeToggle = document.getElementById('modeToggle');
+const body = document.body;
+
+// 检查 localStorage 中的模式设置
+if (localStorage.getItem('dark-mode') === 'enabled') {
+    body.classList.add('dark-mode');
+    modeToggle.innerHTML = '<span class="material-icons">light_mode</span> 昼';
+}
+
+// 切换模式
+modeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+
+    if (body.classList.contains('dark-mode')) {
+        localStorage.setItem('dark-mode', 'enabled');
+        modeToggle.innerHTML = '<span class="material-icons">light_mode</span> 昼';
+    } else {
+        localStorage.setItem('dark-mode', 'disabled');
+        modeToggle.innerHTML = '<span class="material-icons">dark_mode</span> 夜';
+    }
+});
+        // 主页跳转
+        document.getElementById('homeButton').addEventListener('click', () => {
+            window.location.href = '../index.html';
+        });
+    </script>
+</body>
+</html>
