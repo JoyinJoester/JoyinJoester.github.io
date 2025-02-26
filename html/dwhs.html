@@ -369,10 +369,10 @@ if (localStorage.getItem('dark-mode') === 'enabled') {
 
                 if (body.classList.contains('dark-mode')) {
                     localStorage.setItem('dark-mode', 'enabled');
-                    modeToggle.innerHTML = '<span class="material-icons">light_mode</span> 昼';
+                    modeToggle.innerHTML = '<span class="material-icons">light_mode</span>';
                 } else {
                     localStorage.setItem('dark-mode', 'disabled');
-                    modeToggle.innerHTML = '<span class="material-icons">dark_mode</span> 夜';
+                    modeToggle.innerHTML = '<span class="material-icons">dark_mode</span>';
                 }
             });
         // 跳转到主页
