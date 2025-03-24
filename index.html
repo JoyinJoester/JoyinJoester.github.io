@@ -1,1240 +1,459 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joyin的主页</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-	
-        /* 全局样式 */
-        :root {
-            --primary-color: #42a5f5;
-            --background-color: #f0f2f5;
-            --text-color: #2d3436;
-			--text1-color: #ffffff;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --footer-background: rgba(255, 255, 255, 0.9);
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        body.dark-mode {
-            --primary-color: #81d4fa;
-            --background-color: #263238;
-            --text-color: #ffffff;
-			--text1-color: #2d3436;
-            --card-bg: rgba(38, 50, 56, 0.9);
-            --footer-background: rgba(38, 50, 56, 0.9);
-            --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
-        }
-
-        body {
-			 /*font-family: '方正筑紫A圆体R', 方正筑紫A圆体R;*/
-           font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* 容器 */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* 顶部头像 */
-        .header {
-            text-align: center;
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-
-        .header img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 4px solid #fff;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .header img:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-color);
-            margin-top: 20px;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            color: var(--text-color);
-            max-width: 600px;
-            margin: 20px auto;
-            line-height: 1.6;
-        }
-
-        /* 卡片 */
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow);
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card3 {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow);
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card3 li{
-            margin-top: 10px;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        /* 标题 */
-        h2 {
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: var(--text-color);
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-
-        /* 段落 */
-        p {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: var(--text-color);
-        }
-/* 按钮*/
-	
-       
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, var(--primary-color), #3700b3);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: var(--shadow);
-        }
-
-        .button:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .button:active {
-            transform: translateY(0);
-            box-shadow: var(--shadow);
-        }
-
-		
-        /* 导航栏 */
-        .navbar {
-            background-color: var(--card-bg);
-            backdrop-filter: blur(10px);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .navbar a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            margin-left: 20px;
-            transition: color 0.3s ease;
-        }
-
-        .navbar a:hover {
-            color: var(--primary-color);
-        }
-
-        /* 夜间模式切换容器 */
-        .mode-container {
-            position: fixed;
-            bottom: 70px;
-            right: 10px;
-            z-index: 1000;
-        }
-
-        /* 夜间模式切换按钮 */
-        .mode-toggle {
-            background-color: var(--card-bg);
-            border: none;
-            color: var(--text-color);
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            gap: 8px;
-            padding: 10px 15px;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .mode-toggle:hover {
-            background-color: var(--primary-color);
-            color: #fff;
-            transform: translateY(-2px);
-        }
-
-        /* 页面切换 */
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-    body,td,th {
-    font-family: Inter, sans-serif;
-}
-a:link {
-    text-decoration: none;
-}
-a:visited {
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: none;
-}
-a:active {
-    text-decoration: none;
-}
-		
-		/* From Uiverse.io by adamgiebl */ 
-.button2 {
-  font-family: inherit;
-  font-size: 20px;
-  background: royalblue;
-  color: white;
-  padding: 0.7em 1em;
-  padding-left: 0.9em;
-  display: flex;
-  align-items: center;
-  border: none;
-  border-radius: 16px;
-  overflow: hidden;
-  transition: all 0.2s;
-  cursor: pointer;
-}
-
-.button2 span {
-  display: block;
-  margin-left: 0.3em;
-  transition: all 0.3s ease-in-out;
-}
-
-.button2 svg {
-  display: block;
-  transform-origin: center center;
-  transition: transform 0.3s ease-in-out;
-}
-
-.button2:hover .svg-wrapper {
-  animation: fly-1 0.6s ease-in-out infinite alternate;
-}
-
-.button2:hover svg {
-  transform: translateX(1.2em) rotate(45deg) scale(1.1);
-}
-
-.button2:hover span {
-  transform: translateX(5em);
-}
-
-.button2:active {
-  transform: scale(0.95);
-}
-
-@keyframes fly-1 {
-  from {
-    transform: translateY(0.1em);
-  }
-
-  to {
-    transform: translateY(-0.1em);
-  }
-}
-
-	/*music*/	
-	/* 播放器容器 */
-        .music-player {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            overflow: hidden;
-            position: relative;
-            min-height: 400px;
-        }
-
-        /* 高斯模糊背景 */
-        .blur-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            filter: blur(30px);
-            z-index: -1;
-            opacity: 0.8;
-        }
-
-        /* 内容区域 */
-        .player-content {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        /* 封面区域 */
-        .cover-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .album-art {
-            width: 200px;
-            height: 200px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        #coverImage {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .song-info {
-            text-align: center;
-        }
-
-        /* 播放列表 */
-        .playlist-section {
-			scrollbar-width: none;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 15px;
-            max-height: 360px;
-            overflow-y: auto;
-        }
-
-        .playlist-item {
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .playlist-item:hover {
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        .playlist-item.active {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        /* 控制区域 */
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            position: relative;
-        }
-
-        .control-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            background: var(--primary-color);
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* 进度条 */
-        .progress-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-        }
-
-        #progress {
-            height: 100%;
-            background: var(--primary-color);
-            width: 0%;
-            transition: width 0.1s linear;
-        }
-
-        /* 音量控制 */
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            position: absolute;
-            right: 20px;
-            bottom: 20px;
-        }
-
-        #volumeSlider {
-            width: 100px;
-            height: 4px;
-            accent-color: var(--primary-color);
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
-        }
-
-        #volumeSlider:hover {
-            opacity: 1;
-        }
-
-        /* 移动端适配 */
-        @media (max-width: 768px) {
-            .player-content {
-                grid-template-columns: 1fr;
-            }
-
-            .playlist-section {
-                max-height: 200px;
-            }
-
-            .album-art {
-                width: 150px;
-                height: 150px;
-            }
-
-            .control-btn {
-                width: 40px;
-                height: 40px;
-            }
-
-            .volume-control {
-                position: static;
-                justify-content: center;
-                margin-top: 15px;
-            }
-
-            #volumeSlider {
-                width: 80px;
-            }
-
-            .controls {
-                padding-bottom: 60px;
-            }
-        }
-		
-		
-		
-		 h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1c1c1c;
-            margin-bottom: 20px;
-        }
-
-        /* 卡片布局 */
-        .card-grid1 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .card1 {
-            background-color: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            padding: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card1:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        .card1 h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-color);
-            margin-top: 0;
-        }
-
-        .card1 p {
-            font-size: 1rem;
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-
-        .card1 a {
-            color: #F776A8;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .card1 a:hover {
-			color: #F1D7FF;
-            text-decoration: underline;
-        }
-		 /* 搜索 */
-        .search-container {
-			margin-top: 500px;
-			position: relative;
-			margin: auto;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 600px;
-            text-align: center;
-        }
-
-        /* 搜索框容器 */
-        .search-box {
-            display: flex;
-            align-items: center;
-            gap: 8px; /* 缩小间距 */
-            position: relative;
-        }
-
-        /* 搜索引擎选择按钮 */
-        #engineButton {
-            padding: 10px 12px; /* 缩小内边距 */
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap; /* 防止文字换行 */
-        }
-
-        #engineButton:hover {
-            background: #F5BEFF;
-        }
-
-        /* 搜索输入框 */
-        #searchInput {
-            flex: 1;
-            padding: 10px 12px; /* 缩小内边距 */
-            border: 2px solid var(--primary-color);
-            border-radius: 8px;
-            font-size: 14px; /* 缩小字体 */
-            outline: none;
-            background: rgba(255, 255, 255, 0.8);
-            transition: all 0.3s ease;
-            min-width: 0; /* 防止溢出 */
-        }
-
-        #searchInput:focus {
-            border-color: var(--hover-color);
-            box-shadow: 0 0 8px rgba(66, 165, 245, 0.3);
-        }
-
-        /* 搜索按钮 */
-        #searchButton {
-            padding: 10px 16px; /* 缩小内边距 */
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px; /* 缩小字体 */
-            transition: all 0.3s ease;
-            white-space: nowrap; /* 防止文字换行 */
-        }
-
-        #searchButton:hover {
-            background: #F5BEFF;
-            transform: translateY(-1px);
-        }
-
-        /* 引擎选择下拉菜单 */
-        .engine-dropdown {
-            position: absolute;
-            left: 0;
-			color: black;
-            top: 50px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            z-index: 100;
-            display: none;
-            width: 160px;
-        }
-
-        .engine-dropdown.show {
-            display: block;
-        }
-
-        .engine-item {
-            padding: 12px 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .engine-item:hover {
-            background: rgba(66, 165, 245, 0.1);
-        }
-
-        /* 移动端适配 */
-        @media (max-width: 600px) {
-            .search-container {
-                padding: 20px;
-            }
-
-            .search-box {
-                gap: 6px; /* 进一步缩小间距 */
-            }
-
-            #engineButton {
-                padding: 8px 10px; /* 进一步缩小内边距 */
-                font-size: 12px; /* 缩小字体 */
-            }
-
-            #searchInput {
-                padding: 8px 10px; /* 进一步缩小内边距 */
-                font-size: 12px; /* 缩小字体 */
-            }
-            #searchButton {
-                padding: 8px 12px; /* 进一步缩小内边距 */
-                font-size: 12px; /* 缩小字体 */
-            }
-            .engine-dropdown {
-                width: 120px; /* 缩小下拉菜单宽度 */
-                font-size: 12px; /* 缩小字体 */
-            }
-        }
-        .card3 a{
-            color: #F776A8;
-            text-decoration: none;
-            font-weight: 500;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joyinの主页</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #42a5f5;
+      --background-color: #f0f2f5;
+      --text-color: #2d3436;
+      --text1-color: #ffffff;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    body.dark-mode {
+      --primary-color: #81d4fa;
+      --background-color: #263238;
+      --text-color: #ffffff;
+      --text1-color: #2d3436;
+      --card-bg: rgba(38, 50, 56, 0.9);
+      --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      margin: 0;
+      transition: all 0.3s ease;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 30px;
+      align-items: start;
+      min-height: 100vh;
+    }
+
+    .left-side {
+      position: sticky;
+      top: 20px;
+      height: calc(100vh - 40px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      margin: 0 auto;
+    }
+
+    .avatar:hover {
+      transform: rotate(8deg);
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      height: 100%;
+    }
+
+    /* 卡片通用样式 */
+    .left-side .card {
+        background: transparent;
+        backdrop-filter: none;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .left-side .card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+
+    /* 新增列表样式 */
+    .card ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      height: 100%;
+    }
+
+    .left-cards,
+    .right-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      height: 100%;
+    }
+
+    .left-cards .card,
+    .right-cards .card {
+      flex: 1;
+      min-height: 150px;
+      overflow: hidden;
+    }
+
+    .nav-card {
+      margin-top: auto;
+    }
+
+    /* 修复的选项卡样式 */
+    .nav-tabs {
+      display: flex;
+      gap: 15px;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text-color);
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--primary-color);
+      color: var(--text1-color);
+    }
+
+    .tab-content .content-item {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .tab-content .content-item.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .mode-toggle {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: var(--card-bg);
+      color: var(--text-color); /* 新增颜色变量 */
+      padding: 12px 20px;
+      border-radius: 50px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      border: none;
+      transition: color 0.3s ease; /* 添加颜色过渡效果 */
+    }
+
+    @media (max-width: 1024px) {
+      .container {
+        grid-template-columns: 1fr;
+        padding: 15px;
+      }
+      .left-side {
+        position: static;
+        height: auto;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .avatar {
+        width: 120px;
+        height: 120px;
+      }
+      .nav-tabs {
+        flex-wrap: wrap;
+      }
+    }
+    a {
+      text-decoration: none;
+      color: var(--text-color);
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    /* 在现有.card样式后添加 */
+    .nav-card .content-item ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 12px 0;
+    }
+
+    .nav-card .content-item ul li {
+        margin-bottom: 12px;
+        line-height: 1.7;
+        padding: 6px 0;
+    }
+
+    .nav-card .content-item ul li:last-child {
+        margin-bottom: 0;
+    }
+    .nav-card .content-item ul li a{
+        color: var(--primary-color);
+    }
+
+  </style>
 </head>
 <body>
-    <!-- 夜间模式切换容器 -->
-<div class="mode-container">
-        <button class="mode-toggle" id="modeToggle">
-            <span class="material-icons">dark_mode</span>
-          夜
-        </button>
+  <button class="mode-toggle" id="modeToggle">
+    <span class="material-icons">dark_mode</span>
+    夜间模式
+  </button>
+
+  <div class="container">
+    <div class="left-side">
+      <div class="card">
+        <a href="https://github.com/JoyinJoester" target="_blank">
+          <img src="image/cfa71fe042f69a6d0c31ef76e58f3fb.jpg" alt="头像" class="avatar">
+        </a>
+        <h2>Joyin</h2>
+        <p>牛牛拥有者</p>
+        <p>开源爱好者</p>
+      </div>
     </div>
 
-    <!-- 导航栏 -->
-    <div class="navbar">
-        <span>我的个人主页</span>
-        <div>
-            <a href="#" data-page="home">首页</a>
-            <a href="#" data-page="about">资源</a>
-            <a href="#" data-page="contact">音乐</a>
-			<a href="#" data-page="so">搜索</a>
+    <div class="main-content">
+      <div class="card-grid">
+        <div class="left-cards">
+          <div class="card">
+            <h2>个人介绍</h2>
+                <p>2006年度美国时代周刊风云人物<br>2008年感动中国组委会大奖获得者<br>2019年获得年度地球卫士奖<br>2022年奥林匹克杯获得者</p>
+          </div>
+          <div class="card">
+            <h2>这里简单介绍一下郑安南</h2>
+            <p>✅是饭桶，是废物，是成语里的酒囊饭袋，俗语里的臭鱼烂虾，是沉睡在虚无空间的逃避者，是半醉在生活现实的奉承者，是天上掉馅饼也不抬头的低头族，是夜夜笙歌的纨绔子弟，是玩物丧志的狺狺之犬，是铁打的孙笑川，是过街老鼠般存在的蟑螂</p>
+
+          </div>
         </div>
-    </div>
 
-    
-    <!-- 页面内容 -->
-    <div class="container">
-        <!-- 首页 -->
-        <div id="home" class="page active">
-			<!-- 顶部头像 -->
-				<div class="header">
-				<a href="https://github.com/JoyinJoester" target="_blank"><img src="image/cfa71fe042f69a6d0c31ef76e58f3fb.jpg" alt="Takagi"></a>
-					<h1>欢迎来到我的个人主页</h1>
-					<p>
-						Joyin的个人主页
-					</p>
-				</div>
+        <div class="right-cards">
+          <div class="card">
+            <h3> 工具</h3>
+            <ul>
+              <li>VScode</li>
+              <li>GitHub Desktop</li>
+              <li>Docker Desktop</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>在用语言</h3>
+<ul>
+  <li>
+    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #E34C26; margin-right: 8px;"></span>
+    HTML5+
+    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #2965F1; margin-right: 8px;"></span>
+    CSS3+
+    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #F1E05A; margin-right: 8px;"></span>
+    JavaScript
+  </li>
+  <li>
+    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #555555; margin-right: 8px;"></span>
+    C
+  </li>
+  <li>
+    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #DEA584; margin-right: 8px;"></span>
+    Rust
+  </li>
+</ul>
+          </div>
+          <div class="card">
+            <h3>联系我</h3>
+            <div style="display: flex; gap: 12px; padding: 15px;">
+                <!-- 知乎卡片 -->
+                <a href="https://www.zhihu.com/people/joyin-32-17-38" target="_blank" 
+                   style="
+                     width: 80px;
+                     height: 80px;
+                     background: rgba(0, 102, 255, 0.1);
+                     border-radius: 12px;
+                     display: flex;
+                     flex-direction: column;
+                     align-items: center;
+                     justify-content: center;
+                     text-decoration: none;
+                     transition: all 0.3s ease;
+                     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                     color: #0066ff;
+                   "
+                   onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)'"
+                   onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 6px rgba(0, 0, 0, 0.1)'">
+                  <svg style="width: 24px; height: 24px; margin-bottom: 8px;" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.207 16.621c-.235.096-.5.147-.774.147-1.28 0-2.318-1.153-2.318-2.576 0-.364.064-.708.177-1.023l-1.658-1.117a4.876 4.876 0 01-.573 1.311c-.643 1.058-1.599 1.699-2.727 1.699-1.363 0-2.48-1.077-2.48-2.4 0-.77.32-1.468.835-1.98l1.204 1.416c-.15.18-.24.4-.24.64 0 .641.463 1.164 1.033 1.164.52 0 .94-.423.94-.945 0-.243-.084-.463-.22-.643l-1.663-1.96c.52-.602 1.223-.97 2.03-.97 1.362 0 2.48 1.077 2.48 2.4 0 .593-.18 1.145-.49 1.604l1.698 1.146c.35-.56.552-1.23.552-1.94 0-2.065-1.555-3.76-3.54-3.955V7h-1.5v1.045c-1.985.195-3.54 1.89-3.54 3.955 0 2.185 1.74 3.97 3.93 3.97 1.235 0 2.34-.58 3.07-1.48.73.9 1.835 1.48 3.07 1.48.882 0 1.693-.29 2.354-.775l-.587-1.814z"/>
+                  </svg>
+                  <span style="font-size: 12px; font-weight: 500;">知乎</span>
+                </a>
+              
+                <!-- GitHub卡片 -->
+                <a href="https://github.com/JoyinJoester" target="_blank" 
+                   style="
+                     width: 80px;
+                     height: 80px;
+                     background: rgba(0, 0, 0, 0.05);
+                     border-radius: 12px;
+                     display: flex;
+                     flex-direction: column;
+                     align-items: center;
+                     justify-content: center;
+                     text-decoration: none;
+                     transition: all 0.3s ease;
+                     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                     color:#000;
+                   "
+                   onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)'"
+                   onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 6px rgba(0, 0, 0, 0.1)'">
+                  <svg style="width: 24px; height: 24px; margin-bottom: 8px;" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.07.63-1.32-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/>
+                  </svg>
+                  <span style="font-size: 12px; font-weight: 500;">GitHub</span>
+                </a>
+              
+                <!-- B站卡片 -->
+                <a href="https://space.bilibili.com/487993033?spm_id_from=333.1007.0.0" target="_blank" 
+                   style="
+                     width: 80px;
+                     height: 80px;
+                     background: rgba(251, 114, 153, 0.1);
+                     border-radius: 12px;
+                     display: flex;
+                     flex-direction: column;
+                     align-items: center;
+                     justify-content: center;
+                     text-decoration: none;
+                     transition: all 0.3s ease;
+                     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                     color: #fb7299;
+                   "
+                   onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)'"
+                   onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 6px rgba(0, 0, 0, 0.1)'">
+                  <svg style="width: 24px; height: 24px; margin-bottom: 8px;" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18.223 3.086a1.25 1.25 0 010 1.768L17.08 5.996h1.17A3.75 3.75 0 0122 9.747v7.5a3.75 3.75 0 01-3.75 3.75H5.75A3.75 3.75 0 012 17.247v-7.5a3.75 3.75 0 013.75-3.75h1.166L5.775 4.855a1.25 1.25 0 111.768-1.768l2.652 2.652c.075.063.141.13.198.202h3.213c.057-.072.123-.14.198-.202l2.652-2.652a1.25 1.25 0 011.768 0zM12 8.996a2 2 0 00-2 2v4a2 2 0 104 0v-4a2 2 0 00-2-2zm-8.25 6a1.75 1.75 0 00-1.75 1.75v2.5c0 .966.784 1.75 1.75 1.75h14.5A1.75 1.75 0 0020 19.246v-2.5a1.75 1.75 0 00-1.75-1.75H3.75z"/>
+                  </svg>
+                  <span style="font-size: 12px; font-weight: 500;">哔哩哔哩</span>
+                </a>
+              </div>
+          </div>
+        </div>
+      </div>
 
-            <div class="card">
-                <h2>我的项目</h2>
-                <p>以下是我最近<del>没完成</del>正在做的一些项目：</p>
-                <ul>
-                    <li>Let-your-GCC-fly-</li>
-                    <li>好像我没有做什么了</li>
-                    
-                </ul>
-                <a href="https://github.com/JoyinJoester?tab=repositories" class="button" target="_blank">查看全部项目</a>
-            </div>
-            <div class="card3">
-                <h2>文章</h2>
-                <p>乱七八糟的一些小文章：</p>
-                <ul>
-                    <li><a href="https://juejin.cn/post/7479387138510225420" target="_blank">用ollama在本地部署deepseek R1以及接入VScode平替Github Copilot</a></li>
-                    <li><a href="https://blog.csdn.net/2202_75930938/article/details/138408495" target="_blank">Pixel(OEM不可开)使用记录</a></li>
-                </ul>
-                </div>
-            <div class="card">
-                <h2>最新动态</h2>
-                <p>📅 2025年03月：郑安南怎么这么坏啊，老是打扰我学习</p>
-                <p>📅 2025年02月：发布了我的博客(没有服务器啊，算了放github托管吧)</p>
-                <p>📅 2024年12月：获得荣誉勋章被何同学拉黑</p>
-            </div>
-			<div class="card">
-                <h2>关于我</h2>
-                <p>2006年被评为年度美国时代周刊风云人物<br>2008年感动中国组委会大奖获得者<br>2019年获得年度地球卫士奖<br>2022年奥林匹克杯获得者</p>
-            </div>
+      <div class="card nav-card">
+        <div class="nav-tabs">
+          <button class="tab-btn active" data-target="tech">技术文章</button>
+          <button class="tab-btn" data-target="life">生活记录</button>
+          <button class="tab-btn" data-target="log">工具箱</button>
+        </div>
 
-            <div class="card">
-                <h2>我的技能</h2>
-                <p>✅ 前端开发：HTML、CSS、JavaScript<del>(这个我可以用AI跑)</del></p>
-                <p>✅ 编程工具：VScode、Godot、vim</p>
-                <p>✅ 设计工具：Adobe&nbsp;Photoshop、Adobe XD、RPGMaker</p>
-            </div>
-			<div class="card3">
-                <h2>站点内置工具</h2>
-                <p><a href="html/ljjh.html">链接净化</a></p>
+        <div class="tab-content">
+          <div id="tech" class="content-item active">
+            <h3>最新技术文章</h3>
+            <ul>
+              <li><a href="https://juejin.cn/post/7479387138510225420" target="_blank">用ollama在本地部署deepseek R1以及接入VScode平替Github Copilot</a></li>
+              <li><a href="https://blog.csdn.net/2202_75930938/article/details/138408495" target="_blank">Pixel(OEM不可开)使用记录</a></li>
+                
+            </ul>
+          </div>
+          <div id="life" class="content-item">
+                <p>📅 2025年03月24日：更新一下排版布局</p>
+                <p>📅 2025年03月10日：郑安南怎么这么坏啊，老是打扰我学习</p>
+                <p>📅 2025年02月25日：发布了我的博客(没有服务器啊，算了放github托管吧)</p>
+                <p>📅 2024年12月01日：获得荣誉勋章被何同学拉黑</p>
+          </div>
+          <div id="log" class="content-item">
+            <p><a href="html/ljjh.html">链接净化</a></p>
                 <p><a href="html/zstj.html">字数统计</a></p>
                 <p><a href="html/dwhs.html">单位换算</a></p>
                 <p><a href="html/fqz.html">番茄钟</a></p>
-            </div>
-			<div class="card">
-                <h2>联系我</h2>
-                <p>如果你有任何问题或建议，欢迎通过以下方式联系我：</p>
-                <p><a href="mailto:joyin8888@outlook.com">
-				<button class="button2">
-				<div class="svg-wrapper-1">
-					<div class="svg-wrapper">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						width="24"
-						height="24"
-					    >
-						<path fill="none" d="M0 0h24v24H0z"></path>
-						<path
-						fill="currentColor"
-						d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-						></path>
-					</svg>
-					</div>
-				</div>
-				<span>Send Email</span>
-				</button>
-</a></p>
-
-                
-            </div>
+                <p><a href="html/ziyuan.html">资源中心</a></p>
+          </div>
         </div>
-		
-</div>
-
-        <!-- 网址页面 -->
-        <div id="about" class="page">
-				
-				<div class="card-grid1">
-				<!-- 示例卡片 -->
-				<div class="card1">
-					<h2>技术资源</h2>
-					<p>
-						<a href="https://github.com" target="_blank">GitHub</a> - 全球最大的代码托管平台。<br>
-						<a href="https://stackoverflow.com" target="_blank">Stack Overflow</a> - 程序员问答社区。<br>
-						<a href="https://developer.mozilla.org" target="_blank">MDN Web Docs</a> - Web 开发文档。<br>
-						<a href="https://www.csdn.net/" target="_blank">CSDN</a> - 傻逼:CSDN<br>
-						<a href="https://www.cnblogs.com/" target="_blank">博客园</a> - 比csdn好用多了<br>
-						
-					</p>
-				</div>
-
-				<div class="card1">
-					<h2>系统下载</h2>
-					<p>
-						<a href="https://hellowindows.cn/" target="_blank">HelloWindows</a> - Windows系统iso下载。<br>
-						<a href="https://archlinux.org/" target="_blank">Arch</a> - Arch神教。<br>
-						<a href="https://www.debian.org/" target="_blank">Debian</a> - Debian发行版下载。<br>
-						<a href="https://ubuntu.com/download" target="_blank">Ubuntu</a> - 知名的debian发行版。<br>
-						<a href="https://linuxmint.com/" target="_blank">Mint</a> - 我认为最适合新人的Linux发行版<br>
-						<a href="https://www.kali.org/" target="_blank">Kali</a> - 学好了一起吃国家饭<br>
-						
-					</p>
-				</div>
-
-				<div class="card1">
-					<h2>设计工具</h2>
-					<p>
-						<a href="https://www.figma.com" target="_blank">Figma</a> - 在线设计工具。<br>
-						<a href="https://www.adobe.com" target="_blank">Adobe Creative Cloud</a> - 创意设计套件。<br>
-						<a href="https://www.canva.com" target="_blank">Canva</a> - 简单易用的设计工具。<br>
-						<a href="https://www.peisebiao.com/" target="_blank">配色表</a> -设计配色参考。<br>
-						
-					</p>
-				</div>
-
-				<div class="card1">
-					<h2>学习平台</h2>
-					<p>
-						<a href="https://store.steampowered.com/about/" target="_blank">Steam</a> - 思题目刷题大全<br>
-						<a href="https://store.epicgames.com/zh-CN/" target="_blank">Epic</a> - 艾派克学习平台。<br>
-						<a href="https://www.gog.com/galaxy" target="_blank">GOG</a> - 吉欧吉单词听写。<br>
-						<a href="https://flingtrainer.com/" target="_blank">Fling</a> - 风灵月影题目全解。<br>
-						<a href="https://www.4399.com/" target="_blank">4399</a> - 4399碎片化记忆。<br>
-						<a href="https://www.nexusmods.com/" target="_blank">nexus</a> - 学习软件必备插件。<br>
-						
-					</p>
-				</div>
-					
-					<div class="card1">
-					<h2>装机必备工具</h2>
-					<p>
-						<a href="https://www.tbtool.cn/" target="_blank">图吧工具箱</a> - 集成了多种工具的工具箱。<br>
-						<a href="https://www.ventoy.net/cn/index.html" target="_blank">Ventory</a> - 制作简易的启动盘(图吧有)。<br>
-						<a href="https://www.diskgenius.cn/download.php" target="_blank">DG</a> - 硬盘分区(图吧有)。<br>
-						<a href="https://www.wepe.com.cn/download.html" target="_blank">微PE</a> - 一款好用的pe启动工具(图吧有)<br>
-
-					</p>
-				</div>
-
-				<div class="card1">
-					<h2>AI工具</h2>
-					<p>
-						<a href="https://chatgpt.com/auth/login" target="_blank">ChatGPT</a><br>
-						<a href="https://chat.deepseek.com/" target="_blank">Deepseek</a><br>
-						<a href="https://copilot.microsoft.com/chats/5suZxdg23zxVgNE3TGggs" target="_blank">copilot</a><br>
-						<a href="https://gemini.google.com/app" target="_blank">Gemini</a><br>
-						<a href="https://ollama.com/" target="_blank">ollama</a><br>
-						
-					</p>
-				</div>
-					<div class="card1">
-					<h2>动画网站</h2>
-					<p>
-						<a href="https://www.age.tv/" target="_blank">AGE动漫</a><br>
-						<a href="https://www.yinghua8.net/" target="_blank">樱花动漫</a><br>
-						<a href="https://www.clicli.cc/" target="_blank">Clicli弹幕网</a><br>
-						<a href="https://www.233dm.com/" target="_blank">233动漫</a><br>
-						<a href="https://www.imandaow.com/" target="_blank">漫岛TV</a><br>
-						
-					</p>
-				</div>
-					<div class="card1">
-					<h2>在线工具</h2>
-					<p>
-						<a href="https://wordcount.com/zh/" target="_blank">字数统计</a><br>
-						<a href="https://md.openwrite.cn/" target="_blank">微信MD在线编辑</a><br>
-						<a href="https://cn.unithelper.com/" target="_blank">单位换算</a><br>
-						<a href="" target="_blank"></a><br>
-						<a href="" target="_blank"></a><br>
-						
-					</p>
-				</div>
-					<div class="card1">
-					<h2>3D打印</h2>
-					<p>
-						<a href="https://www.thingiverse.com/" target="_blank">Thingiverse</a><br>
-						<a href="https://www.crealitycloud.cn/" target="_blank">创想云</a><br>
-						<a href="https://www.dayin.la/" target="_blank">打印啦</a><br>
-						<a href="https://www.most3d.cn/" target="_blank">莫斯特3D</a><br>
-						<a href="https://3dexport.com/" target="_blank">3D Export</a><br>
-					</p>
-				</div>
-                <div class="card1">
-					<h2>网盘资源(到期请联系我补充)</h2>
-					<p>
-						<a href="https://caiyun.139.com/m/i?0S5Cs8fBYKeDL" target="_blank">Adobe全家桶</a><br>
-						<a href="https://caiyun.139.com/m/i?0S5Cs8f9D01Xx" target="_blank">PPT模板</a><br>
-					</p>
-				</div>
-			</div>
-</div>
-
-        <!-- 音乐页面 -->
-        <div id="contact" class="page">
-       <div class="music-player">
-            <!-- 高斯模糊背景 -->
-            <div class="blur-background" id="blurBackground"></div>
-
-            <!-- 内容区域 -->
-            <div class="player-content">
-                <!-- 封面区域 -->
-                <div class="cover-section">
-                    <div class="album-art">
-                        <img id="coverImage" src="https://via.placeholder.com/200" alt="专辑封面">
-                    </div>
-                    <div class="song-info">
-                        <h2 id="songTitle">选择歌曲</h2>
-                        <p id="artist">-</p>
-                    </div>
-                </div>
-
-                <!-- 播放列表 -->
-                <div class="playlist-section">
-                    <h3>播放列表</h3>
-                    <div id="playlist"></div>
-                </div>
-            </div>
-
-            <!-- 控制区域 -->
-            <div class="controls">
-                <!-- 进度条 -->
-                <div class="progress-container">
-                    <div id="progress"></div>
-                </div>
-
-                <!-- 播放控制按钮 -->
-                <button class="control-btn" id="prevBtn">⏮</button>
-                <button class="control-btn" id="playPauseBtn">▶</button>
-                <button class="control-btn" id="nextBtn">⏭</button>
-
-                <!-- 音量控制 -->
-                <div class="volume-control">
-                    <span class="material-icons">volume_up</span>
-                    <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
-                </div>
-            </div>
-        </div>
-        </div>
-    <div id="so" class="page">
-		<div class="search-container">
-        <h1 style="color: var(--primary-color); margin-bottom: 30px;">搜索</h1>
-        <div class="search-box">
-            <button id="engineButton">
-                
-                百度 ▼
-            </button>
-            <input type="text" id="searchInput" placeholder="输入关键词...">
-            <button id="searchButton">搜索</button>
-            <div class="engine-dropdown" id="engineDropdown">
-                <div class="engine-item" data-engine="baidu">
-                    
-                    百度
-                </div>
-                <div class="engine-item" data-engine="google">
-                    
-                    Google
-                </div>
-                <div class="engine-item" data-engine="bing">
-                    
-                    Bing
-                </div>
-                <div class="engine-item" data-engine="duckduckgo">
-                    DuckDuckGo
-                </div>
-                
-                <div class="engine-item" data-engine="CSDN">
-                    CSDN
-                </div>
-                <div class="engine-item" data-engine="GitHub">
-                    GitHub
-                </div>
-                <div class="engine-item" data-engine="bokeyuan">
-                    博客园
-                </div>
-                <div class="engine-item" data-engine="yinghua">
-                    樱花动漫
-                </div>
-                <div class="engine-item" data-engine="yandex">
-                    yandex
-                </div>
-                <div class="engine-item" data-engine="mengniang">
-                    萌娘百科
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 
-	</div>
- 
-    <!-- JavaScript -->
-<script>
-        // 获取所有导航链接
-        const navLinks = document.querySelectorAll('.navbar a');
-        // 获取所有页面
-        const pages = document.querySelectorAll('.page');
+  <script>
+    // 夜间模式切换
+    const modeToggle = document.getElementById('modeToggle');
+    const body = document.body;
 
-        // 为每个导航链接添加点击事件
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault(); // 阻止默认跳转行为
+    const updateMode = () => {
+      const isDark = body.classList.contains('dark-mode');
+      localStorage.setItem('dark-mode', isDark ? 'enabled' : 'disabled');
+      modeToggle.innerHTML = isDark 
+        ? '<span class="material-icons">light_mode</span> 日间模式'
+        : '<span class="material-icons">dark_mode</span> 夜间模式';
+    };
 
-                // 获取目标页面的 ID
-                const targetPage = link.getAttribute('data-page');
+    if (localStorage.getItem('dark-mode') === 'enabled') {
+      body.classList.add('dark-mode');
+    }
+    updateMode();
 
-                // 隐藏所有页面
-                pages.forEach(page => {
-                    page.classList.remove('active');
-                });
+    modeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      updateMode();
+    });
 
-                // 显示目标页面
-                document.getElementById(targetPage).classList.add('active');
-            });
-        });
+    // 修复的选项卡功能
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.dataset.target;
+        const targetContent = document.getElementById(targetId);
 
-        // 夜间模式切换
-        const modeToggle = document.getElementById('modeToggle');
-        const body = document.body;
+        // 移除所有激活状态
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.content-item').forEach(c => c.classList.remove('active'));
 
-        // 检查 localStorage 中的模式设置
-        if (localStorage.getItem('dark-mode') === 'enabled') {
-            body.classList.add('dark-mode');
-            modeToggle.innerHTML = '<span class="material-icons">light_mode</span>昼';
-        }
-
-        // 切换模式
-        modeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('dark-mode', 'enabled');
-                modeToggle.innerHTML = '<span class="material-icons">light_mode</span>昼';
-            } else {
-                localStorage.setItem('dark-mode', 'disabled');
-                modeToggle.innerHTML = '<span class="material-icons">dark_mode</span> 夜';
-            }
-        });
-	
-    </script>
-	<script>
-        // 音乐列表（假设音乐文件存放在 /music/ 文件夹中）
-        const musicList = [
-            {
-                title: "君の知らない物語",
-                artist: "supercell",
-                src: "music/01.mp3",
-                cover: "image/01.jpg"
-            },
-            {
-                title: "声嘶力竭",
-                artist: "美波",
-                src: "music/02.mp3",
-                cover: "image/02.jpg"
-            },
-            {
-                title: "鸟之诗",
-                artist: "Lia",
-                src: "music/03.mp3",
-                cover: "image/03.jpg"
-            },
-			{
-                title: "Aoharu Band Arrange",
-                artist: "Blue Archive",
-                src: "music/04.mp3",
-                cover: "image/04.jpg"
-            },
-			 {
-                title: "美しきもの",
-                artist: "Sound Horizon",
-                src: "music/05.mp3",
-                cover: "image/0506.jpg"
-            },
-			 {
-                title: "朝と夜の物語",
-                artist: "Sound Horizon",
-                src: "music/06.mp3",
-                cover: "image/0506.jpg"
-            },
-			{
-                title: "azure",
-                artist: "TrySail",
-                src: "music/07.mp3",
-                cover: "image/07.jpg"
-            },
-			
-        ];
-        
-         let currentTrack = 0;
-        const audio = new Audio();
-        let isPlaying = false;
-
-        // DOM元素
-        const elements = {
-            playPauseBtn: document.getElementById('playPauseBtn'),
-            prevBtn: document.getElementById('prevBtn'),
-            nextBtn: document.getElementById('nextBtn'),
-            coverImage: document.getElementById('coverImage'),
-            songTitle: document.getElementById('songTitle'),
-            artist: document.getElementById('artist'),
-            playlist: document.getElementById('playlist'),
-            blurBackground: document.getElementById('blurBackground'),
-            progress: document.getElementById('progress'),
-            volumeSlider: document.getElementById('volumeSlider')
-        };
-
-        // 初始化播放列表
-        function initPlaylist() {
-            musicList.forEach((track, index) => {
-                const item = document.createElement('div');
-                item.className = 'playlist-item';
-                item.innerHTML = `
-                    <div>${track.title}</div>
-                    <div style="font-size:0.8em;opacity:0.7">${track.artist}</div>
-                `;
-                item.addEventListener('click', () => playTrack(index));
-                elements.playlist.appendChild(item);
-            });
-        }
-
-        // 播放指定曲目
-        function playTrack(index) {
-            currentTrack = index;
-            const track = musicList[currentTrack];
-            
-            audio.src = track.src;
-            elements.coverImage.src = track.cover;
-            elements.blurBackground.style.backgroundImage = `url(${track.cover})`;
-            elements.songTitle.textContent = track.title;
-            elements.artist.textContent = track.artist;
-            // 更新播放列表样式
-            document.querySelectorAll('.playlist-item').forEach((item, i) => {
-                item.classList.toggle('active', i === currentTrack);
-            });
-            if (isPlaying) audio.play();
-        }
-        // 播放/暂停控制
-        elements.playPauseBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                audio.pause();
-            } else {
-                audio.play();
-            }
-            isPlaying = !isPlaying;
-            elements.playPauseBtn.textContent = isPlaying ? '⏸' : '▶';
-        });
-        // 上一首
-        elements.prevBtn.addEventListener('click', () => {
-            currentTrack = (currentTrack - 1 + musicList.length) % musicList.length;
-            playTrack(currentTrack);
-        });
-        // 下一首
-        elements.nextBtn.addEventListener('click', () => {
-            currentTrack = (currentTrack + 1) % musicList.length;
-            playTrack(currentTrack);
-        });
-        // 进度条控制
-        document.querySelector('.progress-container').addEventListener('click', (e) => {
-            const rect = e.target.getBoundingClientRect();
-            const pos = (e.clientX - rect.left) / rect.width;
-            audio.currentTime = pos * audio.duration;
-        });
-        // 自动更新进度条
-        audio.addEventListener('timeupdate', () => {
-            const progress = (audio.currentTime / audio.duration) * 100 || 0;
-            elements.progress.style.width = `${progress}%`;
-        });
-        // 音量控制
-        elements.volumeSlider.addEventListener('input', (e) => {
-            audio.volume = e.target.value;
-            localStorage.setItem('playerVolume', e.target.value);
-        });
-        // 初始化音量
-        audio.volume = localStorage.getItem('playerVolume') || 1;
-        elements.volumeSlider.value = audio.volume;
-        // 歌曲结束自动下一首
-        audio.addEventListener('ended', () => {
-            currentTrack = (currentTrack + 1) % musicList.length;
-            playTrack(currentTrack);
-        });
-        // 初始化
-        initPlaylist();
-        playTrack(0);
-    </script>
-	<script>
-        // 搜索引擎配置
-        const engines = {
-            baidu: "https://www.baidu.com/s?wd=",
-            google: "https://www.google.com/search?q=",
-            bing: "https://www.bing.com/search?q=",
-            duckduckgo: "https://duckduckgo.com/?q=",
-            CSDN: "https://so.csdn.net/so/search?q=",
-            github: "https://github.com/search?q=",
-            bokeyuan: "https://zzk.cnblogs.com/s?w=",
-            yinghua: "https://www.yinghua8.net/lookfor.html?wd=",
-            yandex: "https://yandex.com/search/?text=",
-            mengniang: "https://zh.moegirl.org.cn/index.php?search="
-        };
-        let currentEngine = "baidu";
-        // 切换搜索引擎
-        document.querySelectorAll('.engine-item').forEach(item => {
-            item.addEventListener('click', () => {
-                currentEngine = item.dataset.engine;
-                document.getElementById('engineButton').innerHTML = `
-                    
-                    ${item.textContent.trim()} ▼
-                `;
-                document.getElementById('engineDropdown').classList.remove('show');
-            });
-        });
-        // 显示/隐藏引擎选择菜单
-        document.getElementById('engineButton').addEventListener('click', (e) => {
-            e.stopPropagation();
-            document.getElementById('engineDropdown').classList.toggle('show');
-        });
-        // 点击页面其他区域隐藏菜单
-        document.addEventListener('click', () => {
-            document.getElementById('engineDropdown').classList.remove('show');
-        });
-        // 搜索功能
-        document.getElementById('searchButton').addEventListener('click', () => {
-            const query = document.getElementById('searchInput').value.trim();
-            if (query) {
-                window.open(engines[currentEngine] + encodeURIComponent(query), '_blank');
-            }
-        });
-        // 回车键搜索
-        document.getElementById('searchInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                document.getElementById('searchButton').click();
-            }
-        });
-    </script>
+        // 添加激活状态
+        btn.classList.add('active');
+        targetContent.classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
