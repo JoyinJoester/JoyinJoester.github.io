@@ -7,77 +7,84 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
+        /* 核心样式系统 */
         :root {
             --primary: #FF6B6B;
             --bg: #f8f9fa;
-            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-bg: rgba(255, 255, 255, 0.95);
             --text: #2d3436;
-            --blur: blur(20px);
+            --blur: blur(12px);
             --radius: 16px;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .dark-mode {
             --primary: #FF8787;
-            --bg: #263238;
-            --card-bg: rgba(38, 50, 56, 0.9);
-            --text: #eceff1;
-            --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+            --bg: #1a1e1f;
+            --card-bg: rgba(26, 30, 31, 0.95);
+            --text: #f0f3f5;
+            --shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
         }
 
+        /* 基础布局 */
         body {
             font-family: 'Inter', sans-serif;
             margin: 0;
-            padding: 2rem;
+            padding: 1rem;
             background: var(--bg);
             color: var(--text);
-            transition: all 0.3s ease;
+            transition: var(--transition);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
+        /* 卡片容器 */
         .card {
             background: var(--card-bg);
             backdrop-filter: var(--blur);
             border-radius: var(--radius);
             padding: 2rem;
             box-shadow: var(--shadow);
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
+            width: min(95%, 800px);
+            margin: 1rem auto;
+            border: 1px solid rgba(125, 125, 125, 0.1);
         }
 
-        .input-group {
-            margin: 2rem auto;
-            max-width: 600px;
-            width: 90%;
+        /* 输入区域 */
+        .input-container {
+            margin: 2rem 0;
+            position: relative;
         }
 
-        #inputText {
+        #markdownInput {
             width: 100%;
-            padding: 1rem;
+            padding: 1.25rem;
             border: 2px solid var(--primary);
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
+            border-radius: calc(var(--radius) - 4px);
+            background: rgba(255, 255, 255, 0.08);
             color: var(--text);
-            font-size: 16px;
-            min-height: 200px;
+            font-size: 1rem;
+            min-height: 180px;
             resize: vertical;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            box-sizing: border-box;
+            line-height: 1.6;
         }
 
-        #inputText:focus {
+        #markdownInput:focus {
             outline: none;
-            box-shadow: 0 0 8px var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
         }
 
-        .button-group {
-            display: flex;
+        /* 按钮系统 */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
+            margin-top: 2rem;
         }
 
         .btn {
@@ -86,10 +93,12 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
+            transition: var(--transition);
+            display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
+            white-space: nowrap;
         }
 
         .btn-primary {
@@ -98,142 +107,199 @@
         }
 
         .btn-secondary {
-            background: rgba(255, 107, 107, 0.1);
+            background: transparent;
             color: var(--primary);
-            border: 1px solid var(--primary);
+            border: 1px solid rgba(255, 107, 107, 0.3);
         }
 
         .btn:hover {
-            opacity: 0.9;
             transform: translateY(-1px);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .control-group {
+        /* 控制按钮组 */
+        .global-controls {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
+            bottom: 1.5rem;
+            right: 1.5rem;
             display: flex;
-            gap: 1rem;
-        }
-
-        .icon-btn {
-            padding: 12px;
+            gap: 0.8rem;
             background: var(--card-bg);
             backdrop-filter: var(--blur);
-            border-radius: 50%;
-            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 999px;
             box-shadow: var(--shadow);
-            border: none;
-            color: var(--text);
         }
 
+        .control-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            border: none;
+        }
+
+        /* 响应式设计 */
         @media (max-width: 768px) {
             body {
-                padding: 1rem;
+                padding: 0.5rem;
+                align-items: flex-start;
             }
+
             .card {
                 padding: 1.5rem;
+                margin: 0.5rem auto;
             }
-            .input-group {
-                width: 100%;
-                max-width: 100%;
-                padding: 0;
-            }
-            #inputText {
+
+            #markdownInput {
                 min-height: 150px;
+                padding: 1rem;
+                font-size: 0.95rem;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            .global-controls {
+                bottom: 1rem;
+                right: 1rem;
+                transform: scale(0.9);
+            }
+        }
+
+        @media (max-width: 480px) {
+            #markdownInput {
+                min-height: 120px;
+                font-size: 0.9rem;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            .global-controls {
+                bottom: 0.5rem;
+                right: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="card">
-        <h2 style="color: var(--primary); text-align: center;">Fuck Markdown</h2>
-        
-        <div class="input-group">
+        <h1 style="color: var(--primary); text-align: center; margin: 0 0 1.5rem;">
+            🧼 Fuck Markdown
+        </h1>
+
+        <div class="input-container">
             <textarea 
-                id="inputText" 
-                placeholder="粘贴你的Markdown文本..."
+                id="markdownInput"
+                placeholder="粘贴你的Markdown内容..."
+                autofocus
             ></textarea>
         </div>
 
-        <div class="button-group">
-            <button class="btn btn-primary" id="processBtn">
-                <span class="material-icons">cleaning_services</span>
-                净化文本
+        <div class="action-buttons">
+            <button class="btn btn-primary" id="cleanBtn">
+                <span class="material-icons">auto_fix_high</span>
+                立即净化
             </button>
             <button class="btn btn-secondary" id="copyBtn">
                 <span class="material-icons">content_copy</span>
                 复制结果
             </button>
-            <button class="btn btn-secondary" id="clearBtn">
-                <span class="material-icons">delete</span>
+            <button class="btn btn-secondary" id="resetBtn">
+                <span class="material-icons">restart_alt</span>
                 清空内容
             </button>
         </div>
     </div>
 
-    <div class="control-group">
-        <button class="icon-btn" id="homeButton">
+    <!-- 全局控制 -->
+    <div class="global-controls">
+        <button class="control-btn" id="homeBtn">
             <span class="material-icons">home</span>
         </button>
-        <button class="icon-btn" id="themeToggle">
+        <button class="control-btn" id="themeBtn">
             <span class="material-icons">dark_mode</span>
         </button>
     </div>
 
     <script>
-        // 夜间模式切换
-        const themeToggle = document.getElementById('themeToggle');
+        // 主题管理系统
+        const themeBtn = document.getElementById('themeBtn');
         const body = document.body;
 
-        if (localStorage.getItem('theme') === 'dark') {
-            body.classList.add('dark-mode');
-            themeToggle.innerHTML = '<span class="material-icons">light_mode</span>';
-        }
-
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
+        function updateMode() {
             const isDark = body.classList.contains('dark-mode');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            themeToggle.innerHTML = isDark ? 
+            localStorage.setItem('dark-mode', isDark ? 'enabled' : 'disabled');
+            themeBtn.innerHTML = isDark ? 
                 '<span class="material-icons">light_mode</span>' : 
                 '<span class="material-icons">dark_mode</span>';
-        });
-
-        // Markdown处理逻辑
-        const processBtn = document.getElementById('processBtn');
-        const copyBtn = document.getElementById('copyBtn');
-        const clearBtn = document.getElementById('clearBtn');
-        const inputText = document.getElementById('inputText');
-
-        const markdownRegex = /[#*_\-`~^=<>|\[\]()!\\]/g;
-
-        function cleanMarkdown() {
-            return inputText.value.replace(markdownRegex, '');
         }
 
-        processBtn.addEventListener('click', () => {
-            inputText.value = cleanMarkdown();
+        if (localStorage.getItem('dark-mode') === 'enabled') {
+            body.classList.add('dark-mode');
+        }
+        updateMode();
+
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            updateMode();
         });
 
-        copyBtn.addEventListener('click', () => {
-            const cleanedText = cleanMarkdown();
-            if (cleanedText) {
-                navigator.clipboard.writeText(cleanedText);
-                alert('净化后的文本已复制！');
-            } else {
-                alert('请输入需要处理的文本！');
+        // Markdown净化逻辑
+        const mdRegex = /[*_#`~^\-+=|!{}\[\]()<>\\]/g;
+        const inputField = document.getElementById('markdownInput');
+        const cleanBtn = document.getElementById('cleanBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        function sanitizeMarkdown() {
+            return inputField.value.replace(mdRegex, '');
+        }
+
+        // 操作处理
+        cleanBtn.addEventListener('click', () => {
+            inputField.value = sanitizeMarkdown();
+            inputField.focus();
+        });
+
+        copyBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(sanitizeMarkdown());
+                alert('✅ 净化后的文本已复制！');
+            } catch {
+                alert('❌ 复制失败，请手动选择文本');
             }
         });
 
-        clearBtn.addEventListener('click', () => {
-            inputText.value = '';
-            inputText.focus();
+        resetBtn.addEventListener('click', () => {
+            // 清空输入框内容
+            inputField.value = ''; 
+            inputField.focus();
         });
 
-        document.getElementById('homeButton').addEventListener('click', () => {
+        // 主页跳转
+        document.getElementById('homeBtn').addEventListener('click', () => {
             window.location.href = '../index.html';
         });
+
+        // 初始化
+        // initTheme(); 移除原有的初始化方法
     </script>
 </body>
 </html>
