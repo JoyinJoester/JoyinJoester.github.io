@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        /* 完整保留原始CSS */
         :root {
             --primary-color: #42a5f5;
             --background-color: #f0f2f5;
@@ -41,7 +40,6 @@
             margin: 0 auto;
         }
 
-        /* 完整卡片样式 */
         .card-grid1 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -55,11 +53,37 @@
             box-shadow: var(--shadow);
             padding: 20px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .card1:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card1::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transition: all 0.5s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .card1:hover::before {
+            top: 100%;
+            left: 100%;
         }
 
         .card1 h2 {
@@ -86,31 +110,77 @@
             text-decoration: underline;
         }
 
-        /* 夜间模式切换 */
-        .mode-toggle {
+        .control-buttons {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .icon-btn {
+            width: 48px;
+            height: 48px;
             background: var(--card-bg);
-            padding: 12px 20px;
-            border-radius: 50px;
-            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
             cursor: pointer;
-            border: none;
+            box-shadow: var(--shadow);
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            border: none;
+            color: var(--text-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .icon-btn .material-icons {
+            font-size: 24px;
+        }
+
+        .back-to-top {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .page-title {
+            text-align: center;
+            margin: 20px 0 30px;
+            font-weight: 700;
+            font-size: 2.2rem;
+            color: var(--text-color);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), #F776A8);
+            border-radius: 2px;
         }
     </style>
 </head>
 <body>
-    <!-- 夜间模式切换 -->
-    <button class="mode-toggle" id="modeToggle">
-        <span>夜间模式</span>
-    </button>
-
     <div class="container">
-        <!-- 完整保留原始卡片内容 -->
+        <h1 class="page-title">资源导航</h1>
         <div class="card-grid1">
             <div class="card1">
                 <h2>技术资源</h2>
@@ -219,18 +289,32 @@
         </div>
     </div>
 
+    <div class="control-buttons">
+        <button class="icon-btn back-to-top" id="backToTopBtn" title="回到顶部">
+            <span class="material-icons">arrow_upward</span>
+        </button>
+        <button class="icon-btn" id="homeButton" title="返回主页">
+            <span class="material-icons">home</span>
+        </button>
+        <button class="icon-btn" id="modeToggle" title="切换模式">
+            <span class="material-icons">dark_mode</span>
+        </button>
+    </div>
+
     <script>
-        // 完整保留原始夜间模式功能
         const modeToggle = document.getElementById('modeToggle');
         const body = document.body;
+        const modeIcon = modeToggle.querySelector('.material-icons');
 
         function updateMode() {
             if (body.classList.contains('dark-mode')) {
                 localStorage.setItem('dark-mode', 'enabled');
-                modeToggle.innerHTML = '<span>日间模式</span>';
+                modeIcon.textContent = 'light_mode';
+                modeToggle.setAttribute('title', '切换到日间模式');
             } else {
                 localStorage.setItem('dark-mode', 'disabled');
-                modeToggle.innerHTML = '<span>夜间模式</span>';
+                modeIcon.textContent = 'dark_mode';
+                modeToggle.setAttribute('title', '切换到夜间模式');
             }
         }
 
@@ -243,68 +327,24 @@
             body.classList.toggle('dark-mode');
             updateMode();
         });
-    </script>
 
-    <!-- 在head部分添加Material Icons字体链接 -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
-    <!-- 修改后的控制按钮容器（替换原有夜间模式按钮） -->
-    <div class="control-buttons">
-        <button class="icon-btn" id="homeButton">
-            <span class="material-icons">home</span>
-        </button>
-        <button class="icon-btn" id="modeToggle">
-            <span class="material-icons">dark_mode</span>
-        </button>
-    </div>
-    
-    <style>
-        /* 添加z-index确保按钮在最上层 */
-        .control-buttons {
-            z-index: 1000;
-            /* 保持原有其他样式不变... */
-        }
+        const backToTopBtn = document.getElementById('backToTopBtn');
         
-        /* 移除原有夜间模式按钮样式 */
-        .mode-toggle {
-            display: none;
-        }
-    </style>
-    
-    <script>
-        // 修改后的夜间模式切换逻辑（保持原有功能）
-        const modeToggle = document.getElementById('modeToggle');
-        // ... 保持原有夜间模式代码不变 ...
-    </script>
-    
-    <!-- 在样式部分添加控制按钮样式 -->
-    <style>
-        /* 控制按钮 */
-        .control-buttons {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
-        }
-    
-        .icon-btn {
-            padding: 10px;
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: none;
-        }
-    </style>
-    
-    <!-- 在脚本部分添加返回功能 -->
-    <script>
-        // 跳转到主页
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
         document.getElementById('homeButton').addEventListener('click', () => {
             window.location.href = '../index.html';
         });

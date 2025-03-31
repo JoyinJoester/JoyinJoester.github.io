@@ -9,7 +9,7 @@
     <style>
         /* 核心样式系统 */
         :root {
-            --primary: #42a5f5;
+            --primary: #FF6B6B;
             --bg: #f8f9fa;
             --card-bg: rgba(255, 255, 255, 0.95);
             --text: #2d3436;
@@ -20,7 +20,7 @@
         }
 
         .dark-mode {
-            --primary: #81d4fa;
+            --primary: #FF8787;
             --bg: #1a1e1f;
             --card-bg: rgba(26, 30, 31, 0.95);
             --text: #f0f3f5;
@@ -51,35 +51,18 @@
             width: min(95%, 800px);
             margin: 1rem auto;
             border: 1px solid rgba(125, 125, 125, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        /* 标题样式 */
-        .title {
-            color: var(--primary);
-            text-align: center;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
         }
 
         /* 输入容器 */
         .input-container {
+            margin: 2rem 0;
+            position: relative;
             width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1rem;
         }
 
         /* 输入框样式 */
         #inputLink {
             width: 100%;
-            max-width: 600px;
             padding: 1.25rem;
             border: 2px solid var(--primary);
             border-radius: calc(var(--radius) - 4px);
@@ -87,22 +70,20 @@
             color: var(--text);
             font-size: 1rem;
             transition: var(--transition);
-            flex: 0 1 auto;
+            box-sizing: border-box;
         }
 
         #inputLink:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(66, 165, 245, 0.2);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
         }
 
         /* 按钮系统 */
         .action-buttons {
-            display: flex;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 1rem;
-            width: 100%;
-            max-width: 600px;
-            flex-wrap: wrap;
+            margin-top: 2rem;
         }
 
         .btn {
@@ -117,7 +98,6 @@
             justify-content: center;
             gap: 0.5rem;
             white-space: nowrap;
-            flex: 1 1 auto;
         }
 
         .btn-primary {
@@ -128,7 +108,7 @@
         .btn-secondary {
             background: transparent;
             color: var(--primary);
-            border: 1px solid rgba(66, 165, 245, 0.3);
+            border: 1px solid rgba(255, 107, 107, 0.3);
         }
 
         .btn:hover {
@@ -173,16 +153,16 @@
 
             .card {
                 padding: 1.5rem;
-                gap: 1rem;
+                margin: 0.5rem auto;
             }
 
             #inputLink {
                 padding: 1rem;
-                max-width: 100%;
+                font-size: 0.95rem;
             }
 
             .action-buttons {
-                flex-direction: column;
+                grid-template-columns: 1fr;
                 gap: 0.8rem;
             }
 
@@ -212,9 +192,8 @@
 </head>
 <body>
     <div class="card">
-        <h1 class="title">
-            <span class="material-icons">link</span>
-            链接净化工具
+        <h1 style="color: var(--primary); text-align: center; margin: 0 0 1.5rem;">
+            🔗 链接净化工具
         </h1>
 
         <div class="input-container">
@@ -222,6 +201,7 @@
                 type="text" 
                 id="inputLink" 
                 placeholder="输入需要处理的链接..."
+                autofocus
             >
         </div>
 
@@ -233,6 +213,10 @@
             <button class="btn btn-secondary" id="copyBtn">
                 <span class="material-icons">content_copy</span>
                 复制结果
+            </button>
+            <button class="btn btn-secondary" id="resetBtn">
+                <span class="material-icons">restart_alt</span>
+                清空内容
             </button>
         </div>
     </div>
@@ -254,6 +238,7 @@
         // 元素获取
         const openLinkBtn = document.getElementById('openLinkBtn');
         const copyBtn = document.getElementById('copyBtn');
+        const resetBtn = document.getElementById('resetBtn');
         const inputLink = document.getElementById('inputLink');
         const themeBtn = document.getElementById('themeBtn');
         const homeBtn = document.getElementById('homeBtn');
@@ -286,6 +271,12 @@
             } else {
                 alert('请输入有效的链接！');
             }
+        });
+
+        // 清空内容
+        resetBtn.addEventListener('click', () => {
+            inputLink.value = '';
+            inputLink.focus();
         });
 
         // 主题管理
