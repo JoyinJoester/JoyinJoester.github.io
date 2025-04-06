@@ -1,537 +1,1267 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Joyinの主页</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <style>
-    :root {
-      --primary-color: #42a5f5;
-      --background-color: #f0f2f5;
-      --text-color: #2d3436;
-      --text1-color: #ffffff;
-      --card-bg: rgba(255, 255, 255, 0.9);
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.2);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索</title>
+    <style>
+        :root {
+            --primary-color: #f0f0f0;
+            --bg-color: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-color: #333333;
+            --accent-color: #0066ff;
+            --engine-border: rgba(0, 0, 0, 0.1);
+            --clock-color: #0066ff;
+            --history-bg: rgba(240, 240, 240, 0.9);
+            --history-hover: rgba(0, 0, 0, 0.05);
+            --modal-overlay: rgba(0, 0, 0, 0.5);
+        }
 
-    body.dark-mode {
-      --primary-color: #81d4fa;
-      --background-color: #263238;
-      --text-color: #ffffff;
-      --text1-color: #2d3436;
-      --card-bg: rgba(38, 50, 56, 0.9);
-      --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-    }
+        [data-theme="dark"] {
+            --primary-color: #2d2d2d;
+            --bg-color: #1a1a1a;
+            --card-bg: rgba(45, 45, 45, 0.8);
+            --text-color: #ffffff;
+            --accent-color: #00ff88;
+            --engine-border: rgba(255, 255, 255, 0.1);
+            --clock-color: #00ff88;
+            --history-bg: rgba(50, 50, 50, 0.8);
+            --history-hover: rgba(255, 255, 255, 0.1);
+            --modal-overlay: rgba(0, 0, 0, 0.7);
+        }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--background-color);
-      color: var(--text-color);
-      margin: 0;
-      transition: all 0.3s ease;
-      min-height: 100vh;
-    }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            transition: all 0.3s ease;
+        }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 30px;
-      align-items: start;
-      min-height: 100vh;
-    }
+        html, body {
+            overflow: hidden;
+            height: 100%;
+        }
 
-    .left-side {
-      position: sticky;
-      top: 20px;
-      height: calc(100vh - 40px);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+        .search-container {
+            width: 90%;
+            max-width: 1000px;
+            position: relative;
+            margin-top: -20px;
+        }
 
-    .avatar {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-      margin: 0 auto;
-    }
+        .live-clock {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 50px; 
+            font-weight: 600; 
+            opacity: 0.9;
+            transition: all 0.3s;
+            letter-spacing: 2px;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            color: var(--clock-color);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            cursor: pointer;
+        }
 
-    .avatar:hover {
-      transform: rotate(8deg);
-    }
+        [data-theme="dark"] .live-clock {
+            text-shadow: 0 2px 8px rgba(0, 255, 136, 0.3);
+        }
 
-    .main-content {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      height: 100%;
-    }
+        .live-clock:hover {
+            opacity: 1;
+            transform: translateX(-50%) scale(1.02);
+        }
 
-    /* 卡片通用样式 */
-    .left-side .card {
-        background: transparent;
-        backdrop-filter: none;
-        box-shadow: none;
-        padding: 0;
-    }
+        .clock-tooltip {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+            color: var(--text-color);
+        }
 
-    .left-side .card:hover {
-        transform: none;
-        box-shadow: none;
-    }
+        .live-clock:hover .clock-tooltip {
+            opacity: 0.7;
+        }
 
-    .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: var(--shadow);
-      transition: all 0.3s ease;
-    }
+        .search-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
 
-    /* 新增列表样式 */
-    .card ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
+        .engine-switch {
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--engine-border);
+            border-radius: 12px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
 
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-hover);
-    }
+        .engine-switch:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
 
-    .card-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      height: 100%;
-    }
+        .engine-icon {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+        }
 
-    .left-cards,
-    .right-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      height: 100%;
-    }
+        .engine-options {
+            position: absolute;
+            top: 55px;
+            left: 0;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 12px;
+            padding: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 100;
+            min-width: 220px;
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid var(--engine-border);
+            overscroll-behavior: contain;
+        }
 
-    .left-cards .card,
-    .right-cards .card {
-      flex: 1;
-      min-height: 150px;
-      overflow: hidden;
-    }
+        .engine-options::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .engine-options {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
-    .nav-card {
-      margin-top: auto;
-    }
+        .engine-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
 
-    /* 修复的选项卡样式 */
-    .nav-tabs {
-      display: flex;
-      gap: 15px;
-      border-bottom: 2px solid var(--primary-color);
-      padding-bottom: 12px;
-      margin-bottom: 20px;
-    }
+        .engine-option:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
 
-    .tab-btn {
-      background: none;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      color: var(--text-color);
-      transition: all 0.3s ease;
-    }
+        [data-theme="dark"] .engine-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
 
-    .tab-btn.active {
-      background: var(--primary-color);
-      color: var(--text1-color);
-    }
+        .engine-name {
+            margin-left: 10px;
+            white-space: nowrap;
+            font-size: 15px;
+        }
 
-    .tab-content .content-item {
-      display: none;
-      animation: fadeIn 0.4s ease;
-    }
+        .search-box {
+            flex: 1;
+            height: 25px;
+            padding: 10px 50px 10px 20px;
+            border: 1px solid var(--engine-border);
+            border-radius: 12px;
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-size: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
 
-    .tab-content .content-item.active {
-      display: block;
-    }
+        .search-box:focus {
+            outline: 2px solid var(--accent-color);
+            box-shadow: 0 4px 25px rgba(0, 102, 255, 0.15);
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .search-button {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            color: var(--text-color);
+            opacity: 0.8;
+            transition: all 0.2s;
+        }
 
-    .mode-toggle {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      background: var(--card-bg);
-      color: var(--text-color); /* 新增颜色变量 */
-      padding: 12px 20px;
-      border-radius: 50px;
-      box-shadow: var(--shadow);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      border: none;
-      transition: color 0.3s ease; /* 添加颜色过渡效果 */
-    }
+        .search-button:hover {
+            opacity: 1;
+            transform: translateY(-50%) scale(1.1);
+        }
 
-    @media (max-width: 1024px) {
-      .container {
-        grid-template-columns: 1fr;
-        padding: 15px;
-      }
-      .left-side {
-        position: static;
-        height: auto;
-      }
-      .card-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+        .search-button svg {
+            width: 20px;
+            height: 20px;
+        }
 
-    @media (max-width: 768px) {
-      .avatar {
-        width: 120px;
-        height: 120px;
-      }
-      .nav-tabs {
-        flex-wrap: wrap;
-      }
-    }
-    a {
-      text-decoration: none;
-      color: var(--text-color);
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    /* 在现有.card样式后添加 */
-    .nav-card .content-item ul {
-        list-style-type: none;
-        padding-left: 0;
-        margin: 12px 0;
-    }
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            padding: 10px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--engine-border);
+            transition: all 0.2s;
+        }
 
-    .nav-card .content-item ul li {
-        margin-bottom: 12px;
-        line-height: 1.7;
-        padding: 6px 0;
-    }
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
 
-    .nav-card .content-item ul li:last-child {
-        margin-bottom: 0;
-    }
-    .nav-card .content-item ul li a{
-        color: var(--primary-color);
-    }
+        body.engine-menu-open {
+            overflow: hidden;
+        }
 
-  </style>
+        .customize-engines {
+            display: none;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--modal-overlay);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .modal-close {
+            cursor: pointer;
+            font-size: 24px;
+            opacity: 0.7;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .custom-engine-list {
+            margin-bottom: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .custom-engine-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        [data-theme="dark"] .custom-engine-item {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .custom-engine-info {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .custom-engine-name {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .custom-engine-url {
+            font-size: 12px;
+            opacity: 0.7;
+            word-break: break-all;
+        }
+
+        .custom-engine-delete {
+            color: #ff4d4f;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .add-engine-form {
+            background: rgba(0, 0, 0, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        [data-theme="dark"] .add-engine-form {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--engine-border);
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .add-engine-button {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .add-engine-button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* 添加搜索联想样式 */
+        .suggest-container {
+            position: absolute;
+            top: 55px;
+            left: 54px;
+            right: 0;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 12px;
+            padding: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 99;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--engine-border);
+        }
+        
+        .suggest-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 4px;
+        }
+        
+        .suggest-item:hover, .suggest-item.active {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        [data-theme="dark"] .suggest-item:hover, 
+        [data-theme="dark"] .suggest-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .suggest-text {
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .suggest-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .suggest-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* 自定义引擎通用图标 */
+        .custom-engine-icon {
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+        
+        .custom-engine-icon svg {
+            width: 14px;
+            height: 14px;
+        }
+        
+        /* 移除自定义引擎图标输入框 */
+        #engineIcon-group {
+            display: none;
+        }
+
+        /* 移动端适配样式 - 删除滑动聚焦相关样式 */
+        @media (max-width: 768px) {
+            .live-clock {
+                visibility: visible;
+                opacity: 0.9;
+                z-index: 10;
+            }
+            
+            .search-container {
+                width: 90%;
+                max-width: 1000px;
+                position: relative;
+                margin-top: -20px;
+                z-index: 5;
+            }
+            
+            .theme-toggle {
+                top: 15px;
+                right: 15px;
+                z-index: 50;
+            }
+            
+            .engine-switch {
+                z-index: 20;
+            }
+            
+            .search-box {
+                z-index: 10;
+            }
+            
+            /* 搜索相关弹出层应该在最上层 */
+            .engine-options {
+                z-index: 100;
+            }
+            
+            .suggest-container {
+                top: 65px;
+                left: 15px;
+                right: 15px;
+                max-height: calc(100vh - 80px);
+                z-index: 100;
+            }
+            
+            /* 模态框应该在最上层 */
+            .modal-overlay {
+                z-index: 1000;
+            }
+
+            html, body {
+                overflow: auto;
+                overscroll-behavior: none; /* 防止下拉刷新 */
+                touch-action: manipulation; /* 改善触摸体验 */
+            }
+
+            /* 移动端不显示快捷键提示 */
+            .shortcuts-container {
+                display: none;
+            }
+        }
+
+        /* 快捷键提示样式 */
+        .shortcuts-container {
+            position: fixed;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--text-color);
+            opacity: 0.6;
+            transition: opacity 0.3s;
+            text-align: center;
+            z-index: 5;
+        }
+
+        .shortcuts-container:hover {
+            opacity: 1;
+        }
+
+        .shortcut-item {
+            margin: 0 8px;
+            white-space: nowrap;
+        }
+
+        .shortcut-key {
+            background: var(--card-bg);
+            border: 1px solid var(--engine-border);
+            border-radius: 4px;
+            padding: 2px 5px;
+            margin-right: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
-  <button class="mode-toggle" id="modeToggle">
-    <span class="material-icons">dark_mode</span>
-    夜间模式
-  </button>
-
-  <div class="container">
-    <div class="left-side">
-      <div class="card">
-        <a href="https://github.com/JoyinJoester" target="_blank">
-          <img src="image/cfa71fe042f69a6d0c31ef76e58f3fb.jpg" alt="头像" class="avatar">
-        </a>
-        <h2>Joyin</h2>
-        <p>牛牛拥有者</p>
-        <p>开源爱好者</p>
-      </div>
-    </div>
-
-    <div class="main-content">
-      <div class="card-grid">
-        <div class="left-cards">
-          <div class="card">
-            <h2>个人介绍</h2>
-                <p>2006年度美国时代周刊风云人物<br>2008年感动中国组委会大奖获得者<br>2019年获得年度地球卫士奖<br>2022年奥林匹克杯获得者</p>
-          </div>
-          <div class="card">
-            <h2>这里简单介绍一下郑安南</h2>
-            <p>✅是饭桶，是废物，是成语里的酒囊饭袋，俗语里的臭鱼烂虾，是沉睡在虚无空间的逃避者，是半醉在生活现实的奉承者，是天上掉馅饼也不抬头的低头族，是夜夜笙歌的纨绔子弟，是玩物丧志的狺狺之犬，是铁打的孙笑川，是过街老鼠般存在的蟑螂</p>
-
-          </div>
+    <div class="theme-toggle" onclick="toggleTheme()">🌓</div>
+    
+    <!-- 删除内容容器 -->
+    
+    <div class="search-container">
+        <div class="live-clock" id="liveClock">
+            <div class="clock-tooltip">点击设置自定义搜索引擎</div>
         </div>
-
-        <div class="right-cards">
-          <div class="card">
-            <h3> 工具</h3>
-            <ul>
-              <li>VScode</li>
-              <li>GitHub Desktop</li>
-              <li>Docker Desktop</li>
-            </ul>
-          </div>
-          <div class="card">
-            <h3>在用语言</h3>
-<ul>
-  <li>
-    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #E34C26; margin-right: 8px;"></span>
-    HTML5+
-    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #2965F1; margin-right: 8px;"></span>
-    CSS3+
-    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #F1E05A; margin-right: 8px;"></span>
-    JavaScript
-  </li>
-  <li>
-    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #555555; margin-right: 8px;"></span>
-    C
-  </li>
-  <li>
-    <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #DEA584; margin-right: 8px;"></span>
-    Rust
-  </li>
-</ul>
-          </div>
-          <div class="card">
-            <h3>联系我</h3>
-            <div style="display: flex; gap: 12px; padding: 15px;">
-                <!-- 知乎卡片 -->
-                <a href="https://www.zhihu.com/people/joyin-32-17-38" target="_blank" 
-                   style="
-                     width: 80px;
-                     height: 80px;
-                     background: rgba(0, 102, 255, 0.1);
-                     border-radius: 12px;
-                     display: flex;
-                     flex-direction: column;
-                     align-items: center;
-                     justify-content: center;
-                     text-decoration: none;
-                     transition: all 0.3s ease;
-                     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-                     color: #0066ff;
-                   "
-                   onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)'"
-                   onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 6px rgba(0, 0, 0, 0.1)'">
-                  <svg style="width: 28px; height: 28px; margin-bottom: 8px;" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12.0025 2C6.48837 2 2 6.48419 2 11.9983C2 17.5125 6.48837 22 12.0025 22C17.5167 22 22 17.5125 22 11.9983C22 6.48419 17.5167 2 12.0025 2ZM16.6369 15.7021C16.3562 16.0309 15.8839 16.0714 15.555 15.7906L15.5436 15.7817L13.9283 14.4033C13.7284 14.6221 13.5175 14.8295 13.2972 15.0228C12.5711 15.6553 11.6765 16 10.7474 16C8.47502 16 6.63657 14.1456 6.63657 11.8517C6.63657 9.55789 8.47502 7.70348 10.7474 7.70348C13.0199 7.70348 14.8583 9.55789 14.8583 11.8517C14.8583 12.4381 14.741 12.998 14.5257 13.5071L16.6453 15.2982C16.9741 15.5789 17.0171 16.0732 16.7364 16.4021L16.6369 15.7021ZM10.7474 14.3879C12.1437 14.3879 13.2716 13.257 13.2716 11.8517C13.2716 10.4465 12.1437 9.31553 10.7474 9.31553C9.35111 9.31553 8.22322 10.4465 8.22322 11.8517C8.22322 13.257 9.35111 14.3879 10.7474 14.3879Z"/>
-                    <path d="M12.207 6H11.4915V11.6667H13.9812L14.1624 10.75H12.207V6Z"/>
-                  </svg>
-                  <span style="font-size: 12px; font-weight: 500;">知乎</span>
-                </a>
-              
-                <!-- GitHub卡片 -->
-                <a href="https://github.com/JoyinJoester" target="_blank" 
-                   style="
-                     width: 80px;
-                     height: 80px;
-                     background: rgba(0, 0, 0, 0.05);
-                     border-radius: 12px;
-                     display: flex;
-                     flex-direction: column;
-                     align-items: center;
-                     justify-content: center;
-                     text-decoration: none;
-                     transition: all 0.3s ease;
-                     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-                     color:#000;
-                   "
-                   onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)'"
-                   onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 6px rgba(0, 0, 0, 0.1)'">
-                  <svg style="width: 24px; height: 24px; margin-bottom: 8px;" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.07.63-1.32-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/>
-                  </svg>
-                  <span style="font-size: 12px; font-weight: 500;">GitHub</span>
-                </a>
-              
-                <!-- B站卡片 -->
-                <a href="https://space.bilibili.com/487993033?spm_id_from=333.1007.0.0" target="_blank" 
-                   style="
-                     width: 80px;
-                     height: 80px;
-                     background: rgba(251, 114, 153, 0.1);
-                     border-radius: 12px;
-                     display: flex;
-                     flex-direction: column;
-                     align-items: center;
-                     justify-content: center;
-                     text-decoration: none;
-                     transition: all 0.3s ease;
-                     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-                     color: #fb7299;
-                   "
-                   onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)'"
-                   onmouseout="this.style.transform='none'; this.style.boxShadow='0 2px 6px rgba(0, 0, 0, 0.1)'">
-                  <svg style="width: 28px; height: 28px; margin-bottom: 8px;" fill="currentColor" viewBox="0 0 1024 1024">
-                    <path d="M306.005333 117.632L444.330667 256h135.296l138.368-138.325333a42.666667 42.666667 0 0 1 60.373333 60.373333L700.330667 256H789.333333A149.333333 149.333333 0 0 1 938.666667 405.333333v341.333334a149.333333 149.333333 0 0 1-149.333334 149.333333h-554.666666A149.333333 149.333333 0 0 1 85.333333 746.666667v-341.333334A149.333333 149.333333 0 0 1 234.666667 256h88.96L245.632 177.962667a42.666667 42.666667 0 0 1 60.373333-60.373334zM789.333333 341.333333h-554.666666a64 64 0 0 0-63.701334 57.856L170.666667 405.333333v341.333334a64 64 0 0 0 57.856 63.701333L234.666667 810.666667h554.666666a64 64 0 0 0 63.701334-57.856L853.333333 746.666667v-341.333334a64 64 0 0 0-57.856-63.701333L789.333333 341.333333zM341.333333 469.333333a42.666667 42.666667 0 0 1 42.666667 42.666667v85.333333a42.666667 42.666667 0 0 1-85.333333 0v-85.333333a42.666667 42.666667 0 0 1 42.666666-42.666667z m341.333334 0a42.666667 42.666667 0 0 1 42.666666 42.666667v85.333333a42.666667 42.666667 0 0 1-85.333333 0v-85.333333a42.666667 42.666667 0 0 1 42.666667-42.666667z"/>
-                  </svg>
-                  <span style="font-size: 12px; font-weight: 500;">哔哩哔哩</span>
-                </a>
-              </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card nav-card">
-        <div class="nav-tabs">
-          <button class="tab-btn active" data-target="tech">技术文章</button>
-          <button class="tab-btn" data-target="life">生活记录</button>
-          <button class="tab-btn" data-target="log">工具箱</button>
-        </div>
-
-        <div class="tab-content">
-          <div id="tech" class="content-item active">
-            <h3>最新技术文章</h3>
-            <ul>
-              <li><a href="https://juejin.cn/post/7479387138510225420" target="_blank">用ollama在本地部署deepseek R1以及接入VScode平替Github Copilot</a></li>
-              <li><a href="https://blog.csdn.net/2202_75930938/article/details/138408495" target="_blank">Pixel(OEM不可开)使用记录</a></li>
-              <li><a href="https://juejin.cn/post/7487769881497370658" target="_blank">变身！CV工程师进阶为Tab工程师（2025年3月最新GitHub学生包申请）</a></li>
-                
-            </ul>
-          </div>
-          <div id="life" class="content-item">
-                <p>📅 2025年03月27日：傻逼郑安南太气人了，这阳痿的东西</p>
-                <p>📅 2025年03月24日：更新一下排版布局</p>
-                <p>📅 2025年03月10日：郑安南怎么这么坏啊，老是打扰我学习</p>
-                <p>📅 2025年02月25日：发布了我的博客(没有服务器啊，算了放github托管吧)</p>
-                <p>📅 2024年12月01日：获得荣誉勋章被何同学拉黑</p>
-          </div>
-          <div id="log" class="content-item">
-            <p><a href="html/ljjh.html">链接净化</a></p>
-                <p><a href="html/zstj.html">字数统计</a></p>
-                <p><a href="html/dwhs.html">单位换算</a></p>
-                <p><a href="html/fqz.html">番茄钟</a></p>
-                <p><a href="html/fuckmd.html">Fuck Markdown</a></p>
-                <p><a href="html/ziyuan.html">资源中心</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // 夜间模式切换
-    const modeToggle = document.getElementById('modeToggle');
-    const body = document.body;
-
-    const updateMode = () => {
-      const isDark = body.classList.contains('dark-mode');
-      localStorage.setItem('dark-mode', isDark ? 'enabled' : 'disabled');
-      modeToggle.innerHTML = isDark 
-        ? '<span class="material-icons">light_mode</span> 日间模式'
-        : '<span class="material-icons">dark_mode</span> 夜间模式';
-    };
-
-    if (localStorage.getItem('dark-mode') === 'enabled') {
-      body.classList.add('dark-mode');
-    }
-    updateMode();
-
-    modeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark-mode');
-      updateMode();
-    });
-
-    // 修复的选项卡功能
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const targetId = btn.dataset.target;
-        const targetContent = document.getElementById(targetId);
-
-        // 移除所有激活状态
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.content-item').forEach(c => c.classList.remove('active'));
-
-        // 添加激活状态
-        btn.classList.add('active');
-        targetContent.classList.add('active');
-      });
-    });
-
-    // 添加页面加载动画
-    document.addEventListener('DOMContentLoaded', () => {
-      // 给所有卡片添加渐入动画
-      const cards = document.querySelectorAll('.card');
-      cards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         
-        setTimeout(() => {
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        }, 100 * index);
-      });
-      
-      // 添加图片懒加载
-      const lazyImages = document.querySelectorAll('img');
-      const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            if (img.dataset.src) {
-              img.src = img.dataset.src;
-              img.removeAttribute('data-src');
+        <form id="searchForm">
+            <div class="search-group">
+                <div class="engine-wrapper">
+                    <button type="button" class="engine-switch" id="engineSwitch">
+                        <img src="image/bing.ico" class="engine-icon" alt="搜索引擎">
+                    </button>
+                    <div class="engine-options" id="engineOptions">
+                        <div class="engine-option" data-value="bing">
+                            <img src="image/bing.ico" class="engine-icon" alt="Bing">
+                            <span class="engine-name">必应</span>
+                        </div>
+                        <div class="engine-option" data-value="baidu">
+                            <img src="image/baidu.ico" class="engine-icon" alt="Baidu">
+                            <span class="engine-name">百度</span>
+                        </div>
+                        <div class="engine-option" data-value="so360">
+                            <img src="image/360.ico" class="engine-icon" alt="360">
+                            <span class="engine-name">360搜索</span>
+                        </div>
+                        <div class="engine-option" data-value="sogou">
+                            <img src="image/sougo.ico" class="engine-icon" alt="Sogou">
+                            <span class="engine-name">搜狗</span>
+                        </div>
+                        <div class="engine-option" data-value="CSDN">
+                            <img src="image/csdn.ico" class="engine-icon" alt="CSDN">
+                            <span class="engine-name">CSDN</span>
+                        </div>
+                        <div class="engine-option" data-value="github">
+                            <img src="image/github.ico" class="engine-icon" alt="GitHub">
+                            <span class="engine-name">GitHub</span>
+                        </div>
+                        <div class="engine-option" data-value="mengniang">
+                            <img src="image/mengniang.ico" class="engine-icon" alt="Moegirl">
+                            <span class="engine-name">萌娘百科</span>
+                        </div>
+                        <div class="engine-option" data-value="google">
+                            <img src="image/google.png" class="engine-icon" alt="Google">
+                            <span class="engine-name">Google</span>
+                        </div>
+                        <div class="engine-option" data-value="yandex">
+                            <img src="image/yandex.png" class="engine-icon" alt="Yandex">
+                            <span class="engine-name">Yandex</span>
+                        </div>
+                        
+                        <div id="customEngines"></div>
+                    </div>
+                </div>
+                <input 
+                    type="text" 
+                    class="search-box" 
+                    placeholder="用 Bing 搜索..."
+                    autocomplete="off"
+                >
+                <button type="submit" class="search-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"/>
+                    </svg>
+                </button>
+                
+                <!-- 添加搜索联想容器 -->
+                <div class="suggest-container" id="suggestContainer"></div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="modal-overlay" id="customEngineModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">自定义搜索引擎</div>
+                <div class="modal-close" id="closeModal">×</div>
+            </div>
+            
+            <div class="custom-engine-list" id="customEngineList"></div>
+            
+            <div class="add-engine-form">
+                <div class="form-group">
+                    <label for="engineName">引擎名称</label>
+                    <input type="text" id="engineName" placeholder="例如: 知乎">
+                </div>
+                <div class="form-group">
+                    <label for="engineUrl">搜索URL (使用 %s 代替查询词)</label>
+                    <input type="text" id="engineUrl" placeholder="例如: https://www.zhihu.com/search?q=%s">
+                </div>
+                <button type="button" class="add-engine-button" id="addEngineBtn">添加搜索引擎</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 快捷键提示容器 - 将在桌面端显示，移动端不显示 -->
+    <div class="shortcuts-container" id="shortcutsContainer">
+        <div class="shortcut-item">
+            <span class="shortcut-key">Ctrl</span> + <span class="shortcut-key">K</span> 
+            <span class="shortcut-desc">聚焦搜索框</span>
+        </div>
+        <div class="shortcut-item">
+            <span class="shortcut-key">Alt</span> + <span class="shortcut-key">1-9</span> 
+            <span class="shortcut-desc">切换搜索引擎</span>
+        </div>
+        <div class="shortcut-item">
+            <span class="shortcut-key">Esc</span> 
+            <span class="shortcut-desc">清空搜索框</span>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.dataset.theme = 
+                document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('theme', document.body.dataset.theme);
+        }
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) document.body.dataset.theme = savedTheme;
+
+        function updateClock() {
+            const clock = document.getElementById('liveClock');
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-CN', { 
+                hour12: false, 
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            }).replace(/:/g, '<span style="opacity:0.6;margin:0 2px;">:</span>');
+            
+            clock.innerHTML = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        const engines = {
+            baidu: { 
+                url: "https://www.baidu.com/s?wd=", 
+                icon: "image/baidu.ico", 
+                placeholder: "百度一下..." 
+            },
+            google: { 
+                url: "https://www.google.com/search?q=", 
+                icon: "image/google.png",
+                placeholder: "Google 搜索..." 
+            },
+            bing: { 
+                url: "https://www.bing.com/search?q=", 
+                icon: "image/bing.ico", 
+                placeholder: "必应搜索..." 
+            },
+            so360: { 
+                url: "https://www.so.com/s?q=", 
+                icon: "image/360.ico", 
+                placeholder: "360 搜索..." 
+            },
+            CSDN: { 
+                url: "https://so.csdn.net/so/search?q=", 
+                icon: "image/csdn.ico", 
+                placeholder: "CSDN 搜索..." 
+            },
+            github: { 
+                url: "https://github.com/search?q=", 
+                icon: "image/github.ico", 
+                placeholder: "GitHub 搜索..." 
+            },
+            mengniang: { 
+                url: "https://zh.moegirl.org.cn/index.php?search=", 
+                icon: "image/mengniang.ico", 
+                placeholder: "萌娘百科..." 
+            },
+            yandex: { 
+                url: "https://yandex.com/search/?text=", 
+                icon: "image/yandex.png",
+                placeholder: "Yandex 搜索..." 
+            },
+            sogou: { 
+                url: "https://www.sogou.com/web?query=", 
+                icon: "image/sougo.ico", 
+                placeholder: "搜狗搜索..." 
             }
-            observer.unobserve(img);
+        };
+
+        const customEngines = JSON.parse(localStorage.getItem('customEngines') || '{}');
+        Object.assign(engines, customEngines);
+
+        let currentEngine = 'bing';
+
+        const engineSwitch = document.getElementById('engineSwitch');
+        const engineOptions = document.getElementById('engineOptions');
+        const searchBox = document.querySelector('.search-box');
+        let engineIcon = document.querySelector('#engineSwitch .engine-icon');
+        const suggestContainer = document.getElementById('suggestContainer');
+        const customEngineModal = document.getElementById('customEngineModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const addEngineBtn = document.getElementById('addEngineBtn');
+        const liveClock = document.getElementById('liveClock');
+
+        liveClock.addEventListener('click', (e) => {
+            e.stopPropagation();
+            refreshCustomEnginesList();
+            customEngineModal.style.display = 'flex';
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            customEngineModal.style.display = 'none';
+        });
+
+        customEngineModal.addEventListener('click', (e) => {
+            if (e.target === customEngineModal) {
+                customEngineModal.style.display = 'none';
+            }
+        });
+
+        // 统一的放大镜SVG图标
+        const magnifierSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"/>
+        </svg>`;
+        
+        // 自定义搜索引擎图标的数据URL
+        const customEngineIconDataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(magnifierSvg)}`;
+
+        function refreshCustomEnginesList() {
+            const customEngineList = document.getElementById('customEngineList');
+            customEngineList.innerHTML = '';
+            
+            const userEngines = Object.keys(customEngines);
+            
+            if (userEngines.length === 0) {
+                customEngineList.innerHTML = '<div style="text-align:center;padding:10px;opacity:0.7;">暂无自定义搜索引擎</div>';
+                return;
+            }
+            
+            userEngines.forEach(key => {
+                const engine = customEngines[key];
+                const item = document.createElement('div');
+                item.className = 'custom-engine-item';
+                item.innerHTML = `
+                    <div class="custom-engine-info">
+                        <div class="custom-engine-name">${key}</div>
+                        <div class="custom-engine-url">${engine.url}</div>
+                    </div>
+                    <div class="custom-engine-delete" data-key="${key}">删除</div>
+                `;
+                customEngineList.appendChild(item);
+            });
+            
+            document.querySelectorAll('.custom-engine-delete').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const key = btn.dataset.key;
+                    delete customEngines[key];
+                    delete engines[key];
+                    localStorage.setItem('customEngines', JSON.stringify(customEngines));
+                    refreshCustomEnginesList();
+                    renderCustomEngineOptions();
+                });
+            });
+        }
+
+        addEngineBtn.addEventListener('click', () => {
+            const name = document.getElementById('engineName').value.trim();
+            const url = document.getElementById('engineUrl').value.trim();
+            // 使用统一的图标
+            const icon = customEngineIconDataUrl;
+            
+            if (!name || !url) {
+                alert('引擎名称和搜索URL不能为空');
+                return;
+            }
+            
+            if (!url.includes('%s')) {
+                alert('搜索URL必须包含 %s 作为查询词的占位符');
+                return;
+            }
+            
+            customEngines[name] = {
+                url: url,
+                icon: icon,
+                placeholder: `用 ${name} 搜索...`
+            };
+            
+            engines[name] = customEngines[name];
+            
+            localStorage.setItem('customEngines', JSON.stringify(customEngines));
+            
+            document.getElementById('engineName').value = '';
+            document.getElementById('engineUrl').value = '';
+            
+            refreshCustomEnginesList();
+            renderCustomEngineOptions();
+        });
+
+        function renderCustomEngineOptions() {
+            const customEnginesContainer = document.getElementById('customEngines');
+            customEnginesContainer.innerHTML = '';
+            
+            Object.keys(customEngines).forEach(key => {
+                const engine = customEngines[key];
+                const option = document.createElement('div');
+                option.className = 'engine-option';
+                option.dataset.value = key;
+                
+                // 使用自定义图标容器
+                option.innerHTML = `
+                    <div class="custom-engine-icon">${magnifierSvg}</div>
+                    <span class="engine-name">${key}</span>
+                `;
+                
+                customEnginesContainer.appendChild(option);
+                
+                option.addEventListener('click', () => {
+                    currentEngine = key;
+                    
+                    // 设置搜索框图标也为自定义图标
+                    const engineIconWrapper = document.createElement('div');
+                    engineIconWrapper.className = 'custom-engine-icon';
+                    engineIconWrapper.innerHTML = magnifierSvg;
+                    
+                    // 替换搜索按钮图标
+                    engineIcon.replaceWith(engineIconWrapper);
+                    engineIcon = engineIconWrapper; // 更新引用
+                    
+                    searchBox.placeholder = engine.placeholder;
+                    engineOptions.style.display = 'none';
+                    document.body.classList.remove('engine-menu-open');
+                    localStorage.setItem('searchEngine', key);
+                });
+            });
+        }
+
+        engineSwitch.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpening = engineOptions.style.display === 'block';
+            engineOptions.style.display = isOpening ? 'none' : 'block';
+            document.body.classList.toggle('engine-menu-open', !isOpening);
+        });
+
+        document.querySelectorAll('.engine-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const value = option.dataset.value;
+                currentEngine = value;
+                const engine = engines[value];
+                
+                engineIcon.src = engine.icon;
+                searchBox.placeholder = engine.placeholder;
+                engineOptions.style.display = 'none';
+                document.body.classList.remove('engine-menu-open');
+                localStorage.setItem('searchEngine', value);
+            });
+        });
+
+        const savedEngine = localStorage.getItem('searchEngine');
+        if (savedEngine && engines[savedEngine]) {
+            currentEngine = savedEngine;
+            const engine = engines[savedEngine];
+            engineIcon.src = engine.icon;
+            searchBox.placeholder = engine.placeholder;
+        }
+
+        document.addEventListener('click', () => {
+            engineOptions.style.display = 'none';
+            suggestContainer.style.display = 'none';
+            document.body.classList.remove('engine-menu-open');
+        });
+
+        engineOptions.addEventListener('wheel', (e) => {
+            e.stopPropagation();
+        });
+
+        document.getElementById('searchForm').onsubmit = (e) => {
+            e.preventDefault();
+            const query = searchBox.value.trim();
+            if (query) {
+                window.location.href = `${engines[currentEngine].url}${encodeURIComponent(query)}`;
+            }
+        };
+
+        renderCustomEngineOptions();
+
+        document.addEventListener('keydown', e => {
+          if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            searchBox.focus();
+          }
+          
+          if (e.key === 'Escape') {
+            searchBox.value = '';
+          }
+          
+          if (e.altKey && e.key >= 1 && e.key <= 9) {
+            const index = parseInt(e.key) - 1;
+            const enginesList = Object.keys(engines);
+            if (enginesList[index]) {
+              switchEngine(enginesList[index]);
+            }
           }
         });
-      });
-      
-      lazyImages.forEach(img => {
-        if (img.src) {
-          img.dataset.src = img.src;
-          img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
-          imageObserver.observe(img);
-        }
-      });
-    });
-    
-    // 改进滚动效果
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-          window.scrollTo({
-            top: targetElement.offsetTop - 20,
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
-    
-    // 优化页面滚动响应
-    let lastScrollTop = 0;
-    window.addEventListener('scroll', () => {
-      const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      
-      if (currentScrollTop > lastScrollTop) {
-        // 向下滚动
-        document.querySelector('.mode-toggle').style.transform = 'translateY(80px)';
-      } else {
-        // 向上滚动
-        document.querySelector('.mode-toggle').style.transform = 'translateY(0)';
-      }
-      
-      // 更新滚动位置
-      lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
-    }, { passive: true });
-  </script>
 
+        function switchEngine(engineKey) {
+          const engine = engines[engineKey];
+          currentEngine = engineKey;
+          engineIcon.src = engine.icon;
+          searchBox.placeholder = engine.placeholder;
+          localStorage.setItem('searchEngine', engineKey);
+        }
+
+        // 添加搜索联想功能
+        let suggestTimeout = null;
+        
+        // 搜索联想API映射
+        const suggestApis = {
+            baidu: {
+                url: "https://suggestion.baidu.com/su?wd=",
+                callback: "window.baiduSuggestion",
+                process: data => (data.s || []).map(item => ({ text: item }))
+            },
+            google: {
+                url: "https://suggestqueries.google.com/complete/search?client=firefox&q=",
+                callback: "window.googleSuggestion",
+                process: data => (data[1] || []).map(item => ({ text: item }))
+            },
+            bing: {
+                url: "https://api.bing.com/qsonhs.aspx?type=cb&q=",
+                callback: "window.bingSuggestion",
+                process: data => {
+                    try {
+                        return data.AS.Results[0].Suggests.map(item => ({ text: item.Txt }));
+                    } catch (e) {
+                        return [];
+                    }
+                }
+            },
+            so360: {
+                url: "https://sug.so.360.cn/suggest?word=",
+                callback: "window.so360Suggestion",
+                process: data => (data.s || []).map(item => ({ text: item }))
+            },
+            sogou: {
+                url: "https://www.sogou.com/suggnew/ajajjson?key=",
+                callback: "window.sogouSuggestion",
+                process: data => {
+                    try {
+                        // 搜狗返回的是特殊格式，需要处理
+                        if (typeof data === 'string') {
+                            const match = data.match(/\["(.*?)"\]/);
+                            if (match && match[1]) {
+                                return match[1].split('","').map(item => ({ text: item }));
+                            }
+                        }
+                        return [];
+                    } catch (e) {
+                        return [];
+                    }
+                }
+            },
+            // 其他引擎不支持或使用默认的处理方式
+            default: {
+                process: () => []
+            }
+        };
+
+        // 注册全局回调函数
+        window.baiduSuggestion = function(data) {
+            handleSuggestionData(data, 'baidu');
+        };
+
+        window.googleSuggestion = function(data) {
+            handleSuggestionData(data, 'google');
+        };
+
+        window.bingSuggestion = function(data) {
+            handleSuggestionData(data, 'bing');
+        };
+
+        window.so360Suggestion = function(data) {
+            handleSuggestionData(data, 'so360');
+        };
+
+        window.sogouSuggestion = function(data) {
+            handleSuggestionData(data, 'sogou');
+        };
+        
+        // 处理搜索建议数据
+        function handleSuggestionData(data, engine) {
+            const api = suggestApis[engine] || suggestApis.default;
+            const suggestions = api.process(data);
+            renderSuggestions(suggestions, searchBox.value.trim());
+        }
+
+        // 获取当前引擎的API配置
+        function getSuggestApi(engine) {
+            return suggestApis[engine] || suggestApis.default;
+        }
+
+        // JSONP请求函数
+        function jsonp(url, callback) {
+            const script = document.createElement('script');
+            script.src = url;
+            script.onerror = function() {
+                document.body.removeChild(script);
+            };
+            script.onload = function() {
+                document.body.removeChild(script);
+                if (typeof callback === 'function') callback();
+            };
+            document.body.appendChild(script);
+        }
+
+        // 获取搜索建议
+        function fetchSuggestions(query) {
+            if (!query.trim()) {
+                suggestContainer.style.display = 'none';
+                return;
+            }
+
+            const api = getSuggestApi(currentEngine);
+            
+            // 如果没有对应的API，不显示建议
+            if (!api.url) {
+                suggestContainer.style.display = 'none';
+                return;
+            }
+            
+            const callbackParam = api.callback ? `&cb=${api.callback.split('.')[1]}` : '';
+            const url = api.url + encodeURIComponent(query) + callbackParam;
+            
+            jsonp(url);
+        }
+
+        // 渲染搜索建议
+        function renderSuggestions(suggestions, query) {
+            if (!suggestions || suggestions.length === 0) {
+                suggestContainer.style.display = 'none';
+                return;
+            }
+
+            suggestContainer.innerHTML = '';
+            
+            suggestions.forEach(item => {
+                const suggestItem = document.createElement('div');
+                suggestItem.className = 'suggest-item';
+                
+                // 高亮匹配文本
+                const highlightedText = item.text.replace(
+                    new RegExp('(' + query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + ')', 'gi'),
+                    '<span style="color:var(--accent-color);font-weight:bold">$1</span>'
+                );
+                
+                suggestItem.innerHTML = `
+                    <div class="suggest-text">${highlightedText}</div>
+                `;
+                
+                suggestItem.addEventListener('click', () => {
+                    searchBox.value = item.text;
+                    suggestContainer.style.display = 'none';
+                    document.getElementById('searchForm').requestSubmit();
+                });
+                
+                suggestContainer.appendChild(suggestItem);
+            });
+            
+            suggestContainer.style.display = 'block';
+        }
+
+        // 搜索框输入事件
+        searchBox.addEventListener('input', () => {
+            clearTimeout(suggestTimeout);
+            suggestTimeout = setTimeout(() => {
+                fetchSuggestions(searchBox.value.trim());
+                
+                // 在移动设备上输入时保持searching状态
+                if (isMobile && searchBox.value.trim()) {
+                    document.body.classList.add('searching');
+                }
+            }, 300); // 延迟300ms避免频繁请求
+        });
+
+        // 搜索框聚焦事件 - 简化
+        searchBox.addEventListener('focus', () => {
+            if (isMobile) {
+                document.body.classList.add('searching');
+                
+                if (searchBox.value.trim()) {
+                    fetchSuggestions(searchBox.value.trim());
+                }
+            }
+        });
+        
+        searchBox.addEventListener('blur', () => {
+            // 延迟移除类，以便用户有时间点击搜索建议
+            setTimeout(() => {
+                // 只有当建议容器隐藏时才移除类
+                if (suggestContainer.style.display !== 'block') {
+                    document.body.classList.remove('searching');
+                }
+            }, 200);
+        });
+        
+        // 处理点击搜索建议后的状态
+        suggestContainer.addEventListener('click', () => {
+            setTimeout(() => {
+                document.body.classList.remove('searching');
+            }, 200);
+        });
+        
+        // 处理搜索提交后的状态
+        document.getElementById('searchForm').addEventListener('submit', () => {
+            document.body.classList.remove('searching');
+        });
+
+        document.addEventListener('keydown', e => {
+            if (suggestContainer.style.display === 'block') {
+                const items = suggestContainer.querySelectorAll('.suggest-item');
+                const active = suggestContainer.querySelector('.suggest-item.active');
+                
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (!active && items.length > 0) {
+                        items[0].classList.add('active');
+                        searchBox.value = items[0].querySelector('.suggest-text').textContent;
+                    } else if (active && active.nextElementSibling) {
+                        active.classList.remove('active');
+                        active.nextElementSibling.classList.add('active');
+                        searchBox.value = active.nextElementSibling.querySelector('.suggest-text').textContent;
+                    }
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (active && active.previousElementSibling) {
+                        active.classList.remove('active');
+                        active.previousElementSibling.classList.add('active');
+                        searchBox.value = active.previousElementSibling.querySelector('.suggest-text').textContent;
+                    }
+                }
+            }
+            
+            // 移动设备上按下ESC恢复正常视图
+            if (e.key === 'Escape' && isMobile) {
+                document.body.classList.remove('searching');
+            }
+        });
+
+        // 检测设备类型
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+        
+        if (isMobile) {
+            // 移动端特定设置
+            window.addEventListener('resize', () => {
+                if (document.activeElement === searchBox) {
+                    window.scrollTo(0, 0);
+                }
+            });
+            
+            // 移动端不显示快捷键提示
+            document.getElementById('shortcutsContainer').style.display = 'none';
+        } else {
+            // 桌面端防止滚动
+            document.body.style.overflow = 'hidden';
+            
+            // 确保桌面端显示快捷键提示
+            document.getElementById('shortcutsContainer').style.display = 'flex';
+        }
+        
+        // 在窗口大小变化时重新检查是否显示快捷键提示
+        window.addEventListener('resize', () => {
+            const isMobileNow = window.innerWidth < 768;
+            document.getElementById('shortcutsContainer').style.display = 
+                isMobileNow ? 'none' : 'flex';
+        });
+        
+        // 移除所有滑动检测相关代码
+        if (isMobile) {
+            // 移动端特定设置
+            window.addEventListener('resize', () => {
+                if (document.activeElement === searchBox) {
+                    window.scrollTo(0, 0);
+                }
+            });
+        } else {
+            // 桌面端防止滚动
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 修复搜索框点击事件 - 简化
+        searchBox.addEventListener('click', (e) => {
+            if (isMobile) {
+                document.body.classList.add('searching');
+                e.stopPropagation(); // 防止冒泡到文档点击事件
+            }
+        });
+        
+        // 初始化时适配已存在的自定义引擎
+        document.addEventListener('DOMContentLoaded', () => {
+            // 为所有自定义引擎设置统一图标
+            Object.keys(customEngines).forEach(key => {
+                customEngines[key].icon = customEngineIconDataUrl;
+            });
+            
+            localStorage.setItem('customEngines', JSON.stringify(customEngines));
+            
+            // 如果当前引擎是自定义引擎，更新图标
+            if (customEngines[currentEngine]) {
+                const engineIconWrapper = document.createElement('div');
+                engineIconWrapper.className = 'custom-engine-icon';
+                engineIconWrapper.innerHTML = magnifierSvg;
+                engineIcon.replaceWith(engineIconWrapper);
+                engineIcon = engineIconWrapper;
+            }
+        });
+    </script>
 </body>
 </html>
