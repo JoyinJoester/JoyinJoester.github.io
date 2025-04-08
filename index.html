@@ -253,9 +253,29 @@
         <a href="https://github.com/JoyinJoester" target="_blank">
           <img src="image/cfa71fe042f69a6d0c31ef76e58f3fb.jpg" alt="头像" class="avatar">
         </a>
-        <h2>Joyin</h2>
-        <p>牛牛拥有者</p>
-        <p>开源爱好者</p>
+        <h2 id="typing-title"></h2>
+        <p id="typing-line1"></p>
+        <p id="typing-line2"></p>
+        <script>
+          const typingEffect = (elementId, text, delay = 100) => {
+            const element = document.getElementById(elementId);
+            let index = 0;
+            const type = () => {
+              if (index < text.length) {
+          element.textContent += text[index];
+          index++;
+          setTimeout(type, delay);
+              }
+            };
+            type();
+          };
+
+          document.addEventListener('DOMContentLoaded', () => {
+            typingEffect('typing-title', 'Joyin', 150);
+            setTimeout(() => typingEffect('typing-line1', '牛牛拥有者', 150), 1000);
+            setTimeout(() => typingEffect('typing-line2', '开源爱好者', 150), 2000);
+          });
+        </script>
       </div>
     </div>
 
@@ -287,7 +307,7 @@
 <ul>
   <li>
     <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #E34C26; margin-right: 8px;"></span>
-    HTML5+
+    HTML5+           
     <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #2965F1; margin-right: 8px;"></span>
     CSS3+
     <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #F1E05A; margin-right: 8px;"></span>
@@ -295,12 +315,11 @@
   </li>
   <li>
     <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #555555; margin-right: 8px;"></span>
-    C
-  </li>
-  <li>
+    C+
     <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #DEA584; margin-right: 8px;"></span>
     Rust
   </li>
+
 </ul>
           </div>
           <div class="card">
