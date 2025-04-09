@@ -1,115 +1,223 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>资源导航 - Joyin的主页</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>网址导航 - Bento布局</title>
     <style>
-        :root {
-            --primary-color: #42a5f5;
-            --background-color: #f0f2f5;
-            --text-color: #2d3436;
-            --text1-color: #ffffff;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        body.dark-mode {
-            --primary-color: #81d4fa;
-            --background-color: #263238;
-            --text-color: #ffffff;
-            --text1-color: #2d3436;
-            --card-bg: rgba(38, 50, 56, 0.9);
-            --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            padding: 0;
+            box-sizing: border-box;
         }
-
+        
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f7;
+            color: #333;
+        }
+        
         .container {
-            max-width: 1200px;
+            display: flex;
+            max-width: 1400px;
             margin: 0 auto;
-        }
-
-        .card-grid1 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            padding: 20px;
             gap: 20px;
         }
-
-        .card1 {
-            background-color: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
+        
+        /* 左侧分类栏 */
+        .sidebar {
+            width: 200px;
+            background: white;
+            border-radius: 12px;
             padding: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 20px;
+            height: fit-content;
         }
-
-        .card1:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
+        
+        .sidebar h2 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #333;
         }
-
-        .card1::before {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                135deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.1) 50%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            transition: all 0.5s ease;
-            z-index: 1;
-            pointer-events: none;
+        
+        .category-list {
+            list-style: none;
         }
-
-        .card1:hover::before {
-            top: 100%;
-            left: 100%;
+        
+        .category-item {
+            margin-bottom: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-
-        .card1 h2 {
+        
+        .category-item:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .category-item.active {
+            background-color: #e6f7ff;
+            border-left: 3px solid #1890ff;
+            font-weight: bold;
+        }
+        
+        /* 右侧内容区域 */
+        .content {
+            flex: 1;
+        }
+        
+        .category-content {
+            display: none;
+        }
+        
+        .category-content.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .content-header {
+            grid-column: 1 / -1;
+            margin-bottom: 10px;
+        }
+        
+        .content-header h2 {
             font-size: 1.5rem;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 10px;
+        }
+        
+        .site-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .site-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .site-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            margin-right: 12px;
+            object-fit: cover;
+        }
+        
+        .site-info {
+            flex: 1;
+        }
+        
+        .site-name {
             font-weight: 600;
-            color: var(--text-color);
-            margin-top: 0;
+            margin-bottom: 5px;
         }
-
-        .card1 p {
-            font-size: 1rem;
-            color: var(--text-color);
-            line-height: 1.6;
+        
+        .site-desc {
+            font-size: 0.8rem;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-
-        .card1 a {
-            color: #F776A8;
+        
+        a {
             text-decoration: none;
-            font-weight: 500;
+            color: inherit;
         }
-
-        .card1 a:hover {
-            color: #F1D7FF;
-            text-decoration: underline;
+        
+        /* 资源页面特定样式 */
+        .resources-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
         }
-
+        
+        .resource-group {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .resource-group:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-group h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #333;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 10px;
+        }
+        
+        .resource-list {
+            list-style: none;
+        }
+        
+        /* 确保所有类别使用相同的网格布局 */
+        .card-grid1 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        /* 暗黑模式相关样式 */
+        body.dark-mode {
+            background-color: #263238;
+            color: #ffffff;
+        }
+        
+        body.dark-mode .sidebar,
+        body.dark-mode .site-card,
+        body.dark-mode .resource-group {
+            background-color: #37474f;
+            color: #ffffff;
+        }
+        
+        body.dark-mode .site-desc,
+        body.dark-mode .category-item:not(.active) {
+            color: #b0bec5;
+        }
+        
+        body.dark-mode .category-item.active {
+            background-color: #455a64;
+            border-left: 3px solid #81d4fa;
+        }
+        
+        /* 首字母图标样式 */
+        .site-logo-fallback {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1890ff;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        body.dark-mode .site-logo-fallback {
+            background-color: #0277bd;
+        }
+        
+        /* 控制按钮 */
         .control-buttons {
             position: fixed;
             bottom: 20px;
@@ -118,173 +226,551 @@
             gap: 10px;
             z-index: 1000;
         }
-
+        
         .icon-btn {
             width: 48px;
             height: 48px;
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
+            background: white;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: var(--shadow);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             border: none;
-            color: var(--text-color);
+            color: #333;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-
+        
         .icon-btn:hover {
             transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-
-        .icon-btn .material-icons {
-            font-size: 24px;
+        
+        body.dark-mode .icon-btn {
+            background: #455a64;
+            color: #ffffff;
         }
-
+        
         .back-to-top {
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-
+        
         .back-to-top.visible {
             opacity: 1;
             visibility: visible;
         }
-
-        .page-title {
-            text-align: center;
-            margin: 20px 0 30px;
-            font-weight: 700;
-            font-size: 2.2rem;
-            color: var(--text-color);
-            position: relative;
-            padding-bottom: 15px;
+        
+        /* 添加额外的样式来确保夜间模式正常工作 */
+        body.dark-mode .sidebar h2,
+        body.dark-mode .category-item {
+            color: #ffffff;
         }
-
-        .page-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), #F776A8);
-            border-radius: 2px;
+        
+        body.dark-mode .category-item:hover {
+            background-color: #455a64;
         }
     </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        // 添加图片加载错误处理
+        function handleImageError(img, siteName) {
+            // 获取站点名称的第一个字母并转为大写
+            const firstLetter = siteName.charAt(0).toUpperCase();
+            
+            // 创建一个替代的首字母图标
+            const fallback = document.createElement('div');
+            fallback.className = 'site-logo-fallback';
+            fallback.textContent = firstLetter;
+            
+            // 替换图片元素
+            img.parentNode.replaceChild(fallback, img);
+        }
+    </script>
 </head>
 <body>
     <div class="container">
-        <h1 class="page-title">资源导航</h1>
-        <div class="card-grid1">
-            <div class="card1">
-                <h2>技术资源</h2>
-                <p>
-                    <a href="https://github.com" target="_blank">GitHub</a> - 全球最大的代码托管平台。<br>
-                    <a href="https://stackoverflow.com" target="_blank">Stack Overflow</a> - 程序员问答社区。<br>
-                    <a href="https://developer.mozilla.org" target="_blank">MDN Web Docs</a> - Web 开发文档。<br>
-                    <a href="https://www.csdn.net/" target="_blank">CSDN</a> - 傻逼:CSDN<br>
-                    <a href="https://www.cnblogs.com/" target="_blank">博客园</a> - 比csdn好用多了
-                </p>
+        <!-- 左侧分类栏 -->
+        <div class="sidebar">
+            <h2>网站分类</h2>
+            <ul class="category-list">
+                <li class="category-item active" data-category="tech">技术学习</li>
+                <li class="category-item" data-category="tools">实用工具</li>
+                <li class="category-item" data-category="design">设计资源</li>
+                <li class="category-item" data-category="news">新闻资讯</li>
+                <li class="category-item" data-category="social">社交媒体</li>
+                <li class="category-item" data-category="games">游戏相关</li>
+                <li class="category-item" data-category="systems">系统相关</li>
+                <li class="category-item" data-category="animation">动画网站</li>
+                <li class="category-item" data-category="printing">3D打印</li>
+                <li class="category-item" data-category="ai">AI工具</li>
+            </ul>
+        </div>
+        
+        <!-- 右侧内容区域 -->
+        <div class="content">
+            <!-- 技术学习分类 -->
+            <div class="category-content active" id="tech">
+                <div class="content-header">
+                    <h2>技术学习</h2>
+                </div>
+                
+                <a href="https://github.com" class="site-card">
+                    <img src="https://github.githubassets.com/favicons/favicon.svg" class="site-logo" alt="GitHub" onerror="handleImageError(this, 'GitHub')">
+                    <div class="site-info">
+                        <div class="site-name">GitHub</div>
+                        <div class="site-desc">全球最大的代码托管平台</div>
+                    </div>
+                </a>
+                
+                <a href="https://stackoverflow.com" class="site-card">
+                    <img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico?v=ec617d715196" class="site-logo" alt="Stack Overflow" onerror="handleImageError(this, 'Stack Overflow')">
+                    <div class="site-info">
+                        <div class="site-name">Stack Overflow</div>
+                        <div class="site-desc">程序员问答社区</div>
+                    </div>
+                </a>
+                
+                <a href="https://developer.mozilla.org" class="site-card">
+                    <img src="https://developer.mozilla.org/favicon-48x48.png" class="site-logo" alt="MDN" onerror="handleImageError(this, 'MDN')">
+                    <div class="site-info">
+                        <div class="site-name">MDN Web Docs</div>
+                        <div class="site-desc">Web技术权威文档</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.w3schools.com" class="site-card">
+                    <img src="https://www.w3schools.com/favicon.ico" class="site-logo" alt="W3Schools" onerror="handleImageError(this, 'W3Schools')">
+                    <div class="site-info">
+                        <div class="site-name">W3Schools</div>
+                        <div class="site-desc">Web开发学习平台</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.cnblogs.com/" class="site-card">
+                    <img src="https://common.cnblogs.com/favicon.ico" class="site-logo" alt="博客园" onerror="handleImageError(this, '博客园')">
+                    <div class="site-info">
+                        <div class="site-name">博客园</div>
+                        <div class="site-desc">代码改变世界</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.csdn.net/" class="site-card">
+                    <img src="https://g.csdnimg.cn/static/logo/favicon32.ico" class="site-logo" alt="CSDN" onerror="handleImageError(this, 'CSDN')">
+                    <div class="site-info">
+                        <div class="site-name">CSDN</div>
+                        <div class="site-desc">中文IT技术社区</div>
+                    </div>
+                </a>
             </div>
-
-            <div class="card1">
-                <h2>系统下载</h2>
-                <p>
-                    <a href="https://hellowindows.cn/" target="_blank">HelloWindows</a> - Windows系统iso下载。<br>
-                    <a href="https://archlinux.org/" target="_blank">Arch</a> - Arch神教。<br>
-                    <a href="https://www.debian.org/" target="_blank">Debian</a> - Debian发行版下载。<br>
-                    <a href="https://ubuntu.com/download" target="_blank">Ubuntu</a> - 知名的debian发行版。<br>
-                    <a href="https://linuxmint.com/" target="_blank">Mint</a> - 我认为最适合新人的Linux发行版<br>
-                    <a href="https://www.kali.org/" target="_blank">Kali</a> - 学好了一起吃国家饭
-                </p>
+            
+            <!-- 实用工具分类 -->
+            <div class="category-content" id="tools">
+                <div class="content-header">
+                    <h2>实用工具</h2>
+                </div>
+                
+                <a href="https://www.notion.so" class="site-card">
+                    <img src="https://www.notion.so/images/favicon.ico" class="site-logo" alt="Notion" onerror="handleImageError(this, 'Notion')">
+                    <div class="site-info">
+                        <div class="site-name">Notion</div>
+                        <div class="site-desc">全能工作空间</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.figma.com" class="site-card">
+                    <img src="https://static.figma.com/app/icon/1/favicon.png" class="site-logo" alt="Figma" onerror="handleImageError(this, 'Figma')">
+                    <div class="site-info">
+                        <div class="site-name">Figma</div>
+                        <div class="site-desc">在线设计协作工具</div>
+                    </div>
+                </a>
+                
+                <a href="https://trello.com" class="site-card">
+                    <img src="https://a.trellocdn.com/prgb/dist/images/ios/apple-touch-icon-152x152.png" class="site-logo" alt="Trello" onerror="handleImageError(this, 'Trello')">
+                    <div class="site-info">
+                        <div class="site-name">Trello</div>
+                        <div class="site-desc">项目管理工具</div>
+                    </div>
+                </a>
             </div>
-
-            <div class="card1">
-                <h2>设计工具</h2>
-                <p>
-                    <a href="https://www.figma.com" target="_blank">Figma</a> - 在线设计工具。<br>
-                    <a href="https://www.adobe.com" target="_blank">Adobe Creative Cloud</a> - 创意设计套件。<br>
-                    <a href="https://www.canva.com" target="_blank">Canva</a> - 简单易用的设计工具。<br>
-                    <a href="https://www.peisebiao.com/" target="_blank">配色表</a> -设计配色参考。
-                </p>
+            
+            <!-- 设计资源分类 -->
+            <div class="category-content" id="design">
+                <div class="content-header">
+                    <h2>设计资源</h2>
+                </div>
+                
+                <a href="https://dribbble.com" class="site-card">
+                    <img src="https://cdn.dribbble.com/assets/favicon-63b2904a073c89b52b19aa08cebc16a154bcf83fee8ecc6439968b1e6db569c7.ico" class="site-logo" alt="Dribbble" onerror="handleImageError(this, 'Dribbble')">
+                    <div class="site-info">
+                        <div class="site-name">Dribbble</div>
+                        <div class="site-desc">设计师作品展示平台</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.behance.net" class="site-card">
+                    <img src="https://a5.behance.net/06e55c02e69d2453337e226e0390f3f817da6760/img/site/favicon.ico?cb=264615658" class="site-logo" alt="Behance" onerror="handleImageError(this, 'Behance')">
+                    <div class="site-info">
+                        <div class="site-name">Behance</div>
+                        <div class="site-desc">创意作品集平台</div>
+                    </div>
+                </a>
+                
+                <a href="https://unsplash.com" class="site-card">
+                    <img src="https://unsplash.com/favicon-32x32.png" class="site-logo" alt="Unsplash" onerror="handleImageError(this, 'Unsplash')">
+                    <div class="site-info">
+                        <div class="site-name">Unsplash</div>
+                        <div class="site-desc">免费高质量图片</div>
+                    </div>
+                </a>
             </div>
-
-            <div class="card1">
-                <h2>学习平台</h2>
-                <p>
-                    <a href="https://store.steampowered.com/about/" target="_blank">Steam</a> - 思题目刷题大全<br>
-                    <a href="https://store.epicgames.com/zh-CN/" target="_blank">Epic</a> - 艾派克学习平台。<br>
-                    <a href="https://www.gog.com/galaxy" target="_blank">GOG</a> - 吉欧吉单词听写。<br>
-                    <a href="https://flingtrainer.com/" target="_blank">Fling</a> - 风灵月影题目全解。<br>
-                    <a href="https://www.4399.com/" target="_blank">4399</a> - 4399碎片化记忆。<br>
-                    <a href="https://www.nexusmods.com/" target="_blank">nexus</a> - 学习软件必备插件。
-                </p>
+            
+            <!-- 新闻资讯分类 -->
+            <div class="category-content" id="news">
+                <div class="content-header">
+                    <h2>新闻资讯</h2>
+                </div>
+                
+                <a href="https://www.theverge.com" class="site-card">
+                    <img src="https://cdn.vox-cdn.com/uploads/chorus_asset/file/7395367/favicon-16x16.0.png" class="site-logo" alt="The Verge" onerror="handleImageError(this, 'The Verge')">
+                    <div class="site-info">
+                        <div class="site-name">The Verge</div>
+                        <div class="site-desc">科技新闻网站</div>
+                    </div>
+                </a>
+                
+                <a href="https://techcrunch.com" class="site-card">
+                    <img src="https://techcrunch.com/wp-content/uploads/2015/02/cropped-cropped-favicon-gradient.png?w=32" class="site-logo" alt="TechCrunch" onerror="handleImageError(this, 'TechCrunch')">
+                    <div class="site-info">
+                        <div class="site-name">TechCrunch</div>
+                        <div class="site-desc">创业公司和科技新闻</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.wired.com" class="site-card">
+                    <img src="https://www.wired.com/favicon.ico" class="site-logo" alt="WIRED" onerror="handleImageError(this, 'WIRED')">
+                    <div class="site-info">
+                        <div class="site-name">WIRED</div>
+                        <div class="site-desc">科技文化媒体</div>
+                    </div>
+                </a>
             </div>
-
-            <div class="card1">
-                <h2>装机必备工具</h2>
-                <p>
-                    <a href="https://www.tbtool.cn/" target="_blank">图吧工具箱</a> - 集成了多种工具的工具箱。<br>
-                    <a href="https://www.ventoy.net/cn/index.html" target="_blank">Ventory</a> - 制作简易的启动盘(图吧有)。<br>
-                    <a href="https://www.diskgenius.cn/download.php" target="_blank">DG</a> - 硬盘分区(图吧有)。<br>
-                    <a href="https://www.wepe.com.cn/download.html" target="_blank">微PE</a> - 一款好用的pe启动工具(图吧有)
-                </p>
+            
+            <!-- 社交媒体分类 -->
+            <div class="category-content" id="social">
+                <div class="content-header">
+                    <h2>社交媒体</h2>
+                </div>
+                
+                <a href="https://twitter.com" class="site-card">
+                    <img src="https://abs.twimg.com/responsive-web/client-web/icon-svg.168b89d5.svg" class="site-logo" alt="Twitter" onerror="handleImageError(this, 'Twitter')">
+                    <div class="site-info">
+                        <div class="site-name">Twitter</div>
+                        <div class="site-desc">实时信息分享平台</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.reddit.com" class="site-card">
+                    <img src="https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png" class="site-logo" alt="Reddit" onerror="handleImageError(this, 'Reddit')">
+                    <div class="site-info">
+                        <div class="site-name">Reddit</div>
+                        <div class="site-desc">内容分享社区</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.zhihu.com" class="site-card">
+                    <img src="https://static.zhihu.com/heifetz/favicon.ico" class="site-logo" alt="知乎" onerror="handleImageError(this, '知乎')">
+                    <div class="site-info">
+                        <div class="site-name">知乎</div>
+                        <div class="site-desc">中文问答社区</div>
+                    </div>
+                </a>
             </div>
-
-            <div class="card1">
-                <h2>AI工具</h2>
-                <p>
-                    <a href="https://chatgpt.com/auth/login" target="_blank">ChatGPT</a><br>
-                    <a href="https://chat.deepseek.com/" target="_blank">Deepseek</a><br>
-                    <a href="https://copilot.microsoft.com/chats/5suZxdg23zxVgNE3TGggs" target="_blank">copilot</a><br>
-                    <a href="https://gemini.google.com/app" target="_blank">Gemini</a><br>
-                    <a href="https://ollama.com/" target="_blank">ollama</a>
-                </p>
+            
+            <!-- 游戏相关分类 -->
+            <div class="category-content" id="games">
+                <div class="content-header">
+                    <h2>游戏相关</h2>
+                </div>
+                
+                <a href="https://store.steampowered.com/about/" class="site-card">
+                    <img src="https://store.steampowered.com/favicon.ico" class="site-logo" alt="Steam" onerror="handleImageError(this, 'Steam')">
+                    <div class="site-info">
+                        <div class="site-name">Steam</div>
+                        <div class="site-desc">思题目刷题大全</div>
+                    </div>
+                </a>
+                
+                <a href="https://store.epicgames.com/zh-CN/" class="site-card">
+                    <img src="https://static-assets-prod.epicgames.com/favicon.ico" class="site-logo" alt="Epic" onerror="handleImageError(this, 'Epic')">
+                    <div class="site-info">
+                        <div class="site-name">Epic</div>
+                        <div class="site-desc">艾派克学习平台</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.gog.com/galaxy" class="site-card">
+                    <img src="https://www.gog.com/favicon.ico" class="site-logo" alt="GOG" onerror="handleImageError(this, 'GOG')">
+                    <div class="site-info">
+                        <div class="site-name">GOG</div>
+                        <div class="site-desc">吉欧吉单词听写</div>
+                    </div>
+                </a>
+                
+                <a href="https://flingtrainer.com/" class="site-card">
+                    <img src="https://flingtrainer.com/favicon.ico" class="site-logo" alt="Fling" onerror="handleImageError(this, 'Fling')">
+                    <div class="site-info">
+                        <div class="site-name">Fling</div>
+                        <div class="site-desc">风灵月影题目全解</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.4399.com/" class="site-card">
+                    <img src="https://www.4399.com/favicon.ico" class="site-logo" alt="4399" onerror="handleImageError(this, '4399')">
+                    <div class="site-info">
+                        <div class="site-name">4399</div>
+                        <div class="site-desc">4399碎片化记忆</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.nexusmods.com/" class="site-card">
+                    <img src="https://www.nexusmods.com/assets/images/nexus-favicon-32x32.png" class="site-logo" alt="Nexus Mods" onerror="handleImageError(this, 'Nexus')">
+                    <div class="site-info">
+                        <div class="site-name">Nexus Mods</div>
+                        <div class="site-desc">学习软件必备插件</div>
+                    </div>
+                </a>
             </div>
-
-            <div class="card1">
-                <h2>动画网站</h2>
-                <p>
-                    <a href="https://www.age.tv/" target="_blank">AGE动漫</a><br>
-                    <a href="https://www.yinghua8.net/" target="_blank">樱花动漫</a><br>
-                    <a href="https://www.clicli.cc/" target="_blank">Clicli弹幕网</a><br>
-                    <a href="https://www.233dm.com/" target="_blank">233动漫</a><br>
-                    <a href="https://www.imandaow.com/" target="_blank">漫岛TV</a>
-                </p>
+            
+            <!-- 系统相关分类 -->
+            <div class="category-content" id="systems">
+                <div class="content-header">
+                    <h2>系统相关</h2>
+                </div>
+                
+                <a href="https://hellowindows.cn/" class="site-card">
+                    <img src="https://hellowindows.cn/favicon.ico" class="site-logo" alt="HelloWindows" onerror="handleImageError(this, 'HelloWindows')">
+                    <div class="site-info">
+                        <div class="site-name">HelloWindows</div>
+                        <div class="site-desc">Windows系统iso下载</div>
+                    </div>
+                </a>
+                
+                <a href="https://archlinux.org/" class="site-card">
+                    <img src="https://archlinux.org/static/favicon.ico" class="site-logo" alt="Arch Linux" onerror="handleImageError(this, 'Arch Linux')">
+                    <div class="site-info">
+                        <div class="site-name">Arch Linux</div>
+                        <div class="site-desc">Arch神教</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.debian.org/" class="site-card">
+                    <img src="https://www.debian.org/favicon.ico" class="site-logo" alt="Debian" onerror="handleImageError(this, 'Debian')">
+                    <div class="site-info">
+                        <div class="site-name">Debian</div>
+                        <div class="site-desc">Debian发行版下载</div>
+                    </div>
+                </a>
+                
+                <a href="https://ubuntu.com/download" class="site-card">
+                    <img src="https://ubuntu.com/favicon.ico" class="site-logo" alt="Ubuntu" onerror="handleImageError(this, 'Ubuntu')">
+                    <div class="site-info">
+                        <div class="site-name">Ubuntu</div>
+                        <div class="site-desc">知名的debian发行版</div>
+                    </div>
+                </a>
+                
+                <a href="https://linuxmint.com/" class="site-card">
+                    <img src="https://linuxmint.com/favicon.ico" class="site-logo" alt="Linux Mint" onerror="handleImageError(this, 'Linux Mint')">
+                    <div class="site-info">
+                        <div class="site-name">Linux Mint</div>
+                        <div class="site-desc">最适合新人的Linux发行版</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.kali.org/" class="site-card">
+                    <img src="https://www.kali.org/images/favicon.png" class="site-logo" alt="Kali Linux" onerror="handleImageError(this, 'Kali Linux')">
+                    <div class="site-info">
+                        <div class="site-name">Kali Linux</div>
+                        <div class="site-desc">网络安全测试系统</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.tbtool.cn/" class="site-card">
+                    <img src="https://www.tbtool.cn/favicon.ico" class="site-logo" alt="图吧工具箱" onerror="handleImageError(this, '图吧工具箱')">
+                    <div class="site-info">
+                        <div class="site-name">图吧工具箱</div>
+                        <div class="site-desc">集成多种实用工具</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.ventoy.net/cn/index.html" class="site-card">
+                    <img src="https://www.ventoy.net/favicon.ico" class="site-logo" alt="Ventoy" onerror="handleImageError(this, 'Ventoy')">
+                    <div class="site-info">
+                        <div class="site-name">Ventoy</div>
+                        <div class="site-desc">制作简易的启动盘</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.diskgenius.cn/download.php" class="site-card">
+                    <img src="https://www.diskgenius.cn/favicon.ico" class="site-logo" alt="DiskGenius" onerror="handleImageError(this, 'DiskGenius')">
+                    <div class="site-info">
+                        <div class="site-name">DiskGenius</div>
+                        <div class="site-desc">硬盘分区工具</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.wepe.com.cn/download.html" class="site-card">
+                    <img src="https://www.wepe.com.cn/favicon.ico" class="site-logo" alt="微PE" onerror="handleImageError(this, '微PE')">
+                    <div class="site-info">
+                        <div class="site-name">微PE</div>
+                        <div class="site-desc">好用的PE启动工具</div>
+                    </div>
+                </a>
             </div>
-
-            <div class="card1">
-                <h2>在线工具</h2>
-                <p>
-                    <a href="https://wordcount.com/zh/" target="_blank">字数统计</a><br>
-                    <a href="https://md.openwrite.cn/" target="_blank">微信MD在线编辑</a><br>
-                    <a href="https://cn.unithelper.com/" target="_blank">单位换算</a>
-                </p>
+            
+            <!-- 动画网站分类 -->
+            <div class="category-content" id="animation">
+                <div class="content-header">
+                    <h2>动画网站</h2>
+                </div>
+                
+                <a href="https://www.age.tv/" class="site-card">
+                    <img src="https://www.age.tv/favicon.ico" class="site-logo" alt="AGE动漫" onerror="handleImageError(this, 'AGE动漫')">
+                    <div class="site-info">
+                        <div class="site-name">AGE动漫</div>
+                        <div class="site-desc">在线观看动漫的网站</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.yinghua8.net/" class="site-card">
+                    <img src="https://www.yinghua8.net/favicon.ico" class="site-logo" alt="樱花动漫" onerror="handleImageError(this, '樱花动漫')">
+                    <div class="site-info">
+                        <div class="site-name">樱花动漫</div>
+                        <div class="site-desc">免费动漫视频网站</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.clicli.cc/" class="site-card">
+                    <img src="https://www.clicli.cc/favicon.ico" class="site-logo" alt="Clicli" onerror="handleImageError(this, 'Clicli')">
+                    <div class="site-info">
+                        <div class="site-name">Clicli弹幕网</div>
+                        <div class="site-desc">二次元弹幕视频网站</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.233dm.com/" class="site-card">
+                    <img src="https://www.233dm.com/favicon.ico" class="site-logo" alt="233动漫" onerror="handleImageError(this, '233动漫')">
+                    <div class="site-info">
+                        <div class="site-name">233动漫</div>
+                        <div class="site-desc">在线动漫视频网站</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.imandaow.com/" class="site-card">
+                    <img src="https://www.imandaow.com/favicon.ico" class="site-logo" alt="漫岛TV" onerror="handleImageError(this, '漫岛TV')">
+                    <div class="site-info">
+                        <div class="site-name">漫岛TV</div>
+                        <div class="site-desc">在线动漫视频网站</div>
+                    </div>
+                </a>
             </div>
-
-            <div class="card1">
-                <h2>3D打印</h2>
-                <p>
-                    <a href="https://www.thingiverse.com/" target="_blank">Thingiverse</a><br>
-                    <a href="https://www.crealitycloud.cn/" target="_blank">创想云</a><br>
-                    <a href="https://www.dayin.la/" target="_blank">打印啦</a><br>
-                    <a href="https://www.most3d.cn/" target="_blank">莫斯特3D</a><br>
-                    <a href="https://3dexport.com/" target="_blank">3D Export</a>
-                </p>
+            
+            <!-- 3D打印分类 -->
+            <div class="category-content" id="printing">
+                <div class="content-header">
+                    <h2>3D打印</h2>
+                </div>
+                
+                <a href="https://www.thingiverse.com/" class="site-card">
+                    <img src="https://www.thingiverse.com/favicon.ico" class="site-logo" alt="Thingiverse" onerror="handleImageError(this, 'Thingiverse')">
+                    <div class="site-info">
+                        <div class="site-name">Thingiverse</div>
+                        <div class="site-desc">3D打印模型分享平台</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.crealitycloud.cn/" class="site-card">
+                    <img src="https://www.crealitycloud.cn/favicon.ico" class="site-logo" alt="创想云" onerror="handleImageError(this, '创想云')">
+                    <div class="site-info">
+                        <div class="site-name">创想云</div>
+                        <div class="site-desc">3D打印内容平台</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.dayin.la/" class="site-card">
+                    <img src="https://www.dayin.la/favicon.ico" class="site-logo" alt="打印啦" onerror="handleImageError(this, '打印啦')">
+                    <div class="site-info">
+                        <div class="site-name">打印啦</div>
+                        <div class="site-desc">3D打印模型网站</div>
+                    </div>
+                </a>
+                
+                <a href="https://www.most3d.cn/" class="site-card">
+                    <img src="https://www.most3d.cn/favicon.ico" class="site-logo" alt="莫斯特3D" onerror="handleImageError(this, '莫斯特3D')">
+                    <div class="site-info">
+                        <div class="site-name">莫斯特3D</div>
+                        <div class="site-desc">国内3D打印资源网站</div>
+                    </div>
+                </a>
+                
+                <a href="https://3dexport.com/" class="site-card">
+                    <img src="https://3dexport.com/favicon.ico" class="site-logo" alt="3D Export" onerror="handleImageError(this, '3D Export')">
+                    <div class="site-info">
+                        <div class="site-name">3D Export</div>
+                        <div class="site-desc">3D模型交易平台</div>
+                    </div>
+                </a>
             </div>
-
-            <div class="card1">
-                <h2>网盘资源(到期请联系我补充)</h2>
-                <p>
-                    <a href="https://caiyun.139.com/m/i?0S5Cs8fBYKeDL" target="_blank">Adobe全家桶</a><br>
-                    <a href="https://caiyun.139.com/m/i?0S5Cs8f9D01Xx" target="_blank">PPT模板</a>
-                </p>
+            
+            <!-- AI工具分类 -->
+            <div class="category-content" id="ai">
+                <div class="content-header">
+                    <h2>AI工具</h2>
+                </div>
+                
+                <a href="https://chatgpt.com/auth/login" class="site-card">
+                    <img src="https://chatgpt.com/apple-touch-icon.png" class="site-logo" alt="ChatGPT" onerror="handleImageError(this, 'ChatGPT')">
+                    <div class="site-info">
+                        <div class="site-name">ChatGPT</div>
+                        <div class="site-desc">OpenAI开发的AI聊天机器人</div>
+                    </div>
+                </a>
+                
+                <a href="https://chat.deepseek.com/" class="site-card">
+                    <img src="https://chat.deepseek.com/favicon.ico" class="site-logo" alt="Deepseek" onerror="handleImageError(this, 'Deepseek')">
+                    <div class="site-info">
+                        <div class="site-name">Deepseek</div>
+                        <div class="site-desc">AI对话助手</div>
+                    </div>
+                </a>
+                
+                <a href="https://copilot.microsoft.com/" class="site-card">
+                    <img src="https://copilot.microsoft.com/favicon.ico" class="site-logo" alt="Copilot" onerror="handleImageError(this, 'Copilot')">
+                    <div class="site-info">
+                        <div class="site-name">Microsoft Copilot</div>
+                        <div class="site-desc">微软AI助手</div>
+                    </div>
+                </a>
+                
+                <a href="https://gemini.google.com/app" class="site-card">
+                    <img src="https://www.gstatic.com/lamda/images/favicon_v1_150160cddff7f294ce30.svg" class="site-logo" alt="Gemini" onerror="handleImageError(this, 'Gemini')">
+                    <div class="site-info">
+                        <div class="site-name">Gemini</div>
+                        <div class="site-desc">谷歌AI助手</div>
+                    </div>
+                </a>
+                
+                <a href="https://ollama.com/" class="site-card">
+                    <img src="https://ollama.com/favicon.ico" class="site-logo" alt="Ollama" onerror="handleImageError(this, 'Ollama')">
+                    <div class="site-info">
+                        <div class="site-name">Ollama</div>
+                        <div class="site-desc">本地运行大型语言模型</div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -302,51 +788,84 @@
     </div>
 
     <script>
-        const modeToggle = document.getElementById('modeToggle');
-        const body = document.body;
-        const modeIcon = modeToggle.querySelector('.material-icons');
-
-        function updateMode() {
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('dark-mode', 'enabled');
-                modeIcon.textContent = 'light_mode';
-                modeToggle.setAttribute('title', '切换到日间模式');
-            } else {
-                localStorage.setItem('dark-mode', 'disabled');
-                modeIcon.textContent = 'dark_mode';
-                modeToggle.setAttribute('title', '切换到夜间模式');
-            }
-        }
-
-        if (localStorage.getItem('dark-mode') === 'enabled') {
-            body.classList.add('dark-mode');
-        }
-        updateMode();
-
-        modeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            updateMode();
-        });
-
-        const backToTopBtn = document.getElementById('backToTopBtn');
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add('visible');
-            } else {
-                backToTopBtn.classList.remove('visible');
-            }
-        });
-        
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+        // 分类切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryItems = document.querySelectorAll('.category-item');
+            const categoryContents = document.querySelectorAll('.category-content');
+            
+            categoryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 移除所有活跃状态
+                    categoryItems.forEach(item => item.classList.remove('active'));
+                    categoryContents.forEach(content => content.classList.remove('active'));
+                    
+                    // 添加当前活跃状态
+                    this.classList.add('active');
+                    
+                    // 显示对应内容
+                    const targetCategory = this.getAttribute('data-category');
+                    document.getElementById(targetCategory).classList.add('active');
+                });
             });
-        });
-
-        document.getElementById('homeButton').addEventListener('click', () => {
-            window.location.href = '../index.html';
+            
+            // 暗黑模式切换
+            const modeToggle = document.getElementById('modeToggle');
+            const body = document.body;
+            const modeIcon = modeToggle.querySelector('.material-icons');
+            
+            function updateMode() {
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('dark-mode', 'enabled');
+                    modeIcon.textContent = 'light_mode';
+                    modeToggle.setAttribute('title', '切换到日间模式');
+                } else {
+                    localStorage.setItem('dark-mode', 'disabled');
+                    modeIcon.textContent = 'dark_mode';
+                    modeToggle.setAttribute('title', '切换到夜间模式');
+                }
+            }
+            
+            if (localStorage.getItem('dark-mode') === 'enabled') {
+                body.classList.add('dark-mode');
+            }
+            updateMode();
+            
+            modeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                updateMode();
+            });
+            
+            // 返回顶部按钮
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 返回主页按钮
+            document.getElementById('homeButton').addEventListener('click', () => {
+                window.location.href = '../index.html';
+            });
+            
+            // 为所有图片添加错误处理
+            const allImages = document.querySelectorAll('.site-logo');
+            allImages.forEach(img => {
+                if (!img.hasAttribute('onerror')) {
+                    const siteName = img.closest('.site-card').querySelector('.site-name').textContent;
+                    img.setAttribute('onerror', `handleImageError(this, '${siteName}')`);
+                }
+            });
         });
     </script>
 </body>
