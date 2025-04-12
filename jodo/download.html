@@ -137,7 +137,7 @@
             border: none;
             cursor: pointer;
             font-size: 1.5rem;
-            color: var(--dark-color);
+            color: var(--text-primary); /* 修改为浅色文字，确保在暗色背景上可见 */
         }
 
         /* 容器样式 */
@@ -271,7 +271,7 @@
         /* 内联代码 */
         code {
             background-color: var(--code-bg);
-            color: var(--code-text);
+            color: var (--code-text);
             padding: 2px 6px;
             border-radius: 3px;
             font-family: var(--font-code);
@@ -380,8 +380,8 @@
                 top: 70px;
                 left: 0;
                 right: 0;
-                background: white;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                background: var(--bg-secondary); /* 修改为暗色背景 */
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
                 padding: 20px;
                 transition: var(--transition);
             }
@@ -396,6 +396,20 @@
             
             .main-nav li {
                 margin: 10px 0;
+            }
+            
+            .main-nav li a {
+                color: var(--text-primary); /* 确保菜单文字是浅色的 */
+                display: block; /* 增大点击区域 */
+                padding: 8px 15px; /* 增加内边距使按钮更大 */
+                border-radius: var(--border-radius); /* 圆角边框 */
+                transition: var(--transition); /* 平滑过渡效果 */
+            }
+            
+            .main-nav li a:hover,
+            .main-nav li a.active {
+                background-color: rgba(0, 187, 240, 0.1); /* 添加悬停背景 */
+                color: var(--primary-color); /* 悬停时文字变为主题色 */
             }
             
             .mobile-nav-toggle {

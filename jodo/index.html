@@ -400,8 +400,8 @@
                 top: 70px;
                 left: 0;
                 right: 0;
-                background: white;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                background: var(--bg-secondary); /* 将白色改为变量颜色 */
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
                 padding: 20px;
                 transition: var(--transition);
             }
@@ -418,8 +418,13 @@
                 margin: 10px 0;
             }
             
+            .main-nav a {
+                color: var(--text-primary); /* 确保文字颜色在移动端保持可见 */
+            }
+            
             .mobile-nav-toggle {
                 display: block;
+                color: var(--text-primary); /* 修正汉堡菜单图标颜色 */
             }
 
             .bento-medium, .bento-small, .bento-tall {

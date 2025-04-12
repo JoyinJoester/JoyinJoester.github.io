@@ -137,7 +137,7 @@
             border: none;
             cursor: pointer;
             font-size: 1.5rem;
-            color: var(--dark-color);
+            color: var(--text-primary); /* 修改为浅色文字，确保在暗色背景上可见 */
         }
 
         /* 文档页面特有样式 */
@@ -174,7 +174,7 @@
             display: block;
             padding: 10px 15px;
             border-radius: var(--border-radius);
-            color: var(--text-primary);
+            color: var (--text-primary);
             font-weight: 500;
             transition: var(--transition);
         }
@@ -363,9 +363,6 @@
             transform: translateY(-3px);
         }
 
-        /* 页脚 */
-        /* 移除页脚相关的CSS */
-
         /* 命令行 */
         code {
             background-color: var(--code-bg);
@@ -375,6 +372,56 @@
             font-family: var(--font-code);
             font-size: 0.9em;
         }
+
+        /* 移动端目录增强样式 - 删除重复样式 */
+        .mobile-toc {
+            display: none; /* 初始隐藏 */
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: var(--bg-secondary);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 15px;
+            z-index: 999;
+            border: 1px solid var(--border-color);
+            max-width: 80vw;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* 显示时的样式 */
+        .mobile-toc.show {
+            display: block; /* 简化显示方式，确保正常显示 */
+        }
+
+        /* 修改 mobile-toc-toggle，删除重复定义 */
+        .mobile-toc-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            cursor: pointer;
+            text-align: center;
+            line-height: 50px;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-toc-toggle:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        /* 移除重复的 .mobile-toc 和 .mobile-toc-toggle 定义，只保留这一组 */
 
         /* 页面顶部 */
         .page-header {
@@ -392,11 +439,17 @@
             border: none;
         }
 
-        /* 响应式设计 */
-        @media (max-width: 992px) {
-            .docs-container {
-                grid-template-columns: 1fr 2fr;
-            }
+        /* 弹性卡片设计 */
+        .flex-card {
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .flex-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow), 0 10px 25px rgba(0, 187, 240, 0.2);
         }
 
         @media (max-width: 768px) {
@@ -406,8 +459,8 @@
                 top: 70px;
                 left: 0;
                 right: 0;
-                background: white;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                background: var(--bg-secondary); /* 保持使用暗色背景 */
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
                 padding: 20px;
                 transition: var(--transition);
                 z-index: 10;
@@ -425,8 +478,24 @@
                 margin: 10px 0;
             }
             
+            .main-nav li a {
+                color: var(--text-primary); /* 确保菜单文字是浅色的 */
+                display: block; /* 增大点击区域 */
+                padding: 8px 15px; /* 增加内边距使按钮更大 */
+                border-radius: var(--border-radius); /* 圆角边框 */
+                transition: var(--transition); /* 平滑过渡效果 */
+            }
+            
+            .main-nav li a:hover,
+            .main-nav li a.active {
+                background-color: rgba(0, 187, 240, 0.1); /* 添加悬停背景 */
+                color: var(--primary-color); /* 悬停时文字变为主题色 */
+            }
+
+            /* 修复移动导航按钮样式 - 确保移动端显示 */
             .mobile-nav-toggle {
                 display: block;
+                color: var(--text-primary); /* 确保在暗色背景上可见 */
             }
 
             .docs-container {
@@ -434,42 +503,27 @@
             }
             
             .docs-sidebar {
-                position: static;
-                height: auto;
-                margin-bottom: 20px;
+                display: none; /* 隐藏侧边栏目录 */
             }
             
-            .docs-sidebar ul {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-            
-            .docs-sidebar li {
-                margin-bottom: 0;
-                flex: 1 0 auto;
-            }
-            
-            .docs-sidebar a {
-                padding: 8px 12px;
-                font-size: 0.9rem;
-                text-align: center;
-            }
-            
-            .docs-sidebar a i {
-                margin-right: 5px;
+            .mobile-toc-toggle {
+                display: block; /* 显示移动端目录按钮 */
             }
 
             .code-block {
                 font-size: 13px;
             }
+
+            .page-header {
+                padding: 40px 0 30px;
+            }
+            
+            .page-header h2 {
+                font-size: 2rem;
+            }
         }
 
         @media (max-width: 576px) {
-            .docs-sidebar ul {
-                flex-direction: column;
-            }
-            
             .docs-content {
                 padding: 20px 15px;
             }
@@ -488,7 +542,7 @@
             }
             
             .page-header h2 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -533,6 +587,23 @@
                 <li><a href="#tips-tricks"><i class="fas fa-lightbulb"></i> 使用技巧</a></li>
             </ul>
         </aside>
+
+        <!-- 移动端目录按钮和弹出内容 -->
+        <button class="mobile-toc-toggle">
+            <i class="fas fa-list"></i>
+        </button>
+        <div class="mobile-toc">
+            <ul>
+                <li><a href="#introduction" class="active"><i class="fas fa-info-circle"></i> 简介</a></li>
+                <li><a href="#installation"><i class="fas fa-download"></i> 安装</a></li>
+                <li><a href="#basic-usage"><i class="fas fa-play"></i> 基本用法</a></li>
+                <li><a href="#task-management"><i class="fas fa-tasks"></i> 任务管理</a></li>
+                <li><a href="#batch-mode"><i class="fas fa-layer-group"></i> 批量模式</a></li>
+                <li><a href="#due-dates"><i class="fas fa-calendar-alt"></i> 截止日期</a></li>
+                <li><a href="#language-support"><i class="fas fa-globe"></i> 多语言支持</a></li>
+                <li><a href="#tips-tricks"><i class="fas fa-lightbulb"></i> 使用技巧</a></li>
+            </ul>
+        </div>
 
         <!-- 主要内容区域 -->
         <main class="docs-content">
@@ -643,7 +714,7 @@ jodo -c 1 2 3
 # 取消任务完成标记
 jodo -u 1c</div>
 
-                <div class="note-box">
+                <div class="note-box"></div>
                     <strong>注意：</strong> 已完成任务的 ID 会在末尾显示 'c'，例如 '1c'。使用 <code>-u</code> 命令取消完成标记时，需要包含这个 'c' 后缀。
                 </div>
 
@@ -654,7 +725,7 @@ jodo --star 1
 # 取消任务重要标记
 jodo --unstar 1</div>
 
-                <div class="note-box">
+                <div class="note-box"></div>
                     <strong>提示：</strong> 重要任务会在列表中置顶显示，并带有星号标记。
                 </div>
 
@@ -730,7 +801,7 @@ jodo$> exit  # 输入exit退出批量模式</div>
                         <td>即将到期</td>
                         <td>任务在3天内到期</td>
                     </tr>
-                    <tr>
+                    <tr></tr>
                         <td><span class="color-sample color-normal"></span> 正常颜色</td>
                         <td>未紧急</td>
                         <td>任务截止日期较远</td>
@@ -804,21 +875,81 @@ alias jm='jodo -m'</div>
     </div>
 
     <script>
-        // 移动端导航菜单切换
-        document.querySelector('.mobile-nav-toggle').addEventListener('click', function() {
-            document.querySelector('.main-nav').classList.toggle('show');
-        });
-
-        // 点击其他区域关闭导航菜单
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('.main-nav') && 
-                !event.target.closest('.mobile-nav-toggle')) {
-                document.querySelector('.main-nav').classList.remove('show');
-            }
-        });
-
-        // 侧边栏导航激活状态
+        // 页面加载后执行
         document.addEventListener('DOMContentLoaded', function() {
+            // 移动端目录弹出按钮
+            const mobileToggleBtn = document.querySelector('.mobile-toc-toggle');
+            const mobileToc = document.querySelector('.mobile-toc');
+            
+            // 确保元素存在
+            if(mobileToggleBtn && mobileToc) {
+                // 点击目录按钮显示/隐藏目录
+                mobileToggleBtn.addEventListener('click', function(e) {
+                    e.stopPropagation(); // 阻止事件冒泡
+                    mobileToc.classList.toggle('show');
+                    console.log('目录按钮被点击', mobileToc.classList.contains('show') ? '显示' : '隐藏');
+                });
+                
+                // 点击目录内容时阻止关闭
+                mobileToc.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+                
+                // 目录中的链接点击事件
+                const mobileTocLinks = document.querySelectorAll('.mobile-toc a');
+                mobileTocLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href').substring(1);
+                        const targetSection = document.getElementById(targetId);
+                        
+                        if (targetSection) {
+                            // 滚动到目标位置
+                            window.scrollTo({
+                                top: targetSection.offsetTop - 90,
+                                behavior: 'smooth'
+                            });
+                            
+                            // 更新活动状态
+                            mobileTocLinks.forEach(l => l.classList.remove('active'));
+                            this.classList.add('active');
+                            
+                            // 隐藏目录
+                            mobileToc.classList.remove('show');
+                        }
+                    });
+                });
+            }
+            
+            // 点击页面其他区域关闭目录
+            document.body.addEventListener('click', function() {
+                if(mobileToc && mobileToc.classList.contains('show')) {
+                    mobileToc.classList.remove('show');
+                }
+            });
+            
+            // 其他现有的代码
+            // 移动端导航菜单切换
+            const navToggle = document.querySelector('.mobile-nav-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            
+            if(navToggle && mainNav) {
+                navToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    mainNav.classList.toggle('show');
+                });
+            }
+            
+            // 点击其他区域关闭导航菜单
+            document.addEventListener('click', function(event) {
+                if (mainNav && !event.target.closest('.main-nav') && 
+                    !event.target.closest('.mobile-nav-toggle')) {
+                    mainNav.classList.remove('show');
+                }
+            });
+
+            // 侧边栏导航激活状态
             const sidebarLinks = document.querySelectorAll('.docs-sidebar a');
             const sections = document.querySelectorAll('.docs-section');
             
@@ -837,19 +968,30 @@ alias jm='jodo -m'</div>
                 });
                 
                 if (currentSection) {
+                    // 更新侧边栏活动状态
                     sidebarLinks.forEach(link => {
                         link.classList.remove('active');
                         if (link.getAttribute('href') === '#' + currentSection) {
                             link.classList.add('active');
                         }
                     });
+                    
+                    // 更新移动端目录活动状态
+                    if(mobileTocLinks) {
+                        mobileTocLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === '#' + currentSection) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
                 }
             }
             
             // 监听滚动事件
             window.addEventListener('scroll', setActiveSection);
             
-            // 点击链接滚动到相应部分
+            // 点击链接滚动到相应部分 - 侧边栏
             sidebarLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -872,6 +1014,25 @@ alias jm='jodo -m'</div>
             
             // 初始设置
             setActiveSection();
+            
+            // 调整侧边栏高度
+            function adjustSidebarHeight() {
+                const sidebar = document.querySelector('.docs-sidebar');
+                if (sidebar) {
+                    if (window.innerWidth > 768) {
+                        const headerHeight = document.querySelector('.header').offsetHeight;
+                        sidebar.style.height = `calc(100vh - ${headerHeight + 20}px)`;
+                        sidebar.style.top = `${headerHeight + 10}px`;
+                    } else {
+                        sidebar.style.height = 'auto';
+                        sidebar.style.top = 'auto';
+                    }
+                }
+            }
+            
+            // 初始调整和窗口大小改变时调整
+            adjustSidebarHeight();
+            window.addEventListener('resize', adjustSidebarHeight);
         });
     </script>
 </body>
