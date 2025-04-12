@@ -253,29 +253,9 @@
         <a href="https://github.com/JoyinJoester" target="_blank">
           <img src="image/cfa71fe042f69a6d0c31ef76e58f3fb.jpg" alt="头像" class="avatar">
         </a>
-        <h2 id="typing-title"></h2>
-        <p id="typing-line1"></p>
-        <p id="typing-line2"></p>
-        <script>
-          const typingEffect = (elementId, text, delay = 100) => {
-            const element = document.getElementById(elementId);
-            let index = 0;
-            const type = () => {
-              if (index < text.length) {
-          element.textContent += text[index];
-          index++;
-          setTimeout(type, delay);
-              }
-            };
-            type();
-          };
-
-          document.addEventListener('DOMContentLoaded', () => {
-            typingEffect('typing-title', 'Joyin', 150);
-            setTimeout(() => typingEffect('typing-line1', '牛牛拥有者', 150), 1000);
-            setTimeout(() => typingEffect('typing-line2', '开源爱好者', 150), 2000);
-          });
-        </script>
+        <h2>Joyin</h2>
+        <p>牛牛拥有者</p>
+        <p>开源爱好者</p>
       </div>
     </div>
 
@@ -307,7 +287,7 @@
 <ul>
   <li>
     <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #E34C26; margin-right: 8px;"></span>
-    HTML5+           
+    HTML5+
     <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #2965F1; margin-right: 8px;"></span>
     CSS3+
     <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #F1E05A; margin-right: 8px;"></span>
@@ -315,11 +295,12 @@
   </li>
   <li>
     <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #555555; margin-right: 8px;"></span>
-    C+
+    C
+  </li>
+  <li>
     <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #DEA584; margin-right: 8px;"></span>
     Rust
   </li>
-
 </ul>
           </div>
           <div class="card">
@@ -406,6 +387,7 @@
           <button class="tab-btn active" data-target="tech">技术文章</button>
           <button class="tab-btn" data-target="life">生活记录</button>
           <button class="tab-btn" data-target="log">工具箱</button>
+          <button class="tab-btn" data-target="projects">项目</button>
         </div>
 
         <div class="tab-content">
@@ -419,6 +401,8 @@
             </ul>
           </div>
           <div id="life" class="content-item">
+                <p>📅 2025年04月12日：傻逼郑安南</p>
+                <p>📅 2025年04月11日：发布JODO</p>
                 <p>📅 2025年03月27日：傻逼郑安南太气人了，这阳痿的东西</p>
                 <p>📅 2025年03月24日：更新一下排版布局</p>
                 <p>📅 2025年03月10日：郑安南怎么这么坏啊，老是打扰我学习</p>
@@ -432,6 +416,9 @@
                 <p><a href="html/fqz.html">番茄钟</a></p>
                 <p><a href="html/fuckmd.html">Fuck Markdown</a></p>
                 <p><a href="html/ziyuan.html">资源中心</a></p>
+          </div>
+          <div id="projects" class="content-item">
+            <p><a href="jodo/index.html">JODO</a></p>
           </div>
         </div>
       </div>

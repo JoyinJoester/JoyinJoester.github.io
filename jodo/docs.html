@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JODO - 使用文档</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* 基础样式 */
+        :root {
+            --primary-color: #00bbf0;
+            --secondary-color: #005792;
+            --dark-color: #00204a;
+            --light-color: #d9faff;
+            --gray-color: #6a8eae;
+            
+            /* 暗色主题颜色 */
+            --bg-color: #121a24;
+            --bg-secondary: #182435;
+            --text-primary: #e9f0f5;
+            --text-secondary: #a3b8cc;
+            --card-bg: #182435;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --border-color: rgba(0, 187, 240, 0.2);
+            
+            --border-radius: 12px;
+            --font-main: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            --font-code: 'Consolas', 'Courier New', monospace;
+            --transition: all 0.3s ease;
+            --container-padding: 20px;
+            --section-spacing: 60px;
+            --card-padding: 25px;
+            --content-max-width: 1200px;
+
+            /* 代码块颜色变量 */
+            --code-bg: #283149;
+            --code-text: #c1d3e2;
+            --code-comment: #6a889e;
+            --code-keyword: #88c0d0;
+            --code-string: #a3be8c;
+
+            /* 按钮颜色变量 */
+            --btn-primary-bg: linear-gradient(135deg, #005792, #00204a);
+            --btn-primary-hover-bg: linear-gradient(135deg, #00bbf0, #005792);
+            --btn-secondary-bg: rgba(0, 187, 240, 0.15);
+            --btn-secondary-border: rgba(0, 187, 240, 0.5);
+            --btn-secondary-hover-bg: rgba(0, 187, 240, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-color);
+            padding-top: 70px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        h1, h2, h3, h4, h5 {
+            margin: 0 0 15px;
+            line-height: 1.3;
+        }
+
+        /* 头部导航 - 所有页面一致 */
+        .header {
+            background: var(--bg-secondary);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 var(--container-padding);
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .main-nav li {
+            margin-left: 25px;
+        }
+
+        .main-nav a {
+            color: var(--text-primary);
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .main-nav a:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .main-nav a:hover:after,
+        .main-nav a.active:after {
+            width: 100%;
+        }
+
+        .mobile-nav-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+
+        /* 文档页面特有样式 */
+        .docs-container {
+            max-width: var(--content-max-width);
+            margin: 30px auto;
+            padding: 0 var(--container-padding);
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 30px;
+        }
+
+        .docs-sidebar {
+            position: sticky;
+            top: 90px;
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+            background-color: var(--bg-secondary);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: var(--card-padding);
+            border: 1px solid var(--border-color);
+        }
+
+        .docs-sidebar ul {
+            list-style: none;
+        }
+
+        .docs-sidebar li {
+            margin-bottom: 5px;
+        }
+
+        .docs-sidebar a {
+            display: block;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .docs-sidebar a:hover,
+        .docs-sidebar a.active {
+            background-color: rgba(0, 187, 240, 0.1);
+            color: #00bbf0;
+        }
+
+        .docs-sidebar a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .docs-content {
+            background-color: var(--bg-secondary);
+            border-radius: var(--border-radius);
+            padding: var(--card-padding);
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .docs-section {
+            margin-bottom: 40px;
+            scroll-margin-top: 90px;
+        }
+
+        .docs-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .docs-section h2 {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .docs-section h3 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin: 25px 0 15px;
+        }
+
+        .docs-section ul, .docs-section ol {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .docs-section li {
+            margin-bottom: 8px;
+        }
+
+        /* 代码块样式 */
+        .code-block {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            font-family: var(--font-code);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin: 15px 0;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre;
+            word-wrap: normal;
+            border: 1px solid rgba(35, 50, 75, 0.8);
+            /* 隐藏滚动条但保持可滚动功能 */
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        /* 隐藏Webkit浏览器的滚动条 */
+        .code-block::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 注释框 */
+        .note-box {
+            background-color: rgba(0, 187, 240, 0.1);
+            border-left: 4px solid #00bbf0;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .warning-box {
+            background-color: rgba(217, 250, 255, 0.3);
+            border-left: 4px solid #00bbf0;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: var(--bg-secondary);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        table th {
+            background-color: rgba(0, 32, 74, 0.5);
+            font-weight: 600;
+        }
+
+        table tr:hover {
+            background-color: rgba(0, 187, 240, 0.1);
+        }
+
+        /* 颜色示例 */
+        .color-sample {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-right: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .color-overdue {
+            background-color: #ff5252;
+        }
+
+        .color-urgent {
+            background-color: #ff7b7b;
+        }
+
+        .color-soon {
+            background-color: #00bbf0;
+        }
+
+        .color-normal {
+            background-color: #6a8eae;
+        }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            margin: 5px;
+            min-width: 150px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--btn-primary-bg);
+            color: var(--text-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--btn-primary-hover-bg);
+            box-shadow: 0 6px 15px rgba(0, 187, 240, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background: var(--btn-secondary-bg);
+            color: var(--primary-color);
+            border: 2px solid var(--btn-secondary-border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--btn-secondary-hover-bg);
+            border-color: var(--primary-color);
+            box-shadow: 0 6px 15px rgba(0, 187, 240, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* 页脚 */
+        /* 移除页脚相关的CSS */
+
+        /* 命令行 */
+        code {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: var(--font-code);
+            font-size: 0.9em;
+        }
+
+        /* 页面顶部 */
+        .page-header {
+            text-align: center;
+            padding: 60px 0 40px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, rgba(0, 187, 240, 0.05), rgba(0, 32, 74, 0.3));
+            border-radius: var(--border-radius);
+        }
+
+        .page-header h2 {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            border: none;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .docs-container {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                transition: var(--transition);
+                z-index: 10;
+            }
+            
+            .main-nav.show {
+                display: block;
+            }
+            
+            .main-nav ul {
+                flex-direction: column;
+            }
+            
+            .main-nav li {
+                margin: 10px 0;
+            }
+            
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            .docs-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .docs-sidebar {
+                position: static;
+                height: auto;
+                margin-bottom: 20px;
+            }
+            
+            .docs-sidebar ul {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .docs-sidebar li {
+                margin-bottom: 0;
+                flex: 1 0 auto;
+            }
+            
+            .docs-sidebar a {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+                text-align: center;
+            }
+            
+            .docs-sidebar a i {
+                margin-right: 5px;
+            }
+
+            .code-block {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .docs-sidebar ul {
+                flex-direction: column;
+            }
+            
+            .docs-content {
+                padding: 20px 15px;
+            }
+            
+            .docs-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .docs-section h3 {
+                font-size: 1.2rem;
+            }
+            
+            table th, table td {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+            
+            .page-header h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header class="header">
+        <div class="logo">
+            <h1>JODO</h1>
+        </div>
+        <button class="mobile-nav-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="docs.html" class="active">文档</a></li>
+                <li><a href="download.html">下载</a></li>
+                <li><a href="https://github.com/JoyinJoester/JODO" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 页面顶部 -->
+    <div class="page-header">
+        <h2>使用文档</h2>
+        <p>了解如何安装和使用 JODO 进行任务管理</p>
+    </div>
+
+    <!-- 文档内容 -->
+    <div class="docs-container">
+        <!-- 侧边栏导航 -->
+        <aside class="docs-sidebar">
+            <ul>
+                <li><a href="#introduction" class="active"><i class="fas fa-info-circle"></i> 简介</a></li>
+                <li><a href="#installation"><i class="fas fa-download"></i> 安装</a></li>
+                <li><a href="#basic-usage"><i class="fas fa-play"></i> 基本用法</a></li>
+                <li><a href="#task-management"><i class="fas fa-tasks"></i> 任务管理</a></li>
+                <li><a href="#batch-mode"><i class="fas fa-layer-group"></i> 批量模式</a></li>
+                <li><a href="#due-dates"><i class="fas fa-calendar-alt"></i> 截止日期</a></li>
+                <li><a href="#language-support"><i class="fas fa-globe"></i> 多语言支持</a></li>
+                <li><a href="#tips-tricks"><i class="fas fa-lightbulb"></i> 使用技巧</a></li>
+            </ul>
+        </aside>
+
+        <!-- 主要内容区域 -->
+        <main class="docs-content">
+            <!-- 简介部分 -->
+            <section id="introduction" class="docs-section">
+                <h2>简介</h2>
+                <p>JODO 是一个轻量级命令行 Todo 应用程序，帮助您高效管理日常任务。它提供简洁的命令行界面，支持截止日期设置、重要任务标记、任务优先级排序等功能，是命令行爱好者的理想选择。</p>
+                
+                <h3>主要特性</h3>
+                <ul>
+                    <li>简洁的命令行界面</li>
+                    <li>支持任务截止日期设置</li>
+                    <li>重要任务标记</li>
+                    <li>截止日期彩色显示（逾期、紧急、即将到期）</li>
+                    <li>批量添加和操作任务</li>
+                    <li>多语言支持（中文、英文、日语）</li>
+                </ul>
+            </section>
+
+            <!-- 安装部分 -->
+            <section id="installation" class="docs-section">
+                <h2>安装</h2>
+                
+                <h3>从 GitHub 直接安装</h3>
+                <div class="code-block"># 克隆仓库
+git clone https://github.com/JoyinJoester/JODO.git
+cd JODO
+
+# 编译安装
+cargo build --release
+sudo cp ./target/release/jodo /usr/local/bin/
+sudo chmod +x /usr/local/bin/jodo</div>
+
+                <h3>使用 Cargo 从 GitHub 直接安装</h3>
+                <div class="code-block">cargo install --git https://github.com/JoyinJoester/JODO.git</div>
+
+                <h3>Linux 安装</h3>
+                <ol>
+                    <li>
+                        <p>首先进行发布构建：</p>
+                        <div class="code-block">cargo build --release</div>
+                    </li>
+                    <li>
+                        <p>运行提供的安装脚本：</p>
+                        <div class="code-block">sudo chmod +x ./debian_install.sh
+sudo ./debian_install.sh</div>
+                        <p>该脚本会将编译好的二进制文件复制到 <code>/usr/local/bin</code> 目录，并可选地设置 PATH 环境变量。</p>
+                    </li>
+                    <li>
+                        <p>手动安装方式：</p>
+                        <div class="code-block">sudo cp ./target/release/jodo /usr/local/bin/
+sudo chmod +x /usr/local/bin/jodo</div>
+                    </li>
+                    <li>
+                        <p>验证安装：</p>
+                        <div class="code-block">jodo --version</div>
+                        <p>如果显示版本信息，则安装成功。</p>
+                    </li>
+                </ol>
+
+                <h3>使用 Cargo 安装</h3>
+                <p>如果已经安装了 Rust 和 Cargo，也可以使用以下命令安装：</p>
+                <div class="code-block">cargo install --path .</div>
+            </section>
+
+            <!-- 基本用法部分 -->
+            <section id="basic-usage" class="docs-section">
+                <h2>基本用法</h2>
+                
+                <h3>添加任务</h3>
+                <div class="code-block"># 添加新任务
+jodo "完成项目报告"
+
+# 添加带有截止日期的任务
+jodo "完成项目报告" -t 2023-12-31</div>
+
+                <h3>查看任务</h3>
+                <div class="code-block"># 列出所有任务 (两种方式都可以)
+jodo -l
+jodo</div>
+
+                <div class="note-box">
+                    <strong>提示：</strong> 在 JODO 中，任务显示分为未完成和已完成两部分。未完成任务列在上方，已完成任务列在下方。
+                </div>
+            </section>
+
+            <!-- 任务管理部分 -->
+            <section id="task-management" class="docs-section">
+                <h2>任务管理</h2>
+                
+                <h3>编辑任务</h3>
+                <div class="code-block"># 编辑任务内容
+jodo -e 1 "更新后的任务内容"
+
+# 修改任务截止日期
+jodo -e 1 -t 2023-12-25
+
+# 快捷方式：直接修改截止日期
+jodo -t 1 2023-12-25</div>
+
+                <h3>标记任务完成状态</h3>
+                <div class="code-block"># 标记任务为已完成
+jodo -c 1
+
+# 同时标记多个任务为已完成
+jodo -c 1 2 3
+
+# 取消任务完成标记
+jodo -u 1c</div>
+
+                <div class="note-box">
+                    <strong>注意：</strong> 已完成任务的 ID 会在末尾显示 'c'，例如 '1c'。使用 <code>-u</code> 命令取消完成标记时，需要包含这个 'c' 后缀。
+                </div>
+
+                <h3>标记重要任务</h3>
+                <div class="code-block"># 标记任务为重要
+jodo --star 1
+
+# 取消任务重要标记
+jodo --unstar 1</div>
+
+                <div class="note-box">
+                    <strong>提示：</strong> 重要任务会在列表中置顶显示，并带有星号标记。
+                </div>
+
+                <h3>删除任务</h3>
+                <div class="code-block"># 删除单个任务
+jodo -d 1
+
+# 同时删除多个任务
+jodo -d 1 2 3</div>
+
+                <h3>查看任务详情</h3>
+                <div class="code-block"># 显示任务的详细信息
+jodo --show 1</div>
+
+                <h3>子命令形式</h3>
+                <p>JODO 也支持子命令形式进行操作：</p>
+                <div class="code-block">jodo list                  # 列出所有任务
+jodo done 1                # 标记任务为已完成
+jodo undo 1c               # 取消任务完成标记
+jodo remove 1              # 删除任务
+jodo edit 1 "新内容"        # 编辑任务内容
+jodo edit 1 -t 2023-12-25  # 编辑任务截止日期
+jodo star 1                # 标记任务为重要
+jodo unstar 1              # 取消任务重要标记
+jodo show 1                # 显示任务详情</div>
+            </section>
+
+            <!-- 批量模式部分 -->
+            <section id="batch-mode" class="docs-section">
+                <h2>批量模式</h2>
+                <p>JODO 提供批量添加任务的模式，让您可以快速连续添加多个任务：</p>
+                
+                <div class="code-block"># 进入批量添加模式
+jodo -m
+
+# 示例会话:
+jodo$> 完成第一项任务
+任务 "完成第一项任务" 已添加
+jodo$> 完成第二项任务
+任务 "完成第二项任务" 已添加
+jodo$> 学习Rust编程
+任务 "学习Rust编程" 已添加
+jodo$> exit  # 输入exit退出批量模式</div>
+
+                <div class="note-box">
+                    <strong>提示：</strong> 在批量模式中，每输入一行内容并按回车，就会添加一个新任务。输入 "exit" 可以退出批量模式。
+                </div>
+            </section>
+
+            <!-- 截止日期部分 -->
+            <section id="due-dates" class="docs-section">
+                <h2>截止日期</h2>
+                <p>JODO 支持为任务设置截止日期，并使用颜色来提示截止日期的紧急程度：</p>
+                
+                <table>
+                    <tr>
+                        <th>颜色</th>
+                        <th>状态</th>
+                        <th>描述</th>
+                    </tr>
+                    <tr>
+                        <td><span class="color-sample color-overdue"></span> 红色加粗</td>
+                        <td>已过期</td>
+                        <td>任务截止日期已过</td>
+                    </tr>
+                    <tr>
+                        <td><span class="color-sample color-urgent"></span> 亮红色</td>
+                        <td>今天到期</td>
+                        <td>任务在今天截止（紧急）</td>
+                    </tr>
+                    <tr>
+                        <td><span class="color-sample color-soon"></span> 黄色</td>
+                        <td>即将到期</td>
+                        <td>任务在3天内到期</td>
+                    </tr>
+                    <tr>
+                        <td><span class="color-sample color-normal"></span> 正常颜色</td>
+                        <td>未紧急</td>
+                        <td>任务截止日期较远</td>
+                    </tr>
+                </table>
+                
+                <h3>设置截止日期</h3>
+                <div class="code-block"># 创建任务时设置截止日期
+jodo "完成项目报告" -t 2023-12-31
+
+# 修改现有任务的截止日期
+jodo -e 1 -t 2023-12-25
+
+# 快捷方式
+jodo -t 1 2023-12-25</div>
+
+                <div class="note-box">
+                    <strong>提示：</strong> 日期格式为 YYYY-MM-DD，例如 2023-12-31。
+                </div>
+            </section>
+
+            <!-- 多语言支持部分 -->
+            <section id="language-support" class="docs-section">
+                <h2>多语言支持</h2>
+                <p>JODO 支持多种语言界面，您可以使用 <code>-L</code> 参数切换语言：</p>
+                
+                <div class="code-block"># 切换到中文界面
+jodo -L zh-cn
+
+# 切换到英文界面
+jodo -L en
+
+# 切换到日语界面
+jodo -L ja</div>
+
+                <div class="note-box">
+                    <strong>提示：</strong> 语言设置会在当前会话中生效，如果您希望永久设置语言，可以在常用的shell配置文件（如 .bashrc 或 .zshrc）中添加别名。
+                </div>
+            </section>
+
+            <!-- 使用技巧部分 -->
+            <section id="tips-tricks" class="docs-section">
+                <h2>使用技巧</h2>
+                
+                <h3>任务优先级管理</h3>
+                <ul>
+                    <li>使用星标（<code>--star</code>）标记最重要的任务，它们会自动置顶</li>
+                    <li>对临近截止日期的任务优先处理，JODO会以颜色提示您</li>
+                </ul>
+                
+                <h3>数据存储位置</h3>
+                <p>JODO 将所有任务数据保存在以下位置：</p>
+                <div class="code-block">~/.jodo/tasks.json</div>
+                <p>如果您想备份数据，只需拷贝这个文件即可。</p>
+                
+                <h3>建议的别名设置</h3>
+                <p>您可以在 shell 配置文件（如 .bashrc、.zshrc 等）中添加以下别名，简化常用命令：</p>
+                <div class="code-block"># 显示所有任务
+alias jl='jodo -l'
+
+# 标记任务完成
+alias jc='jodo -c'
+
+# 快速添加任务
+alias ja='jodo'
+
+# 进入批量添加模式
+alias jm='jodo -m'</div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // 移动端导航菜单切换
+        document.querySelector('.mobile-nav-toggle').addEventListener('click', function() {
+            document.querySelector('.main-nav').classList.toggle('show');
+        });
+
+        // 点击其他区域关闭导航菜单
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.main-nav') && 
+                !event.target.closest('.mobile-nav-toggle')) {
+                document.querySelector('.main-nav').classList.remove('show');
+            }
+        });
+
+        // 侧边栏导航激活状态
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarLinks = document.querySelectorAll('.docs-sidebar a');
+            const sections = document.querySelectorAll('.docs-section');
+            
+            // 设置活动部分
+            function setActiveSection() {
+                let currentSection = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const scrollPosition = window.scrollY + 100;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+                
+                if (currentSection) {
+                    sidebarLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === '#' + currentSection) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            }
+            
+            // 监听滚动事件
+            window.addEventListener('scroll', setActiveSection);
+            
+            // 点击链接滚动到相应部分
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 90,
+                            behavior: 'smooth'
+                        });
+                        
+                        // 更新活动状态
+                        sidebarLinks.forEach(link => link.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+            
+            // 初始设置
+            setActiveSection();
+        });
+    </script>
+</body>
+</html>

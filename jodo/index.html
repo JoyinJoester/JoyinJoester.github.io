@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JODO - 简单的命令行 Todo 应用</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* 基础样式 */
+        :root {
+            --primary-color: #00bbf0;
+            --secondary-color: #005792;
+            --dark-color: #00204a;
+            --light-color: #d9faff;
+            --gray-color: #6a8eae;
+            
+            /* 暗色主题颜色 */
+            --bg-color: #121a24;
+            --bg-secondary: #182435;
+            --text-primary: #e9f0f5;
+            --text-secondary: #a3b8cc;
+            --card-bg: #182435;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --border-color: rgba(0, 187, 240, 0.2);
+            
+            --border-radius: 12px;
+            --font-main: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            --font-code: 'Consolas', 'Courier New', monospace;
+            --transition: all 0.3s ease;
+            --container-padding: 20px;
+            --section-spacing: 60px;
+            --card-padding: 25px;
+            --content-max-width: 1200px;
+
+            /* 代码块颜色变量 */
+            --code-bg: #283149;
+            --code-text: #c1d3e2;
+            --code-comment: #6a889e;
+            --code-keyword: #88c0d0;
+            --code-string: #a3be8c;
+
+            /* 按钮颜色变量 */
+            --btn-primary-bg: linear-gradient(135deg, #005792, #00204a);
+            --btn-primary-hover-bg: linear-gradient(135deg, #00bbf0, #005792);
+            --btn-secondary-bg: rgba(0, 187, 240, 0.15);
+            --btn-secondary-border: rgba(0, 187, 240, 0.5);
+            --btn-secondary-hover-bg: rgba(0, 187, 240, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-color);
+            padding-top: 70px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        h1, h2, h3, h4, h5 {
+            margin: 0 0 15px;
+            line-height: 1.3;
+        }
+
+        /* 头部导航 */
+        .header {
+            background: var(--bg-secondary);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 var(--container-padding);
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .main-nav li {
+            margin-left: 25px;
+        }
+
+        .main-nav a {
+            color: var(--text-primary);
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .main-nav a:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .main-nav a:hover:after,
+        .main-nav a.active:after {
+            width: 100%;
+        }
+
+        .mobile-nav-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+
+        /* 容器样式 */
+        .container {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+            padding: 0 var(--container-padding);
+        }
+
+        /* Hero 部分 */
+        .hero {
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: var(--section-spacing);
+            background: linear-gradient(135deg, rgba(0, 187, 240, 0.05), rgba(0, 32, 74, 0.2));
+            border-radius: var(--border-radius);
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var (--text-primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: var (--text-secondary);
+        }
+
+        /* Bento 布局样式 */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: minmax(100px, auto);
+            gap: 20px;
+            margin-bottom: var(--section-spacing);
+        }
+
+        .bento-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: var(--card-padding);
+            transition: var(--transition);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bento-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 不同大小的 Bento 项目 */
+        .bento-large {
+            grid-column: span 6;
+            grid-row: span 2;
+        }
+
+        .bento-medium {
+            grid-column: span 4;
+            grid-row: span 1;
+        }
+
+        .bento-small {
+            grid-column: span 3;
+            grid-row: span 1;
+        }
+
+        .bento-wide {
+            grid-column: span 8;
+            grid-row: span 1;
+        }
+
+        .bento-tall {
+            grid-column: span 4;  /* 将 3 改为 4，与 bento-medium 保持一致 */
+            grid-row: span 2;
+        }
+
+        /* 特性部分 */
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        /* 终端演示 */
+        .terminal {
+            background-color: #1e2538;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-bottom: 20px;
+            width: 100%;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+            border: 1px solid #2a3249;
+        }
+
+        .terminal-header {
+            background-color: #2c3653;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #3a4565;
+        }
+
+        .terminal-buttons {
+            display: flex;
+        }
+
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .terminal-button.red { background-color: #ff5f56; }
+        .terminal-button.yellow { background-color: #ffbd2e; }
+        .terminal-button.green { background-color: #27c93f; }
+
+        .terminal-header span {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .terminal-body {
+            padding: 15px;
+            color: white;
+            font-family: var(--font-code);
+            font-size: 14px;
+            line-height: 1.5;
+            background-color: var(--code-bg);
+            height: 200px; /* 恢复固定高度，使内容可滚动 */
+            overflow-y: auto; /* 恢复滚动功能 */
+            /* 隐藏滚动条但保持可滚动功能 */
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        /* 隐藏Webkit浏览器的滚动条 */
+        .terminal-body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .terminal-line {
+            margin-bottom: 8px;
+        }
+
+        .terminal-prompt {
+            color: #3498db;
+        }
+
+        .terminal-command {
+            color: #ecf0f1;
+        }
+
+        .terminal-output {
+            color: #95a5a6;
+            padding-left: 15px;
+        }
+
+        /* 代码块 */
+        .code-block {
+            background-color: var(--code-bg);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            color: var(--code-text);
+            font-family: var(--font-code);
+            overflow-x: auto;
+            margin-bottom: 20px;
+            border: 1px solid rgba(35, 50, 75, 0.8);
+            /* 隐藏滚动条但保持可滚动功能 */
+            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+
+        .code-block::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 代码块中的注释 */
+        .code-block span {
+            color: var(--code-comment);
+        }
+
+        /* 卡片标题 */
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* 安装步骤 */
+        .install-steps {
+            counter-reset: step;
+        }
+
+        .install-step {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .install-step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 24px;
+            height: 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .install-step p {
+            color: var(--text-primary);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .bento-large {
+                grid-column: span 12;
+            }
+            .bento-medium {
+                grid-column: span 6;
+            }
+            .bento-small {
+                grid-column: span 6;
+            }
+            .bento-wide {
+                grid-column: span 12;
+            }
+            .bento-tall {
+                grid-column: span 6;
+                grid-row: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                transition: var(--transition);
+            }
+            
+            .main-nav.show {
+                display: block;
+            }
+            
+            .main-nav ul {
+                flex-direction: column;
+            }
+            
+            .main-nav li {
+                margin: 10px 0;
+            }
+            
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            .bento-medium, .bento-small, .bento-tall {
+                grid-column: span 12;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .terminal-body {
+                font-size: 12px;
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+                margin: 5px 0;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            margin: 5px;
+            min-width: 150px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--btn-primary-bg);
+            color: var(--text-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--btn-primary-hover-bg);
+            box-shadow: 0 6px 15px rgba(0, 187, 240, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background: var(--btn-secondary-bg);
+            color: var(--primary-color);
+            border: 2px solid var(--btn-secondary-border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--btn-secondary-hover-bg);
+            border-color: var(--primary-color);
+            box-shadow: 0 6px 15px rgba(0, 187, 240, 0.2);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header class="header">
+        <div class="logo">
+            <h1>JODO</h1>
+        </div>
+        <button class="mobile-nav-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#" class="active">首页</a></li>
+                <li><a href="docs.html">文档</a></li>
+                <li><a href="download.html">下载</a></li>
+                <!-- 已移除"关于"页面链接 -->
+                <li><a href="https://github.com/JoyinJoester/JODO" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero 区域 -->
+    <section class="hero">
+        <div class="container">
+            <h2>简单高效的命令行 Todo 应用</h2>
+            <p>JODO 帮助你在终端中轻松管理日常任务，提高生产力和工作效率</p>
+            <div>
+                <a href="download.html" class="btn btn-primary">立即下载</a>
+                <a href="docs.html" class="btn btn-secondary">使用文档</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bento 网格布局区域 -->
+    <div class="container">
+        <div class="bento-grid">
+            <!-- 终端演示区块 -->
+            <div class="bento-item bento-large">
+                <div class="card-title">在终端中高效管理任务</div>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <div class="terminal-button red"></div>
+                            <div class="terminal-button yellow"></div>
+                            <div class="terminal-button green"></div>
+                        </div>
+                        <span>Terminal</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span>
+                            <span class="terminal-command"> jodo "完成项目报告"</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">任务 "完成项目报告" 已添加</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span>
+                            <span class="terminal-command"> jodo "准备会议材料" -t 2023-12-15</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">任务 "准备会议材料" 已添加</span>
+                            <span class="terminal-output">截止日期: 2023-12-15</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span>
+                            <span class="terminal-command"> jodo -l</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">未完成任务:</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">ID    描述                       截止日期</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">-----------------------------------------</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">1     完成项目报告               无</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">2     准备会议材料               2023-12-15</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span>
+                            <span class="terminal-command"> jodo -c 1</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">任务 1 标记为完成</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">$</span>
+                            <span class="terminal-command"> jodo</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">未完成任务:</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">ID    描述                       截止日期</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">-----------------------------------------</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">1     准备会议材料               2023-12-15</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">已完成任务:</span>
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-output">1c    完成项目报告               无</span>
+                        </div>
+                    </div>
+                </div>
+                <p>简单直观的命令行界面，让任务管理高效便捷</p>
+            </div>
+
+            <!-- 特性卡片 -->
+            <div class="bento-item bento-small">
+                <i class="fas fa-calendar-alt feature-icon"></i>
+                <div class="card-title">截止日期提醒</div>
+                <p>为任务设置截止日期，并通过颜色直观显示任务紧急程度</p>
+            </div>
+
+            <div class="bento-item bento-small">
+                <i class="fas fa-star feature-icon"></i>
+                <div class="card-title">重要任务标记</div>
+                <p>标记最重要的任务，自动置顶显示，确保优先处理</p>
+            </div>
+
+            <div class="bento-item bento-small">
+                <i class="fas fa-layer-group feature-icon"></i>
+                <div class="card-title">批量操作模式</div>
+                <p>使用批量模式快速添加多个任务，一次性完成多项工作</p>
+            </div>
+
+            <div class="bento-item bento-small">
+                <i class="fas fa-globe feature-icon"></i>
+                <div class="card-title">多语言支持</div>
+                <p>支持中文、英文和日语界面，满足不同用户需求</p>
+            </div>
+
+            <!-- 快速开始区域 -->
+            <div class="bento-item bento-wide">
+                <div class="card-title">快速开始</div>
+                <div class="code-block">
+<span># 安装 JODO</span><br>
+cargo install --git https://github.com/JoyinJoester/JODO.git
+<br>
+<span># 添加新任务</span><br>
+jodo "完成项目报告"
+<br>
+<span># 添加带截止日期的任务</span><br>
+jodo "准备会议材料" -t 2023-12-15
+<br>
+<span># 查看所有任务</span><br>
+jodo -l
+</div>
+                <div>
+                    <a href="docs.html" class="btn btn-secondary">查看完整文档</a>
+                </div>
+            </div>
+
+            <!-- 安装说明 -->
+            <div class="bento-item bento-tall">
+                <div class="card-title">简单安装</div>
+                <div class="install-steps">
+                    <div class="install-step">
+                        <p>克隆 GitHub 仓库</p>
+                        <div class="code-block">git clone https://github.com/JoyinJoester/JODO.git</div>
+                    </div>
+                    <div class="install-step">
+                        <p>构建项目</p>
+                        <div class="code-block">cargo build --release</div>
+                    </div>
+                    <div class="install-step">
+                        <p>安装到系统</p>
+                        <div class="code-block">sudo cp ./target/release/jodo /usr/local/bin/</div>
+                    </div>
+                    <div class="install-step">
+                        <p>完成！开始使用</p>
+                        <div class="code-block">jodo --version</div>
+                    </div>
+                </div>
+                <div class="btn-wrapper" style="margin-top: auto; padding-top: 10px;">
+                    <a href="download.html" class="btn btn-secondary">查看详细安装指南</a>
+                </div>
+            </div>
+
+            <!-- 移除了用户评价卡片 -->
+
+            <!-- 开源项目卡片 - 拉长为 bento-wide -->
+            <div class="bento-item bento-wide">
+                <div class="card-title">开源项目</div>
+                <p>JODO 是一个使用 MIT 许可证开源的项目，我们欢迎所有形式的贡献，包括代码贡献、问题反馈、文档改进或只是分享您的使用经验。</p>
+                <div style="display: flex; justify-content: space-between; margin: 20px 0;">
+                    <div style="text-align: center; padding: 15px; flex: 1;">
+                        <i class="fas fa-code-branch" style="font-size: 2rem; color: var(--primary-color);"></i>
+                        <p style="margin-top: 10px;"><strong>开源协作</strong></p>
+                        <p style="font-size: 0.9rem;">参与项目开发</p>
+                    </div>
+                    <div style="text-align: center; padding: 15px; flex: 1;">
+                        <i class="fas fa-bug" style="font-size: 2rem; color: var(--primary-color);"></i>
+                        <p style="margin-top: 10px;"><strong>问题反馈</strong></p>
+                        <p style="font-size: 0.9rem;">帮助改进产品</p>
+                    </div>
+                    <div style="text-align: center; padding: 15px; flex: 1;">
+                        <i class="fas fa-book" style="font-size: 2rem; color: var(--primary-color);"></i>
+                        <p style="margin-top: 10px;"><strong>文档贡献</strong></p>
+                        <p style="font-size: 0.9rem;">完善使用指南</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 10px;">
+                    <a href="https://github.com/JoyinJoester/JODO" class="btn btn-secondary" style="width: 100%;">
+                        <i class="fab fa-github"></i> 前往 GitHub 仓库
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 移动端导航菜单切换
+        document.querySelector('.mobile-nav-toggle').addEventListener('click', function() {
+            document.querySelector('.main-nav').classList.toggle('show');
+        });
+
+        // 点击其他区域关闭导航菜单
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.main-nav') && 
+                !event.target.closest('.mobile-nav-toggle')) {
+                document.querySelector('.main-nav').classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
