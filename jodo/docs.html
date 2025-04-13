@@ -72,7 +72,7 @@
             line-height: 1.3;
         }
 
-        /* 头部导航 - 所有页面一致 */
+        /* 头部导航 */
         .header {
             background: var(--bg-secondary);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -137,191 +137,246 @@
             border: none;
             cursor: pointer;
             font-size: 1.5rem;
-            color: var(--text-primary); /* 修改为浅色文字，确保在暗色背景上可见 */
-        }
-
-        /* 文档页面特有样式 */
-        .docs-container {
-            max-width: var(--content-max-width);
-            margin: 30px auto;
-            padding: 0 var(--container-padding);
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-            gap: 30px;
-        }
-
-        .docs-sidebar {
-            position: sticky;
-            top: 90px;
-            height: calc(100vh - 100px);
-            overflow-y: auto;
-            background-color: var(--bg-secondary);
-            border-radius: var(--border-radius);
-            box-shadow: var(--card-shadow);
-            padding: var(--card-padding);
-            border: 1px solid var(--border-color);
-        }
-
-        .docs-sidebar ul {
-            list-style: none;
-        }
-
-        .docs-sidebar li {
-            margin-bottom: 5px;
-        }
-
-        .docs-sidebar a {
-            display: block;
-            padding: 10px 15px;
-            border-radius: var(--border-radius);
-            color: var (--text-primary);
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .docs-sidebar a:hover,
-        .docs-sidebar a.active {
-            background-color: rgba(0, 187, 240, 0.1);
-            color: #00bbf0;
-        }
-
-        .docs-sidebar a i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-        }
-
-        .docs-content {
-            background-color: var(--bg-secondary);
-            border-radius: var(--border-radius);
-            padding: var(--card-padding);
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--border-color);
-        }
-
-        .docs-section {
-            margin-bottom: 40px;
-            scroll-margin-top: 90px;
-        }
-
-        .docs-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .docs-section h2 {
-            font-size: 1.8rem;
             color: var(--text-primary);
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* 容器样式 */
+        .container {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+            padding: 0 var(--container-padding);
+        }
+
+        /* Hero 部分 */
+        .hero {
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: var(--section-spacing);
+            background: linear-gradient(135deg, rgba(0, 187, 240, 0.05), rgba(0, 32, 74, 0.2));
+            border-radius: var(--border-radius);
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
             margin-bottom: 20px;
+            color: var(--text-primary);
         }
 
-        .docs-section h3 {
-            font-size: 1.3rem;
-            color: var(--primary-color);
-            margin: 25px 0 15px;
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: var(--text-secondary);
         }
 
-        .docs-section ul, .docs-section ol {
-            padding-left: 20px;
-            margin-bottom: 20px;
+        /* Bento 布局样式 */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: minmax(100px, auto);
+            gap: 20px;
+            margin-bottom: var(--section-spacing);
         }
 
-        .docs-section li {
-            margin-bottom: 8px;
+        .bento-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: var(--card-padding);
+            transition: var(--transition);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* 代码块样式 */
+        .bento-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 不同大小的 Bento 项目 */
+        .bento-large {
+            grid-column: span 6;
+            grid-row: span 2;
+        }
+
+        .bento-medium {
+            grid-column: span 4;
+            grid-row: span 1;
+        }
+
+        .bento-small {
+            grid-column: span 3;
+            grid-row: span 1;
+        }
+
+        .bento-wide {
+            grid-column: span 8;
+            grid-row: span 1;
+        }
+
+        .bento-tall {
+            grid-column: span 4;
+            grid-row: span 2;
+        }
+
+        .bento-full {
+            grid-column: span 12;
+        }
+
+        /* 代码块 */
         .code-block {
             background-color: var(--code-bg);
+            border-radius: var(--border-radius);
+            padding: 15px;
             color: var(--code-text);
             font-family: var(--font-code);
-            padding: 15px;
-            border-radius: var(--border-radius);
-            margin: 15px 0;
             overflow-x: auto;
-            font-size: 14px;
-            line-height: 1.5;
-            white-space: pre;
-            word-wrap: normal;
+            margin-bottom: 20px;
             border: 1px solid rgba(35, 50, 75, 0.8);
-            /* 隐藏滚动条但保持可滚动功能 */
-            scrollbar-width: none;  /* Firefox */
-            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
 
-        /* 隐藏Webkit浏览器的滚动条 */
         .code-block::-webkit-scrollbar {
             display: none;
         }
 
-        /* 注释框 */
-        .note-box {
-            background-color: rgba(0, 187, 240, 0.1);
-            border-left: 4px solid #00bbf0;
-            padding: 15px 20px;
-            margin: 15px 0;
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        /* 代码块中的注释 */
+        .code-block span {
+            color: var(--code-comment);
         }
 
-        .warning-box {
-            background-color: rgba(217, 250, 255, 0.3);
-            border-left: 4px solid #00bbf0;
-            padding: 15px 20px;
-            margin: 15px 0;
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        /* 卡片标题 */
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        /* 表格样式 */
-        table {
+        /* 文档导航 */
+        .doc-sidebar {
+            position: fixed;
+            top: 90px;
+            left: 20px;
+            width: 280px;
+            max-width: 280px;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+            z-index: 100;
+            transition: transform 0.3s ease;
+            scrollbar-width: thin;
+        }
+
+        .doc-sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .doc-sidebar::-webkit-scrollbar-thumb {
+            background-color: var(--border-color);
+            border-radius: 5px;
+        }
+
+        .doc-nav {
+            list-style: none;
+        }
+
+        .doc-nav li {
+            margin-bottom: 8px;
+        }
+
+        .doc-nav a {
+            display: block;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .doc-nav a:hover, 
+        .doc-nav a.active {
+            background-color: var(--btn-secondary-bg);
+            color: var(--primary-color);
+        }
+
+        .doc-content {
+            margin-left: 300px;
+            transition: margin 0.3s ease;
+        }
+
+        .doc-nav-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .doc-nav-toggle:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        /* 文档内容样式 */
+        .doc-section {
+            scroll-margin-top: 100px;
+        }
+
+        .doc-section h3 {
+            color: var(--primary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .doc-section p {
+            margin-bottom: 15px;
+        }
+
+        .command-table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            background-color: var(--bg-secondary);
-            border-radius: var(--border-radius);
-            overflow: hidden;
         }
 
-        table th, table td {
+        .command-table th,
+        .command-table td {
             padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
         }
 
-        table th {
-            background-color: rgba(0, 32, 74, 0.5);
+        .command-table th {
+            background-color: rgba(0, 187, 240, 0.1);
+            color: var(--primary-color);
             font-weight: 600;
         }
 
-        table tr:hover {
+        .command-table tr:hover {
+            background-color: rgba(0, 187, 240, 0.05);
+        }
+
+        .command-example {
             background-color: rgba(0, 187, 240, 0.1);
-        }
-
-        /* 颜色示例 */
-        .color-sample {
-            display: inline-block;
-            width: 15px;
-            height: 15px;
-            border-radius: 3px;
-            vertical-align: middle;
-            margin-right: 8px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .color-overdue {
-            background-color: #ff5252;
-        }
-
-        .color-urgent {
-            background-color: #ff7b7b;
-        }
-
-        .color-soon {
-            background-color: #00bbf0;
-        }
-
-        .color-normal {
-            background-color: #6a8eae;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
         }
 
         /* 按钮样式 */
@@ -363,93 +418,129 @@
             transform: translateY(-3px);
         }
 
-        /* 命令行 */
-        code {
-            background-color: var(--code-bg);
-            color: var(--code-text);
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: var(--font-code);
-            font-size: 0.9em;
-        }
-
-        /* 移动端目录增强样式 - 删除重复样式 */
-        .mobile-toc {
-            display: none; /* 初始隐藏 */
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            background-color: var(--bg-secondary);
+        /* 终端演示 */
+        .terminal {
+            background-color: #1e2538;
             border-radius: var(--border-radius);
-            box-shadow: var(--card-shadow);
-            padding: 15px;
-            z-index: 999;
-            border: 1px solid var(--border-color);
-            max-width: 80vw;
-            max-height: 60vh;
-            overflow-y: auto;
+            overflow: hidden;
+            margin-bottom: 20px;
         }
 
-        /* 显示时的样式 */
-        .mobile-toc.show {
-            display: block; /* 简化显示方式，确保正常显示 */
-        }
-
-        /* 修改 mobile-toc-toggle，删除重复定义 */
-        .mobile-toc-toggle {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            cursor: pointer;
-            text-align: center;
-            line-height: 50px;
-            font-size: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-toc-toggle:hover {
-            background: var(--secondary-color);
-            transform: scale(1.05);
-        }
-
-        /* 移除重复的 .mobile-toc 和 .mobile-toc-toggle 定义，只保留这一组 */
-
-        /* 页面顶部 */
-        .page-header {
-            text-align: center;
-            padding: 60px 0 40px;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, rgba(0, 187, 240, 0.05), rgba(0, 32, 74, 0.3));
-            border-radius: var(--border-radius);
-        }
-
-        .page-header h2 {
-            font-size: 2.5rem;
-            color: var(--text-primary);
-            margin-bottom: 15px;
-            border: none;
-        }
-
-        /* 弹性卡片设计 */
-        .flex-card {
+        .terminal-header {
+            background-color: #2c3653;
+            padding: 10px 15px;
             display: flex;
-            flex-direction: column;
-            transition: all 0.3s ease;
-            height: 100%;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #3a4565;
         }
 
-        .flex-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--card-shadow), 0 10px 25px rgba(0, 187, 240, 0.2);
+        .terminal-buttons {
+            display: flex;
+        }
+
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .terminal-button.red { background-color: #ff5f56; }
+        .terminal-button.yellow { background-color: #ffbd2e; }
+        .terminal-button.green { background-color: #27c93f; }
+
+        .terminal-title {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .terminal-body {
+            padding: 15px;
+            font-family: var(--font-code);
+            font-size: 14px;
+            line-height: 1.5;
+            height: auto;
+            max-height: 400px;
+            overflow-y: auto;
+            color: var(--text-primary);
+        }
+
+        .terminal-line {
+            margin-bottom: 8px;
+        }
+
+        .terminal-prompt {
+            color: #3498db;
+        }
+
+        .terminal-command {
+            color: #ecf0f1;
+        }
+
+        .terminal-output {
+            color: #95a5a6;
+            padding-left: 15px;
+        }
+
+        /* 颜色示例 */
+        .color-box {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            margin-right: 5px;
+            font-weight: 500;
+            font-family: var(--font-code);
+        }
+
+        .color-overdue {
+            background-color: rgba(255, 0, 0, 0.3);
+            color: #ff6b6b;
+            font-weight: 700;
+        }
+
+        .color-today {
+            background-color: rgba(255, 0, 0, 0.2);
+            color: #ff8787;
+        }
+
+        .color-soon {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: #ffd43b;
+        }
+
+        .color-normal {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ced4da;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .bento-large {
+                grid-column: span 12;
+            }
+            .bento-medium {
+                grid-column: span 6;
+            }
+            .bento-small {
+                grid-column: span 6;
+            }
+            .bento-wide {
+                grid-column: span 12;
+            }
+            .bento-tall {
+                grid-column: span 6;
+                grid-row: span 2;
+            }
+            
+            .doc-sidebar {
+                width: 220px;
+            }
+            
+            .doc-content {
+                margin-left: 240px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -459,11 +550,10 @@
                 top: 70px;
                 left: 0;
                 right: 0;
-                background: var(--bg-secondary); /* 保持使用暗色背景 */
+                background: var(--bg-secondary);
                 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
                 padding: 20px;
                 transition: var(--transition);
-                z-index: 10;
             }
             
             .main-nav.show {
@@ -478,72 +568,86 @@
                 margin: 10px 0;
             }
             
-            .main-nav li a {
-                color: var(--text-primary); /* 确保菜单文字是浅色的 */
-                display: block; /* 增大点击区域 */
-                padding: 8px 15px; /* 增加内边距使按钮更大 */
-                border-radius: var(--border-radius); /* 圆角边框 */
-                transition: var(--transition); /* 平滑过渡效果 */
+            .main-nav a {
+                color: var(--text-primary);
             }
             
-            .main-nav li a:hover,
-            .main-nav li a.active {
-                background-color: rgba(0, 187, 240, 0.1); /* 添加悬停背景 */
-                color: var(--primary-color); /* 悬停时文字变为主题色 */
-            }
-
-            /* 修复移动导航按钮样式 - 确保移动端显示 */
             .mobile-nav-toggle {
                 display: block;
-                color: var(--text-primary); /* 确保在暗色背景上可见 */
             }
 
-            .docs-container {
-                grid-template-columns: 1fr;
+            .bento-medium, .bento-small, .bento-tall {
+                grid-column: span 12;
             }
             
-            .docs-sidebar {
-                display: none; /* 隐藏侧边栏目录 */
-            }
-            
-            .mobile-toc-toggle {
-                display: block; /* 显示移动端目录按钮 */
-            }
-
-            .code-block {
-                font-size: 13px;
-            }
-
-            .page-header {
-                padding: 40px 0 30px;
-            }
-            
-            .page-header h2 {
+            .hero h2 {
                 font-size: 2rem;
+            }
+            
+            /* 移动端导航样式 */
+            .doc-sidebar {
+                transform: translateX(-100%);
+                background: var(--bg-secondary);
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+                left: 0;
+                padding: 20px;
+                width: 280px;
+            }
+            
+            .doc-sidebar.show {
+                transform: translateX(0);
+            }
+            
+            .doc-content {
+                margin-left: 0;
+            }
+            
+            .doc-nav-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .doc-nav a {
+                padding: 12px 15px;
             }
         }
 
         @media (max-width: 576px) {
-            .docs-content {
-                padding: 20px 15px;
+            .btn {
+                display: block;
+                width: 100%;
+                margin: 5px 0;
             }
             
-            .docs-section h2 {
-                font-size: 1.5rem;
-            }
-            
-            .docs-section h3 {
-                font-size: 1.2rem;
-            }
-            
-            table th, table td {
-                padding: 8px 10px;
-                font-size: 14px;
-            }
-            
-            .page-header h2 {
+            .hero h2 {
                 font-size: 1.8rem;
             }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .command-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        code {
+            background: var(--code-bg);
+            color: var(--text-primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: var(--font-code);
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .feature-list li {
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -566,473 +670,549 @@
         </nav>
     </header>
 
-    <!-- 页面顶部 -->
-    <div class="page-header">
-        <h2>使用文档</h2>
-        <p>了解如何安装和使用 JODO 进行任务管理</p>
-    </div>
+    <!-- Hero 区域 -->
+    <section class="hero">
+        <div class="container">
+            <h2>JODO 使用文档</h2>
+            <p>了解如何使用 JODO 管理您的日常任务</p>
+        </div>
+    </section>
 
     <!-- 文档内容 -->
-    <div class="docs-container">
-        <!-- 侧边栏导航 -->
-        <aside class="docs-sidebar">
-            <ul>
-                <li><a href="#introduction" class="active"><i class="fas fa-info-circle"></i> 简介</a></li>
-                <li><a href="#installation"><i class="fas fa-download"></i> 安装</a></li>
-                <li><a href="#basic-usage"><i class="fas fa-play"></i> 基本用法</a></li>
-                <li><a href="#task-management"><i class="fas fa-tasks"></i> 任务管理</a></li>
-                <li><a href="#batch-mode"><i class="fas fa-layer-group"></i> 批量模式</a></li>
-                <li><a href="#due-dates"><i class="fas fa-calendar-alt"></i> 截止日期</a></li>
-                <li><a href="#language-support"><i class="fas fa-globe"></i> 多语言支持</a></li>
-                <li><a href="#tips-tricks"><i class="fas fa-lightbulb"></i> 使用技巧</a></li>
-            </ul>
-        </aside>
-
-        <!-- 移动端目录按钮和弹出内容 -->
-        <button class="mobile-toc-toggle">
-            <i class="fas fa-list"></i>
-        </button>
-        <div class="mobile-toc">
-            <ul>
-                <li><a href="#introduction" class="active"><i class="fas fa-info-circle"></i> 简介</a></li>
-                <li><a href="#installation"><i class="fas fa-download"></i> 安装</a></li>
-                <li><a href="#basic-usage"><i class="fas fa-play"></i> 基本用法</a></li>
-                <li><a href="#task-management"><i class="fas fa-tasks"></i> 任务管理</a></li>
-                <li><a href="#batch-mode"><i class="fas fa-layer-group"></i> 批量模式</a></li>
-                <li><a href="#due-dates"><i class="fas fa-calendar-alt"></i> 截止日期</a></li>
-                <li><a href="#language-support"><i class="fas fa-globe"></i> 多语言支持</a></li>
-                <li><a href="#tips-tricks"><i class="fas fa-lightbulb"></i> 使用技巧</a></li>
-            </ul>
-        </div>
-
-        <!-- 主要内容区域 -->
-        <main class="docs-content">
-            <!-- 简介部分 -->
-            <section id="introduction" class="docs-section">
-                <h2>简介</h2>
-                <p>JODO 是一个轻量级命令行 Todo 应用程序，帮助您高效管理日常任务。它提供简洁的命令行界面，支持截止日期设置、重要任务标记、任务优先级排序等功能，是命令行爱好者的理想选择。</p>
-                
-                <h3>主要特性</h3>
-                <ul>
-                    <li>简洁的命令行界面</li>
-                    <li>支持任务截止日期设置</li>
-                    <li>重要任务标记</li>
-                    <li>截止日期彩色显示（逾期、紧急、即将到期）</li>
-                    <li>批量添加和操作任务</li>
-                    <li>多语言支持（中文、英文、日语）</li>
+    <div class="container">
+        <!-- 侧边导航 -->
+        <div class="doc-sidebar" id="doc-sidebar">
+            <div class="bento-item">
+                <div class="card-title">文档导航</div>
+                <ul class="doc-nav">
+                    <li><a href="#features" class="active">特性</a></li>
+                    <li><a href="#installation">安装</a></li>
+                    <li><a href="#basic-usage">基本用法</a></li>
+                    <li><a href="#task-management">任务管理</a></li>
+                    <li><a href="#batch-mode">批量添加模式</a></li>
+                    <li><a href="#other-options">其他选项</a></li>
+                    <li><a href="#due-date-colors">截止日期颜色说明</a></li>
+                    <li><a href="#data-file">数据文件</a></li>
                 </ul>
-            </section>
+            </div>
+        </div>
+        
+        <!-- 导航切换按钮 -->
+        <button class="doc-nav-toggle" id="doc-nav-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- 主要内容区域 -->
+        <div class="doc-content">
+            <div class="bento-grid">
+                <!-- 特性部分 -->
+                <div id="features" class="bento-item bento-full doc-section">
+                    <div class="card-title">JODO 特性</div>
+                    <p>JODO 是一个轻量级命令行 Todo 应用程序，帮助您高效管理日常任务。</p>
+                    
+                    <h3>主要特性</h3>
+                    <ul class="feature-list">
+                        <li>简洁的命令行界面</li>
+                        <li>支持任务截止日期设置</li>
+                        <li>重要任务标记</li>
+                        <li>截止日期彩色显示（逾期、紧急、即将到期）</li>
+                        <li>批量添加和操作任务</li>
+                        <li>多语言支持（中文、英文、日语）</li>
+                    </ul>
 
-            <!-- 安装部分 -->
-            <section id="installation" class="docs-section">
-                <h2>安装</h2>
-                
-                <h3>从 GitHub 直接安装</h3>
-                <div class="code-block"># 克隆仓库
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <div class="terminal-buttons">
+                                <div class="terminal-button red"></div>
+                                <div class="terminal-button yellow"></div>
+                                <div class="terminal-button green"></div>
+                            </div>
+                            <span class="terminal-title">Terminal</span>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">$</span>
+                                <span class="terminal-command"> jodo --help</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">JODO - 简单的命令行 Todo 应用</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">用法: jodo [选项] [任务描述]</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">选项:</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">  -l, --list     列出所有任务</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">  -c, --complete 完成任务</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">  -d, --delete   删除任务</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">  -t, --time     设置截止日期</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">  -h, --help     显示帮助信息</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">  -v, --version  显示版本信息</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">  -m, --multi    批量添加模式</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 安装部分 -->
+                <div id="installation" class="bento-item bento-full doc-section">
+                    <div class="card-title">安装 JODO</div>
+
+                    <h3>从GitHub直接安装</h3>
+                    <div class="code-block">
+# 克隆仓库
 git clone https://github.com/JoyinJoester/JODO.git
 cd JODO
 
 # 编译安装
 cargo build --release
 sudo cp ./target/release/jodo /usr/local/bin/
-sudo chmod +x /usr/local/bin/jodo</div>
+sudo chmod +x /usr/local/bin/jodo
+                    </div>
 
-                <h3>使用 Cargo 从 GitHub 直接安装</h3>
-                <div class="code-block">cargo install --git https://github.com/JoyinJoester/JODO.git</div>
+                    <h3>使用Cargo从GitHub直接安装</h3>
+                    <div class="code-block">
+cargo install --git https://github.com/JoyinJoester/JODO.git
+                    </div>
 
-                <h3>Linux 安装</h3>
-                <ol>
-                    <li>
-                        <p>首先进行发布构建：</p>
-                        <div class="code-block">cargo build --release</div>
-                    </li>
-                    <li>
-                        <p>运行提供的安装脚本：</p>
-                        <div class="code-block">sudo chmod +x ./debian_install.sh
-sudo ./debian_install.sh</div>
-                        <p>该脚本会将编译好的二进制文件复制到 <code>/usr/local/bin</code> 目录，并可选地设置 PATH 环境变量。</p>
-                    </li>
-                    <li>
-                        <p>手动安装方式：</p>
-                        <div class="code-block">sudo cp ./target/release/jodo /usr/local/bin/
-sudo chmod +x /usr/local/bin/jodo</div>
-                    </li>
-                    <li>
-                        <p>验证安装：</p>
-                        <div class="code-block">jodo --version</div>
-                        <p>如果显示版本信息，则安装成功。</p>
-                    </li>
-                </ol>
+                    <h3>Linux安装</h3>
+                    <p>1. 首先进行发布构建:</p>
+                    <div class="code-block">
+cargo build --release
+                    </div>
 
-                <h3>使用 Cargo 安装</h3>
-                <p>如果已经安装了 Rust 和 Cargo，也可以使用以下命令安装：</p>
-                <div class="code-block">cargo install --path .</div>
-            </section>
+                    <p>2. 运行提供的安装脚本:</p>
+                    <div class="code-block">
+sudo chmod +x ./debian_install.sh
+sudo ./debian_install.sh
+                    </div>
+                    <p>该脚本会将编译好的二进制文件复制到 <code>/usr/local/bin</code> 目录，并可选地设置 PATH 环境变量。</p>
 
-            <!-- 基本用法部分 -->
-            <section id="basic-usage" class="docs-section">
-                <h2>基本用法</h2>
-                
-                <h3>添加任务</h3>
-                <div class="code-block"># 添加新任务
+                    <p>3. 手动安装方式:</p>
+                    <p>如果不想使用安装脚本，可以手动安装:</p>
+                    <div class="code-block">
+sudo cp ./target/release/jodo /usr/local/bin/
+sudo chmod +x /usr/local/bin/jodo
+                    </div>
+
+                    <p>4. 验证安装:</p>
+                    <p>安装后，打开新的终端并输入:</p>
+                    <div class="code-block">
+jodo --version
+                    </div>
+                    <p>如果显示版本信息，则安装成功。</p>
+
+                    <h3>使用Cargo安装</h3>
+                    <p>如果已经安装了Rust和Cargo，也可以使用以下命令安装:</p>
+                    <div class="code-block">
+cargo install --path .
+                    </div>
+                </div>
+
+                <!-- 基本用法 -->
+                <div id="basic-usage" class="bento-item bento-wide doc-section">
+                    <div class="card-title">基本用法</div>
+                    
+                    <h3>添加新任务</h3>
+                    <div class="code-block">
+# 添加新任务
 jodo "完成项目报告"
 
 # 添加带有截止日期的任务
-jodo "完成项目报告" -t 2023-12-31</div>
-
-                <h3>查看任务</h3>
-                <div class="code-block"># 列出所有任务 (两种方式都可以)
-jodo -l
-jodo</div>
-
-                <div class="note-box">
-                    <strong>提示：</strong> 在 JODO 中，任务显示分为未完成和已完成两部分。未完成任务列在上方，已完成任务列在下方。
-                </div>
-            </section>
-
-            <!-- 任务管理部分 -->
-            <section id="task-management" class="docs-section">
-                <h2>任务管理</h2>
-                
-                <h3>编辑任务</h3>
-                <div class="code-block"># 编辑任务内容
-jodo -e 1 "更新后的任务内容"
-
-# 修改任务截止日期
-jodo -e 1 -t 2023-12-25
-
-# 快捷方式：直接修改截止日期
-jodo -t 1 2023-12-25</div>
-
-                <h3>标记任务完成状态</h3>
-                <div class="code-block"># 标记任务为已完成
-jodo -c 1
-
-# 同时标记多个任务为已完成
-jodo -c 1 2 3
-
-# 取消任务完成标记
-jodo -u 1c</div>
-
-                <div class="note-box"></div>
-                    <strong>注意：</strong> 已完成任务的 ID 会在末尾显示 'c'，例如 '1c'。使用 <code>-u</code> 命令取消完成标记时，需要包含这个 'c' 后缀。
-                </div>
-
-                <h3>标记重要任务</h3>
-                <div class="code-block"># 标记任务为重要
-jodo --star 1
-
-# 取消任务重要标记
-jodo --unstar 1</div>
-
-                <div class="note-box"></div>
-                    <strong>提示：</strong> 重要任务会在列表中置顶显示，并带有星号标记。
-                </div>
-
-                <h3>删除任务</h3>
-                <div class="code-block"># 删除单个任务
-jodo -d 1
-
-# 同时删除多个任务
-jodo -d 1 2 3</div>
-
-                <h3>查看任务详情</h3>
-                <div class="code-block"># 显示任务的详细信息
-jodo --show 1</div>
-
-                <h3>子命令形式</h3>
-                <p>JODO 也支持子命令形式进行操作：</p>
-                <div class="code-block">jodo list                  # 列出所有任务
-jodo done 1                # 标记任务为已完成
-jodo undo 1c               # 取消任务完成标记
-jodo remove 1              # 删除任务
-jodo edit 1 "新内容"        # 编辑任务内容
-jodo edit 1 -t 2023-12-25  # 编辑任务截止日期
-jodo star 1                # 标记任务为重要
-jodo unstar 1              # 取消任务重要标记
-jodo show 1                # 显示任务详情</div>
-            </section>
-
-            <!-- 批量模式部分 -->
-            <section id="batch-mode" class="docs-section">
-                <h2>批量模式</h2>
-                <p>JODO 提供批量添加任务的模式，让您可以快速连续添加多个任务：</p>
-                
-                <div class="code-block"># 进入批量添加模式
-jodo -m
-
-# 示例会话:
-jodo$> 完成第一项任务
-任务 "完成第一项任务" 已添加
-jodo$> 完成第二项任务
-任务 "完成第二项任务" 已添加
-jodo$> 学习Rust编程
-任务 "学习Rust编程" 已添加
-jodo$> exit  # 输入exit退出批量模式</div>
-
-                <div class="note-box">
-                    <strong>提示：</strong> 在批量模式中，每输入一行内容并按回车，就会添加一个新任务。输入 "exit" 可以退出批量模式。
-                </div>
-            </section>
-
-            <!-- 截止日期部分 -->
-            <section id="due-dates" class="docs-section">
-                <h2>截止日期</h2>
-                <p>JODO 支持为任务设置截止日期，并使用颜色来提示截止日期的紧急程度：</p>
-                
-                <table>
-                    <tr>
-                        <th>颜色</th>
-                        <th>状态</th>
-                        <th>描述</th>
-                    </tr>
-                    <tr>
-                        <td><span class="color-sample color-overdue"></span> 红色加粗</td>
-                        <td>已过期</td>
-                        <td>任务截止日期已过</td>
-                    </tr>
-                    <tr>
-                        <td><span class="color-sample color-urgent"></span> 亮红色</td>
-                        <td>今天到期</td>
-                        <td>任务在今天截止（紧急）</td>
-                    </tr>
-                    <tr>
-                        <td><span class="color-sample color-soon"></span> 黄色</td>
-                        <td>即将到期</td>
-                        <td>任务在3天内到期</td>
-                    </tr>
-                    <tr></tr>
-                        <td><span class="color-sample color-normal"></span> 正常颜色</td>
-                        <td>未紧急</td>
-                        <td>任务截止日期较远</td>
-                    </tr>
-                </table>
-                
-                <h3>设置截止日期</h3>
-                <div class="code-block"># 创建任务时设置截止日期
 jodo "完成项目报告" -t 2023-12-31
 
-# 修改现有任务的截止日期
+# 列出所有任务
+jodo -l
+jodo
+                    </div>
+
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <div class="terminal-buttons">
+                                <div class="terminal-button red"></div>
+                                <div class="terminal-button yellow"></div>
+                                <div class="terminal-button green"></div>
+                            </div>
+                            <span class="terminal-title">基本操作演示</span>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">$</span>
+                                <span class="terminal-command"> jodo "完成项目报告"</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">任务 "完成项目报告" 已添加</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">$</span>
+                                <span class="terminal-command"> jodo "准备会议材料" -t 2023-12-15</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">任务 "准备会议材料" 已添加</span>
+                                <span class="terminal-output">截止日期: 2023-12-15</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">$</span>
+                                <span class="terminal-command"> jodo -l</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">未完成任务:</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">ID    描述                       截止日期</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">-----------------------------------------</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">1     完成项目报告               无</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">2     准备会议材料               2023-12-15</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 基本命令表格 -->
+                <div class="bento-item bento-medium">
+                    <div class="card-title">命令速查表</div>
+                    <table class="command-table">
+                        <tr>
+                            <th>命令</th>
+                            <th>描述</th>
+                        </tr>
+                        <tr>
+                            <td><code>jodo "任务描述"</code></td>
+                            <td>添加新任务</td>
+                        </tr>
+                        <tr>
+                            <td><code>jodo "任务" -t 日期</code></td>
+                            <td>添加带截止日期任务</td>
+                        </tr>
+                        <tr>
+                            <td><code>jodo -l</code> 或 <code>jodo</code></td>
+                            <td>列出所有任务</td>
+                        </tr>
+                        <tr>
+                            <td><code>jodo -c ID</code></td>
+                            <td>完成任务</td>
+                        </tr>
+                        <tr>
+                            <td><code>jodo -d ID</code></td>
+                            <td>删除任务</td>
+                        </tr>
+                        <tr>
+                            <td><code>jodo -h</code></td>
+                            <td>显示帮助信息</td>
+                        </tr>
+                        <tr>
+                            <td><code>jodo -v</code></td>
+                            <td>显示版本信息</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- 任务管理 -->
+                <div id="task-management" class="bento-item bento-full doc-section">
+                    <div class="card-title">任务管理</div>
+                    
+                    <h3>编辑任务内容</h3>
+                    <div class="code-block">
+jodo -e 1 "更新后的任务内容"
+                    </div>
+
+                    <h3>修改任务截止日期</h3>
+                    <div class="code-block">
 jodo -e 1 -t 2023-12-25
+jodo -t 1 2023-12-25  # 快捷方式
+                    </div>
 
-# 快捷方式
-jodo -t 1 2023-12-25</div>
+                    <h3>标记任务为已完成</h3>
+                    <div class="code-block">
+jodo -c 1
+jodo -c 1 2 3  # 一次完成多个任务
+                    </div>
 
-                <div class="note-box">
-                    <strong>提示：</strong> 日期格式为 YYYY-MM-DD，例如 2023-12-31。
+                    <h3>取消任务完成标记</h3>
+                    <div class="code-block">
+jodo -u 1
+                    </div>
+
+                    <h3>标记任务为重要</h3>
+                    <div class="code-block">
+jodo --star 1
+                    </div>
+
+                    <h3>取消任务重要标记</h3>
+                    <div class="code-block">
+jodo --unstar 1
+                    </div>
+
+                    <h3>删除任务</h3>
+                    <div class="code-block">
+jodo -d 1
+jodo -d 1 2 3  # 一次删除多个任务
+                    </div>
+
+                    <h3>查看任务详情</h3>
+                    <div class="code-block">
+jodo --show 1
+                    </div>
+
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <div class="terminal-buttons">
+                                <div class="terminal-button red"></div>
+                                <div class="terminal-button yellow"></div>
+                                <div class="terminal-button green"></div>
+                            </div>
+                            <span class="terminal-title">任务管理演示</span>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">$</span>
+                                <span class="terminal-command"> jodo -c 1</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">任务 1 标记为完成</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">$</span>
+                                <span class="terminal-command"> jodo</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">未完成任务:</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">ID    描述                       截止日期</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">-----------------------------------------</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">2     准备会议材料               2023-12-15</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">已完成任务:</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">1c    完成项目报告               无</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </section>
 
-            <!-- 多语言支持部分 -->
-            <section id="language-support" class="docs-section">
-                <h2>多语言支持</h2>
-                <p>JODO 支持多种语言界面，您可以使用 <code>-L</code> 参数切换语言：</p>
-                
-                <div class="code-block"># 切换到中文界面
-jodo -L zh-cn
-
-# 切换到英文界面
-jodo -L en
-
-# 切换到日语界面
-jodo -L ja</div>
-
-                <div class="note-box">
-                    <strong>提示：</strong> 语言设置会在当前会话中生效，如果您希望永久设置语言，可以在常用的shell配置文件（如 .bashrc 或 .zshrc）中添加别名。
-                </div>
-            </section>
-
-            <!-- 使用技巧部分 -->
-            <section id="tips-tricks" class="docs-section">
-                <h2>使用技巧</h2>
-                
-                <h3>任务优先级管理</h3>
-                <ul>
-                    <li>使用星标（<code>--star</code>）标记最重要的任务，它们会自动置顶</li>
-                    <li>对临近截止日期的任务优先处理，JODO会以颜色提示您</li>
-                </ul>
-                
-                <h3>数据存储位置</h3>
-                <p>JODO 将所有任务数据保存在以下位置：</p>
-                <div class="code-block">~/.jodo/tasks.json</div>
-                <p>如果您想备份数据，只需拷贝这个文件即可。</p>
-                
-                <h3>建议的别名设置</h3>
-                <p>您可以在 shell 配置文件（如 .bashrc、.zshrc 等）中添加以下别名，简化常用命令：</p>
-                <div class="code-block"># 显示所有任务
-alias jl='jodo -l'
-
-# 标记任务完成
-alias jc='jodo -c'
-
-# 快速添加任务
-alias ja='jodo'
-
+                <!-- 批量添加模式 -->
+                <div id="batch-mode" class="bento-item bento-wide doc-section">
+                    <div class="card-title">批量添加模式</div>
+                    
+                    <p>JODO 提供批量添加模式，方便一次添加多个任务:</p>
+                    
+                    <div class="code-block">
 # 进入批量添加模式
-alias jm='jodo -m'</div>
-            </section>
-        </main>
+jodo -m
+                    </div>
+
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <div class="terminal-buttons">
+                                <div class="terminal-button red"></div>
+                                <div class="terminal-button yellow"></div>
+                                <div class="terminal-button green"></div>
+                            </div>
+                            <span class="terminal-title">批量模式演示</span>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">$</span>
+                                <span class="terminal-command"> jodo -m</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">批量添加模式 (输入 'exit' 退出):</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">jodo$></span>
+                                <span class="terminal-command"> 完成第一项任务</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">任务 "完成第一项任务" 已添加</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">jodo$></span>
+                                <span class="terminal-command"> 完成第二项任务</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">任务 "完成第二项任务" 已添加</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">jodo$></span>
+                                <span class="terminal-command"> 学习Rust编程</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">任务 "学习Rust编程" 已添加</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">jodo$></span>
+                                <span class="terminal-command"> exit</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-output">批量模式已结束，共添加 3 个任务</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 其他选项 -->
+                <div id="other-options" class="bento-item bento-medium doc-section">
+                    <div class="card-title">其他选项</div>
+                    
+                    <h3>显示帮助信息</h3>
+                    <div class="code-block">
+jodo -h
+                    </div>
+
+                    <h3>显示版本信息</h3>
+                    <div class="code-block">
+jodo -v
+                    </div>
+
+                    <h3>切换语言</h3>
+                    <div class="code-block">
+jodo -L en  # 英文
+jodo -L zh-cn  # 中文
+jodo -L ja  # 日语
+                    </div>
+                </div>
+
+                <!-- 截止日期颜色说明 -->
+                <div id="due-date-colors" class="bento-item bento-full doc-section">
+                    <div class="card-title">截止日期颜色说明</div>
+                    
+                    <p>JODO 使用不同颜色标记任务的截止日期状态：</p>
+                    
+                    <ul>
+                        <li><span class="color-box color-overdue">2023-12-01</span> <strong>红色加粗</strong>: 已过期</li>
+                        <li><span class="color-box color-today">2023-12-10</span> <strong>亮红色</strong>: 今天到期（紧急）</li>
+                        <li><span class="color-box color-soon">2023-12-12</span> <strong>黄色</strong>: 3天内到期（即将到期）</li>
+                        <li><span class="color-box color-normal">2023-12-20</span> <strong>正常颜色</strong>: 其他日期</li>
+                    </ul>
+                </div>
+
+                <!-- 数据文件 -->
+                <div id="data-file" class="bento-item bento-full doc-section">
+                    <div class="card-title">数据文件</div>
+                    
+                    <p>JODO 将所有任务数据保存在以下位置：</p>
+                    
+                    <div class="code-block">
+# 任务数据：
+~/.jodo/tasks.json
+                    </div>
+                    
+                    <p>每次对任务进行操作后，数据会自动保存到此文件。如需备份数据，只需复制该文件即可。</p>
+                </div>
+
+                <!-- 回到首页 -->
+                <div class="bento-item bento-full" style="text-align: center;">
+                    <a href="index.html" class="btn btn-secondary">返回首页</a>
+                    <a href="download.html" class="btn btn-primary">下载 JODO</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // 页面加载后执行
-        document.addEventListener('DOMContentLoaded', function() {
-            // 移动端目录弹出按钮
-            const mobileToggleBtn = document.querySelector('.mobile-toc-toggle');
-            const mobileToc = document.querySelector('.mobile-toc');
-            
-            // 确保元素存在
-            if(mobileToggleBtn && mobileToc) {
-                // 点击目录按钮显示/隐藏目录
-                mobileToggleBtn.addEventListener('click', function(e) {
-                    e.stopPropagation(); // 阻止事件冒泡
-                    mobileToc.classList.toggle('show');
-                    console.log('目录按钮被点击', mobileToc.classList.contains('show') ? '显示' : '隐藏');
-                });
-                
-                // 点击目录内容时阻止关闭
-                mobileToc.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                });
-                
-                // 目录中的链接点击事件
-                const mobileTocLinks = document.querySelectorAll('.mobile-toc a');
-                mobileTocLinks.forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        
-                        const targetId = this.getAttribute('href').substring(1);
-                        const targetSection = document.getElementById(targetId);
-                        
-                        if (targetSection) {
-                            // 滚动到目标位置
-                            window.scrollTo({
-                                top: targetSection.offsetTop - 90,
-                                behavior: 'smooth'
-                            });
-                            
-                            // 更新活动状态
-                            mobileTocLinks.forEach(l => l.classList.remove('active'));
-                            this.classList.add('active');
-                            
-                            // 隐藏目录
-                            mobileToc.classList.remove('show');
-                        }
-                    });
-                });
-            }
-            
-            // 点击页面其他区域关闭目录
-            document.body.addEventListener('click', function() {
-                if(mobileToc && mobileToc.classList.contains('show')) {
-                    mobileToc.classList.remove('show');
-                }
-            });
-            
-            // 其他现有的代码
-            // 移动端导航菜单切换
-            const navToggle = document.querySelector('.mobile-nav-toggle');
-            const mainNav = document.querySelector('.main-nav');
-            
-            if(navToggle && mainNav) {
-                navToggle.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    mainNav.classList.toggle('show');
-                });
-            }
-            
-            // 点击其他区域关闭导航菜单
-            document.addEventListener('click', function(event) {
-                if (mainNav && !event.target.closest('.main-nav') && 
-                    !event.target.closest('.mobile-nav-toggle')) {
-                    mainNav.classList.remove('show');
-                }
-            });
+        // 移动端导航菜单切换
+        document.querySelector('.mobile-nav-toggle').addEventListener('click', function() {
+            document.querySelector('.main-nav').classList.toggle('show');
+        });
 
-            // 侧边栏导航激活状态
-            const sidebarLinks = document.querySelectorAll('.docs-sidebar a');
-            const sections = document.querySelectorAll('.docs-section');
-            
-            // 设置活动部分
-            function setActiveSection() {
-                let currentSection = '';
-                
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.offsetHeight;
-                    const scrollPosition = window.scrollY + 100;
-                    
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                        currentSection = section.getAttribute('id');
-                    }
-                });
-                
-                if (currentSection) {
-                    // 更新侧边栏活动状态
-                    sidebarLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === '#' + currentSection) {
-                            link.classList.add('active');
-                        }
-                    });
-                    
-                    // 更新移动端目录活动状态
-                    if(mobileTocLinks) {
-                        mobileTocLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === '#' + currentSection) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                }
+        // 点击其他区域关闭导航菜单
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.main-nav') && 
+                !event.target.closest('.mobile-nav-toggle')) {
+                document.querySelector('.main-nav').classList.remove('show');
             }
+        });
+
+        // 文档侧边导航切换
+        document.getElementById('doc-nav-toggle').addEventListener('click', function() {
+            document.getElementById('doc-sidebar').classList.toggle('show');
+            // 切换图标
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.replace('fa-bars', 'fa-times');
+            } else {
+                icon.classList.replace('fa-times', 'fa-bars');
+            }
+        });
+
+        // 点击导航链接时关闭侧边导航（在移动设备上）
+        document.querySelectorAll('.doc-nav a').forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    document.getElementById('doc-sidebar').classList.remove('show');
+                    const icon = document.querySelector('#doc-nav-toggle i');
+                    icon.classList.replace('fa-times', 'fa-bars');
+                }
+            });
+        });
+
+        // 滚动高亮导航
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.doc-section');
+            let currentSection = '';
             
-            // 监听滚动事件
-            window.addEventListener('scroll', setActiveSection);
-            
-            // 点击链接滚动到相应部分 - 侧边栏
-            sidebarLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetSection = document.getElementById(targetId);
-                    
-                    if (targetSection) {
-                        window.scrollTo({
-                            top: targetSection.offsetTop - 90,
-                            behavior: 'smooth'
-                        });
-                        
-                        // 更新活动状态
-                        sidebarLinks.forEach(link => link.classList.remove('active'));
-                        this.classList.add('active');
-                    }
-                });
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    currentSection = section.getAttribute('id');
+                }
             });
             
-            // 初始设置
-            setActiveSection();
-            
-            // 调整侧边栏高度
-            function adjustSidebarHeight() {
-                const sidebar = document.querySelector('.docs-sidebar');
-                if (sidebar) {
-                    if (window.innerWidth > 768) {
-                        const headerHeight = document.querySelector('.header').offsetHeight;
-                        sidebar.style.height = `calc(100vh - ${headerHeight + 20}px)`;
-                        sidebar.style.top = `${headerHeight + 10}px`;
-                    } else {
-                        sidebar.style.height = 'auto';
-                        sidebar.style.top = 'auto';
-                    }
+            document.querySelectorAll('.doc-nav a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href').substring(1) === currentSection) {
+                    a.classList.add('active');
                 }
-            }
-            
-            // 初始调整和窗口大小改变时调整
-            adjustSidebarHeight();
-            window.addEventListener('resize', adjustSidebarHeight);
+            });
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('.doc-nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 90,
+                    behavior: 'smooth'
+                });
+                
+                // 更新导航活动状态
+                document.querySelectorAll('.doc-nav a').forEach(a => {
+                    a.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
         });
     </script>
 </body>
