@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUV - 智能文件整理工具</title>
+    <style>
+        /* 全局样式 */
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #6c757d;
+            --accent-color: #ff6b6b;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        /* 容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* 头部样式 */
+        .hero {
+            background: linear-gradient(135deg, #6c8cbb, #4a6fa5);
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .tagline {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* 徽章样式 */
+        .badge-container {
+            display: flex;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            backdrop-filter: blur(5px);
+        }
+
+        /* 导航栏样式已移除 */
+
+        /* 部分标题 */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .section-title p {
+            color: var(--secondary-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 特性卡片 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .feature-content {
+            font-size: 1rem;
+            color: var(--secondary-color);
+            flex-grow: 1;
+        }
+
+        /* 安装指南 */
+        .installation {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        /* 代码块样式 */
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        /* 命令示例样式 */
+        .commands {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .command-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .command-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .command-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .command-example {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .command {
+            font-family: 'Fira Code', monospace;
+            background-color: #f1f3f5;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            margin-right: 0.8rem;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+        }
+
+        .command-desc {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        /* 文件类型部分 */
+        .file-types-section {
+            margin-bottom: 4rem;
+        }
+
+        .file-types-container {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .file-types-column {
+            flex: 1;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+        }
+
+        .file-types-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .file-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+        }
+
+        .file-type {
+            background-color: #f8f9fa;
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .file-type:hover {
+            background-color: #e9ecef;
+            transform: scale(1.05);
+        }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #3a5ae8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e2e6ea;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* CTA 部分 */
+        .cta {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            border-radius: var(--border-radius);
+            margin-bottom: 4rem;
+        }
+
+        .cta h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: white;
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .footer-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .features {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .file-types-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 3rem 0;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            /* 导航栏媒体查询样式已移除 */
+
+            .installation {
+                padding: 1.5rem;
+            }
+
+            .commands {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* 暗色模式 */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #121212;
+                color: #f8f9fa;
+            }
+
+            .feature-card,
+            .command-card,
+            .file-types-column,
+            .installation,
+            footer {
+                background-color: #1e1e1e;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-link,
+            .feature-title,
+            .command-title,
+            .file-types-title,
+            .section-title h2 {
+                color: #f8f9fa;
+            }
+
+            .feature-content,
+            .command-desc,
+            .section-title p {
+                color: #adb5bd;
+            }
+
+            .file-type {
+                background-color: #2d2d2d;
+                color: #f8f9fa;
+            }
+
+            .file-type:hover {
+                background-color: #343a40;
+            }
+
+            .btn-secondary {
+                background-color: #343a40;
+                color: #f8f9fa;
+            }
+
+            .btn-secondary:hover {
+                background-color: #495057;
+            }
+
+            .command {
+                background-color: #2d2d2d;
+                color: #4dabf7;
+            }
+
+            footer {
+                border-top: 1px solid #343a40;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏已移除 -->
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1 class="logo">AUV</h1>
+            <p class="tagline">智能文件整理工具 - 自动分类和整理各种文件类型，具有灵活的路径配置和智能整理模式</p>
+            <div class="badge-container">
+                <span class="badge">Python 3.7+</span>
+                <span class="badge">MIT License</span>
+                <span class="badge">Windows | macOS | Linux</span>
+            </div>
+            <a href="https://github.com/JoyinJoester/Auv" class="btn btn-large">立即下载</a>
+        </div>
+    </section>
+
+    <main class="container">
+        <!-- 特性部分 -->
+        <section id="features">
+            <div class="section-title">
+                <h2>✨ 核心特性</h2>
+                <p>AUV 提供了强大的文件整理功能，让您的文件管理更加高效</p>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🗂️</div>
+                    <h3 class="feature-title">智能文件整理</h3>
+                    <div class="feature-content">
+                        <p>根据文件类型自动分类，支持自定义规则，让您的文件夹保持整洁有序。</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">自定义命令</h3>
+                    <div class="feature-content">
+                        <p>创建个性化文件整理命令（如 `-py` 整理Python文件），适应您的工作流程。</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📜</div>
+                    <h3 class="feature-title">操作历史</h3>
+                    <div class="feature-content">
+                        <p>追踪所有操作，支持基于时间线的回退功能，确保您可以随时恢复文件。</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3 class="feature-title">灵活配置</h3>
+                    <div class="feature-content">
+                        <p>启用/禁用文件类型，自定义目标路径，完全控制您的文件整理方式。</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🏃</div>
+                    <h3 class="feature-title">守护进程模式</h3>
+                    <div class="feature-content">
+                        <p>后台监控，自动整理新文件，让文件整理变得完全自动化。</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="feature-title">跨平台支持</h3>
+                    <div class="feature-content">
+                        <p>支持 Windows、macOS 和 Linux，在任何环境中都能使用。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 安装部分 -->
+        <section id="installation" class="installation">
+            <div class="section-title">
+                <h2>🚀 快速安装</h2>
+                <p>只需几个简单的步骤，即可开始使用 AUV</p>
+            </div>
+
+            <div class="code-block">
+                # 安装依赖<br>
+                pip install watchdog psutil click<br><br>
+                # 安装 AUV<br>
+                pip install --user -e .<br><br>
+                # 验证安装<br>
+                auv --help
+            </div>
+
+            <div style="text-align: center;">
+                <a href="https://github.com/JoyinJoester/Auv" class="btn">下载源码</a>
+            </div>
+        </section>
+
+        <!-- 使用方法部分 -->
+        <section id="usage">
+            <div class="section-title">
+                <h2>📝 使用方法</h2>
+                <p>AUV 提供了简单直观的命令行界面，让文件整理变得轻松</p>
+            </div>
+
+            <div class="commands">
+                <div class="command-card">
+                    <h3 class="command-title">基本文件整理</h3>
+                    <div class="command-example">
+                        <span class="command">auv -pdf</span>
+                        <span class="command-desc">整理PDF文件</span>
+                    </div>
+                    <div class="command-example">
+                        <span class="command">auv -img</span>
+                        <span class="command-desc">整理图片文件</span>
+                    </div>
+                    <div class="command-example">
+                        <span class="command">auv -doc</span>
+                        <span class="command-desc">整理文档文件</span>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <h3 class="command-title">自定义路径</h3>
+                    <div class="command-example">
+                        <span class="command">auv -pdf here</span>
+                        <span class="command-desc">在当前目录创建PDF文件夹</span>
+                    </div>
+                    <div class="command-example">
+                        <span class="command">auv -img ./Pictures</span>
+                        <span class="command-desc">移动图片到Pictures文件夹</span>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <h3 class="command-title">配置管理</h3>
+                    <div class="command-example">
+                        <span class="command">auv status</span>
+                        <span class="command-desc">显示当前配置</span>
+                    </div>
+                    <div class="command-example">
+                        <span class="command">auv set enable archive</span>
+                        <span class="command-desc">启用压缩包文件支持</span>
+                    </div>
+                    <div class="command-example">
+                        <span class="command">auv set path pdf ~/PDFs</span>
+                        <span class="command-desc">设置PDF默认目标路径</span>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <h3 class="command-title">历史与回退</h3>
+                    <div class="command-example">
+                        <span class="command">auv history</span>
+                        <span class="command-desc">查看操作历史</span>
+                    </div>
+                    <div class="command-example">
+                        <span class="command">auv return</span>
+                        <span class="command-desc">回退上一个操作</span>
+                    </div>
+                    <div class="command-example">
+                        <span class="command">auv return T15</span>
+                        <span class="command-desc">回退到时间线T15</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 文件类型部分 -->
+        <section id="file-types" class="file-types-section">
+            <div class="section-title">
+                <h2>🎯 支持的文件类型</h2>
+                <p>AUV 支持多种文件类型的自动整理</p>
+            </div>
+
+            <div class="file-types-container">
+                <div class="file-types-column">
+                    <h3 class="file-types-title">基本类型（始终可用）</h3>
+                    <div class="file-types">
+                        <div class="file-type">PDF<br>.pdf</div>
+                        <div class="file-type">图片<br>.jpg, .png</div>
+                        <div class="file-type">文档<br>.doc, .txt</div>
+                        <div class="file-type">视频<br>.mp4, .avi</div>
+                        <div class="file-type">音频<br>.mp3, .wav</div>
+                    </div>
+                </div>
+
+                <div class="file-types-column">
+                    <h3 class="file-types-title">扩展类型（按需启用）</h3>
+                    <div class="file-types">
+                        <div class="file-type">安装包<br>.exe, .msi</div>
+                        <div class="file-type">压缩包<br>.zip, .rar</div>
+                        <div class="file-type">代码文件<br>.py, .js</div>
+                        <div class="file-type">字体文件<br>.ttf, .otf</div>
+                        <div class="file-type">电子书<br>.epub, .mobi</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 自定义命令部分 -->
+        <section>
+            <div class="section-title">
+                <h2>🔧 自定义命令</h2>
+                <p>创建您自己的文件整理命令</p>
+            </div>
+
+            <div class="code-block">
+                # 创建自定义命令<br>
+                auv set custom add py .py .pyw --path ~/Python<br><br>
+                # 使用自定义命令<br>
+                auv -py
+            </div>
+        </section>
+
+        <!-- 守护进程部分 -->
+        <section>
+            <div class="section-title">
+                <h2>🏃 守护进程模式</h2>
+                <p>让文件整理变得完全自动化</p>
+            </div>
+
+            <div class="code-block">
+                # 启动后台监控<br>
+                auv agent<br><br>
+                # 停止守护进程<br>
+                auv agent --stop
+            </div>
+        </section>
+
+        <!-- CTA 部分 -->
+        <section class="cta">
+            <h2>准备好开始使用了吗？</h2>
+            <p>立即下载AUV，体验智能文件整理的便捷</p>
+            <div class="cta-buttons">
+                <a href="https://github.com/JoyinJoester/Auv" class="btn">下载AUV</a>
+                <a href="https://github.com/JoyinJoester/Auv/wiki" class="btn btn-secondary">查看文档</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/JoyinJoester/Auv" class="footer-link">GitHub</a>
+                <a href="https://github.com/JoyinJoester/Auv/issues" class="footer-link">问题反馈</a>
+                <a href="https://github.com/JoyinJoester/Auv/wiki" class="footer-link">文档</a>
+            </div>
+            <p class="copyright">AUV - 智能文件整理工具 &copy; 2023</p>
+            <p class="copyright">基于 MIT 许可证开源</p>
+        </div>
+    </footer>
+
+    <script>
+        // 平滑滚动效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 添加动画效果
+        const animatedElements = document.querySelectorAll('.feature-card, .command-card, .file-type');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = entry.target.classList.contains('feature-card') 
+                        ? 'translateY(0)' 
+                        : entry.target.classList.contains('file-type')
+                            ? 'scale(1)'
+                            : 'translateX(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animatedElements.forEach(item => {
+            if (item.classList.contains('feature-card')) {
+                item.style.opacity = 0;
+                item.style.transform = 'translateY(20px)';
+            } else if (item.classList.contains('file-type')) {
+                item.style.opacity = 0;
+                item.style.transform = 'scale(0.8)';
+            } else {
+                item.style.opacity = 0;
+                item.style.transform = 'translateX(20px)';
+            }
+            item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html>
