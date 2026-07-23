@@ -410,6 +410,83 @@ a { color: var(--link); }
   outline-offset: -4px;
 }
 
+/* ---- Internet Explorer 风格窗口 ---- */
+.ie {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  background: var(--face);
+}
+.ie-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  background: var(--face);
+  border-bottom: 1px solid var(--face-dark);
+  flex-shrink: 0;
+}
+.ie-label {
+  font-size: 11px;
+  color: #000;
+  flex-shrink: 0;
+}
+.ie-address {
+  flex: 1;
+  min-width: 0;
+  height: 20px;
+  padding: 0 4px;
+  font-family: var(--font);
+  font-size: 11px;
+  border-top: 2px solid var(--face-darker);
+  border-left: 2px solid var(--face-darker);
+  border-right: 2px solid var(--face-light);
+  border-bottom: 2px solid var(--face-light);
+  background: #fff;
+  color: #000;
+  outline: none;
+}
+.ie-go {
+  min-width: 48px;
+  height: 22px;
+  flex-shrink: 0;
+}
+.ie-status {
+  order: 3;
+  padding: 2px 6px;
+  font-size: 11px;
+  background: var(--face);
+  border-top: 1px solid var(--face-light);
+  color: #222;
+  flex-shrink: 0;
+}
+.ie-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: #fff;
+  border-top: 2px solid var(--face-darker);
+  border-left: 2px solid var(--face-darker);
+  border-right: 2px solid var(--face-light);
+  border-bottom: 2px solid var(--face-light);
+  margin: 0 2px;
+}
+.ie-card h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+.ie-card p {
+  margin: 0 0 10px;
+}
+.ie-card .muted {
+  color: #555;
+  font-size: 11px;
+}
+.repo-list a {
+  cursor: pointer;
+}
+
 /* ---- Taskbar ---- */
 .taskbar {
   position: absolute;
