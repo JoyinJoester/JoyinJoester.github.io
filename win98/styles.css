@@ -62,6 +62,10 @@ a { color: var(--link); }
   gap: 28px;
   font-family: var(--mono);
 }
+/* author display:flex 会压过 UA 的 [hidden]，必须显式关掉 */
+.boot[hidden] {
+  display: none !important;
+}
 .boot-logo {
   font-size: 28px;
   letter-spacing: 0.04em;

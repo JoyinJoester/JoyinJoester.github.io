@@ -127,12 +127,22 @@
 
   // ---- Boot ----
   var boot = document.getElementById('boot');
+  function hideBoot() {
+    if (!boot) return;
+    boot.hidden = true;
+    boot.setAttribute('aria-hidden', 'true');
+    boot.style.display = 'none';
+  }
   if (boot) {
     boot.hidden = false;
-    setTimeout(function () {
-      boot.hidden = true;
-      boot.setAttribute('aria-hidden', 'true');
-    }, 1600);
+    boot.style.display = '';
+    boot.setAttribute('aria-hidden', 'false');
+    // 进度条 CSS 约 1.4s；略多留一点再关
+    setTimeout(hideBoot, 1600);
+    // 兜底：若动画/计时异常，3s 后强制进入桌面
+    setTimeout(hideBoot, 3000);
+    // 点击也可跳过
+    boot.addEventListener('click', hideBoot, { once: true });
   }
 
   // ---- Desktop icons ----
