@@ -1,0 +1,164 @@
+/* ============================================================
+   最近提交 — 实时拉取 GitHub Events API
+   ============================================================ */
+.commits-feed {
+  margin-top: 24px;
+  padding: 24px 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.commits-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.commits-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+}
+
+.commits-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.commits-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.commits-more {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-soft);
+  letter-spacing: 0.04em;
+  transition: color 0.2s var(--ease);
+}
+.commits-more:hover { color: var(--fg); }
+
+.commits-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+
+.commits-item {
+  border-bottom: 1px solid var(--border);
+}
+.commits-item:last-child { border-bottom: none; }
+
+.commits-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto auto;
+  gap: 18px;
+  align-items: center;
+  padding: 13px 8px;
+  margin: 0 -8px;
+  border-radius: 6px;
+  transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.commits-row:hover {
+  background: var(--surface-2);
+  transform: translateX(4px);
+}
+
+.commits-row:active {
+  transform: translateX(2px);
+  transition-duration: 0.1s;
+}
+
+.commits-sha {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.commits-msg {
+  font-size: 14px;
+  color: var(--fg);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.commits-repo {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-soft);
+  background: var(--surface-2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.commits-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.commits-skeleton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 0;
+}
+
+.commits-skeleton::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--muted);
+  opacity: 0.5;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.commits-skeleton-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.commits-error {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 13px 0;
+}
+
+.commits-error .commits-msg {
+  color: var(--muted);
+  font-style: italic;
+}

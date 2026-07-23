@@ -1,0 +1,83 @@
+/* ============================================================
+   联系
+   ============================================================ */
+.contact-card {
+  padding: clamp(48px, 8vw, 96px) clamp(32px, 5vw, 64px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: clamp(20px, 3vw, 32px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, var(--accent-soft), transparent 60%);
+  pointer-events: none;
+}
+
+.contact-card > * { position: relative; z-index: 1; }
+
+.contact-card h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.contact-card h2 em {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.contact-card p {
+  font-size: clamp(16px, 1.6vw, 18px);
+  color: var(--fg-soft);
+  max-width: 56ch;
+  margin: 0 auto 36px;
+}
+
+.contact-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+.contact-social {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 36px;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+}
+
+.contact-social a {
+  width: 40px; height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  transition: all 0.3s var(--ease);
+  color: var(--fg-soft);
+}
+
+.contact-social a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.contact-social a:active {
+  transform: translateY(-1px);
+  transition-duration: 0.1s;
+}
+
+.contact-social svg { width: 16px; height: 16px; fill: currentColor; }

@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Joyin Joester · 前端工程师 · Make it a better place · Tokyo">
+<meta name="author" content="Joyin Joester">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#0e111c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="canonical" href="https://joyinjoester.github.io/">
+<link rel="manifest" href="site.webmanifest">
+
+<!-- 防止主题闪烁 — 必须在 CSS 之前执行 -->
+<script>
+  (function() {
+    var stored = localStorage.getItem('jj-theme');
+    var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    document.documentElement.setAttribute('data-theme', stored || (prefersLight ? 'light' : 'dark'));
+  })();
+</script>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Joyin Joester · 前端工程师 / 交互设计师">
+<meta property="og:description" content="前端工程师与交互设计师,相信「Make it a better place」。目前在 Tokyo 用代码与像素打磨产品细节。">
+<meta property="og:url" content="https://joyinjoester.github.io/">
+<meta property="og:image" content="https://joyinjoester.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Joyin Joester · 前端工程师 / 交互设计师">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="Joyin Joester">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@JoyinJoester">
+<meta name="twitter:title" content="Joyin Joester · 前端工程师 / 交互设计师">
+<meta name="twitter:description" content="前端工程师与交互设计师,相信「Make it a better place」。目前在 Tokyo 用代码与像素打磨产品细节。">
+<meta name="twitter:image" content="https://joyinjoester.github.io/og-image.png">
+
+<title>Joyin Joester · 前端工程师 / 交互设计师</title>
+
+<!-- JSON-LD Person schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Joyin Joester",
+  "alternateName": "Joyin",
+  "url": "https://joyinjoester.github.io/",
+  "image": "https://avatars.githubusercontent.com/u/87232423?v=4",
+  "jobTitle": "前端工程师 / 交互设计师",
+  "description": "前端工程师与交互设计师,相信「Make it a better place」。",
+  "email": "mailto:joyin@joester.dev",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Tokyo",
+    "addressCountry": "JP"
+  },
+  "sameAs": [
+    "https://github.com/JoyinJoester",
+    "https://github.com/Monica-Pass"
+  ],
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Monica Pass",
+    "url": "https://github.com/Monica-Pass"
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://ghchart.rshah.org" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/background.css">
+<link rel="stylesheet" href="assets/css/animations.css">
+<link rel="stylesheet" href="assets/css/nav.css">
+<link rel="stylesheet" href="assets/css/hero.css">
+<link rel="stylesheet" href="assets/css/about.css">
+<link rel="stylesheet" href="assets/css/github.css">
+<link rel="stylesheet" href="assets/css/commits.css">
+<link rel="stylesheet" href="assets/css/projects.css">
+<link rel="stylesheet" href="assets/css/contact.css">
+<link rel="stylesheet" href="assets/css/footer.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+
+<body>
+<div class="ambient" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ============================================================
+     导航
+     ============================================================ -->
+<nav class="nav" aria-label="主导航">
+  <a href="#top" class="nav-logo">
+    <span class="dot" aria-hidden="true"></span>
+    <span>Joyin<span style="color:var(--fg-soft)">·</span>Joester</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">关于</a></li>
+    <li><a href="#github">GitHub</a></li>
+    <li><a href="#projects">项目</a></li>
+    <li><a href="#contact">联系</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" id="themeToggle" aria-label="切换主题" aria-pressed="false">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+      </svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+    <a href="https://github.com/JoyinJoester" target="_blank" rel="noopener" class="nav-cta">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A12 12 0 0 0 0 12a12 12 0 0 0 8.21 11.39c.6.11.82-.26.82-.58v-2c-3.34.73-4-1.61-4-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.08-.73.08-.73 1.2.08 1.84 1.23 1.84 1.23 1.07 1.83 2.81 1.3 3.5.99.1-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.16 0 0 1-.32 3.3 1.23A11.5 11.5 0 0 1 12 6.8a11.5 11.5 0 0 1 3 .4c2.28-1.55 3.29-1.23 3.29-1.23.66 1.64.25 2.86.12 3.16.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 24 12 12 12 0 0 0 12 .5z"/></svg>
+      GitHub
+    </a>
+    <button class="nav-menu-toggle" id="navMenuToggle" aria-label="打开菜单" aria-expanded="false" aria-controls="navOverlay">
+      <svg class="icon-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6l-12 12"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- 移动端全屏菜单 -->
+<div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="导航菜单" aria-hidden="true">
+  <a href="#about" class="overlay-link">关于</a>
+  <a href="#github" class="overlay-link">GitHub</a>
+  <a href="#projects" class="overlay-link">项目</a>
+  <a href="#contact" class="overlay-link">联系</a>
+  <div class="overlay-actions">
+    <a href="mailto:joyin@joester.dev" class="btn btn-ghost">写一封邮件</a>
+    <a href="https://github.com/JoyinJoester" target="_blank" rel="noopener" class="btn btn-primary">GitHub</a>
+  </div>
+</div>
+
+<main id="top">
+
+<!-- ============================================================
+     Hero
+     ============================================================ -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-meta">
+          <span class="status">开放合作</span>
+          <span id="locBadge" style="display:inline-flex;align-items:center;gap:6px;">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="color:var(--fg-soft)"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Tokyo · JP
+          </span>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="line"><span class="word" style="animation-delay:0.05s">Hi,</span></span>
+          <span class="line"><span class="word" style="animation-delay:0.15s">我是</span> <span class="word accent" style="animation-delay:0.25s">Joyin</span></span>
+        </h1>
+
+        <p class="hero-tagline">
+          前端工程师与交互设计师，相信 <strong>「Make it a better place」</strong>。
+          目前在 <strong>Tokyo</strong> 用代码与像素打磨产品细节，
+          关心动画的呼吸感、字体的呼吸、以及每一个 hover 之间的微差。
+        </p>
+
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary magnetic">
+            查看我在做的项目
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a href="#contact" class="btn btn-ghost magnetic">联系我</a>
+        </div>
+
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num" data-source="public_repos">—</div>
+            <div class="hero-stat-label">开源仓库</div>
+          </div>
+          <div>
+            <div class="hero-stat-num" data-source="followers">—</div>
+            <div class="hero-stat-label">GitHub 关注者</div>
+          </div>
+          <div>
+            <div class="hero-stat-num" data-source="following">—</div>
+            <div class="hero-stat-label">正在关注</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">∞</div>
+            <div class="hero-stat-label">好奇心</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="avatar-frame">
+          <div class="avatar-ring"></div>
+          <img src="https://avatars.githubusercontent.com/u/87232423?v=4" alt="Joyin Joester 的头像" width="360" height="360" loading="eager" data-avatar
+               onerror="this.style.display='none';this.parentElement.classList.add('avatar-fallback')">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     关于
+     ============================================================ -->
+<section id="about">
+  <div class="container">
+    <div data-reveal>
+      <div class="section-eyebrow">01 关于</div>
+      <h2 class="section-title">关于这个人，<br>以及他在做的事</h2>
+    </div>
+
+    <div class="about-grid">
+      <aside class="about-aside" data-reveal data-reveal-delay="1">
+        <div class="about-card">
+          <div class="about-row"><span>姓名</span><span>Joyin</span></div>
+          <div class="about-row"><span>账号</span><span>@JoyinJoester</span></div>
+          <div class="about-row"><span>位置</span><span>Tokyo, JP</span></div>
+          <div class="about-row"><span>所属</span><span>Monica Pass</span></div>
+          <div class="about-row"><span>注册于</span><span>2021 · 07</span></div>
+          <div class="about-row"><span>状态</span><span style="color:var(--accent-quiet)">● 开放合作</span></div>
+        </div>
+      </aside>
+
+      <div class="about-prose" data-reveal data-reveal-delay="2">
+        <p>我把屏幕当作一种慢媒体：节奏、留白、负空间，每一样都值得像编辑设计那样去打磨。</p>
+
+        <p>从 <strong>2021</strong> 年开始，我在 GitHub 上以 <strong>JoyinJoester</strong> 的身份积累代码与项目。主力维护 <strong>Monica Pass</strong>——一个开源、本地优先的跨平台密码管理器。</p>
+
+        <p>这个站点的动态数据（贡献热力图、最近提交、组织仓库）全部来自 GitHub API，由 Actions 定时刷新。</p>
+
+        <blockquote class="quote">
+          Make it a better place.
+          <cite>来自 GitHub Bio</cite>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     GitHub
+     ============================================================ -->
+<section id="github">
+  <div class="container">
+    <div data-reveal>
+      <div class="section-eyebrow">02 GitHub</div>
+      <h2 class="section-title">GitHub 贡献热力图</h2>
+      <p class="section-subtitle">过去一年的提交密度。绿色越深，那天写下的代码（或者删掉的代码）越多。</p>
+    </div>
+
+    <div class="gh-wrap" data-reveal data-reveal-delay="1">
+      <div class="gh-header">
+        <div>
+          <div class="gh-title">@JoyinJoester · Contribution Graph</div>
+          <div class="gh-meta">数据来源：github.com · 实时拉取</div>
+        </div>
+        <a href="https://github.com/JoyinJoester" target="_blank" rel="noopener" class="gh-link">
+          在 GitHub 上查看
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
+      </div>
+
+      <div class="gh-chart">
+        <img id="ghChart"
+             src="https://ghchart.rshah.org/JoyinJoester"
+             alt="JoyinJoester 的 GitHub 贡献热力图"
+             loading="lazy"
+             onerror="this.style.display='none';document.getElementById('ghFallback').style.display='block'">
+      </div>
+
+      <div id="ghFallback" style="display:none;text-align:center;padding:40px;color:var(--muted);font-family:var(--font-mono);font-size:13px;">
+        热力图加载失败，请直接访问
+        <a href="https://github.com/JoyinJoester" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid currentColor">github.com/JoyinJoester</a>
+      </div>
+
+      <div class="gh-legend">
+        <span>少</span>
+        <div class="swatches">
+          <span class="sw"></span>
+          <span class="sw" style="background:color-mix(in oklch, var(--accent) 25%, var(--surface-2))"></span>
+          <span class="sw" style="background:color-mix(in oklch, var(--accent) 50%, var(--surface-2))"></span>
+          <span class="sw" style="background:color-mix(in oklch, var(--accent) 75%, var(--surface-2))"></span>
+          <span class="sw" style="background:var(--accent)"></span>
+        </div>
+        <span>多</span>
+      </div>
+
+      <div class="gh-stats">
+        <div class="gh-stat">
+          <div class="gh-stat-num" data-source="public_repos">—</div>
+          <div class="gh-stat-label">公开仓库</div>
+        </div>
+        <div class="gh-stat">
+          <div class="gh-stat-num" data-source="followers">—</div>
+          <div class="gh-stat-label">关注者</div>
+        </div>
+        <div class="gh-stat">
+          <div class="gh-stat-num" data-source="following">—</div>
+          <div class="gh-stat-label">正在关注</div>
+        </div>
+        <div class="gh-stat">
+          <div class="gh-stat-num" data-source="created_year">—</div>
+          <div class="gh-stat-label">加入 GitHub</div>
+        </div>
+      </div>
+
+      <div class="commits-feed" data-reveal data-reveal-delay="2">
+        <div class="commits-head">
+          <div class="commits-title">
+            <span class="commits-pulse"></span>
+            最近提交
+          </div>
+          <span class="commits-meta">实时 · GitHub API</span>
+        </div>
+        <ol class="commits-list" id="commitsList">
+          <li class="commits-skeleton">
+            <span class="commits-skeleton-text">正在拉取最近提交…</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     项目 — 由 data/repos.json 动态渲染 (GitHub Actions 拉取)
+     ============================================================ -->
+<section id="projects">
+  <div class="container">
+    <div class="projects-head" data-reveal>
+      <div>
+        <div class="section-eyebrow">03 我在做的事</div>
+        <h2 class="section-title">Monica Pass 开源项目</h2>
+        <p class="section-subtitle">数据来自 GitHub API，由 Actions 定时刷新。只展示真实仓库信息。</p>
+      </div>
+      <a href="https://github.com/Monica-Pass" target="_blank" rel="noopener" class="projects-link">
+        组织主页 →
+      </a>
+    </div>
+
+    <a href="https://github.com/Monica-Pass" target="_blank" rel="noopener" class="org-banner magnetic-card" data-reveal id="orgBanner" aria-label="Monica Pass 组织主页" hidden>
+      <img src="" alt="Monica Pass 组织头像" class="org-avatar" width="56" height="56" loading="lazy" data-org-avatar />
+      <div class="org-info">
+        <div class="org-name"><span data-org="name">Monica Pass</span> <span class="org-handle" data-org="handle">@Monica-Pass</span></div>
+        <div class="org-desc" data-org="description"></div>
+      </div>
+      <div class="org-stats">
+        <div class="stat-item">
+          <div class="stat-num" data-org="public_repos">—</div>
+          <div class="stat-label">公开仓库</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-org="total_stars">—</div>
+          <div class="stat-label">总 Stars</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-org="followers">—</div>
+          <div class="stat-label">Followers</div>
+        </div>
+      </div>
+    </a>
+
+    <div class="projects-grid" id="projectsGrid">
+      <div class="projects-empty" id="projectsEmpty">
+        正在从 GitHub 加载仓库数据…
+      </div>
+    </div>
+
+    <p style="margin-top:32px;font-family:var(--font-mono);font-size:12px;color:var(--muted);letter-spacing:0.04em;">
+      <span style="color:var(--muted)">/</span> 个人账号 <a href="https://github.com/JoyinJoester?tab=repositories" target="_blank" rel="noopener" style="color:var(--fg-soft);text-decoration:underline;text-underline-offset:3px">JoyinJoester</a> 上还有其他公开仓库。
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     联系
+     ============================================================ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-card" data-reveal>
+      <div class="section-eyebrow" style="justify-content:center;display:flex;">04 联系</div>
+      <h2>让我们<br><em>把事情做好</em>。</h2>
+      <p>开放合作、技术交流、咖啡邀约，任何一种都欢迎。邮件通常 24 小时内回复，GitHub 上的 issue / discussion 永远是首选。</p>
+
+      <div class="contact-actions">
+        <a href="mailto:joyin@joester.dev" class="btn btn-primary magnetic">
+          写一封邮件
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="https://github.com/JoyinJoester" target="_blank" rel="noopener" class="btn btn-ghost magnetic">在 GitHub 上找我</a>
+      </div>
+
+      <div class="contact-social">
+        <a href="https://github.com/JoyinJoester" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24"><path d="M12 .5A12 12 0 0 0 0 12a12 12 0 0 0 8.21 11.39c.6.11.82-.26.82-.58v-2c-3.34.73-4-1.61-4-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.08-.73.08-.73 1.2.08 1.84 1.23 1.84 1.23 1.07 1.83 2.81 1.3 3.5.99.1-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.16 0 0 1-.32 3.3 1.23A11.5 11.5 0 0 1 12 6.8a11.5 11.5 0 0 1 3 .4c2.28-1.55 3.29-1.23 3.29-1.23.66 1.64.25 2.86.12 3.16.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 24 12 12 12 0 0 0 12 .5z"/></svg>
+        </a>
+        <a href="mailto:joyin@joester.dev" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+        <a href="#top" aria-label="回到顶部">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 Joyin · Tokyo · <span style="color:var(--accent-quiet)">●</span> 在线</div>
+    <div>v3.0 · 用 Vanilla JS 构建 · 部署于 GitHub Pages</div>
+    <div><a href="#top">回到顶部 ↑</a></div>
+  </div>
+</footer>
+
+<script src="assets/js/theme.js"></script>
+<script src="assets/js/reveal.js"></script>
+<script src="assets/js/data-loader.js"></script>
+<script src="assets/js/count-up.js"></script>
+<script src="assets/js/magnetic.js"></script>
+<script src="assets/js/smooth-scroll.js"></script>
+<script src="assets/js/nav-scroll.js"></script>
+<script src="assets/js/commits.js"></script>
+<script src="assets/js/projects.js"></script>
+</body>
+</html>

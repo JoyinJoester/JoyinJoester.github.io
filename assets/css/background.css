@@ -1,0 +1,58 @@
+/* ============================================================
+   背景：动态光球 + 噪点
+   ============================================================ */
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  animation: orbDrift 22s var(--ease) infinite;
+  will-change: transform;
+}
+
+[data-theme="light"] .orb { opacity: 0.55; filter: blur(100px); }
+
+.orb-1 {
+  width: 480px; height: 480px;
+  background: var(--orb-1);
+  top: -10%; left: -8%;
+  animation-delay: -2s;
+}
+.orb-2 {
+  width: 560px; height: 560px;
+  background: var(--orb-2);
+  top: 35%; right: -15%;
+  animation-delay: -8s;
+}
+.orb-3 {
+  width: 380px; height: 380px;
+  background: var(--orb-3);
+  bottom: -5%; left: 30%;
+  animation-delay: -14s;
+}
+
+@keyframes orbDrift {
+  0%, 100% { transform: translate3d(0,0,0) scale(1); }
+  33%      { transform: translate3d(60px, -40px, 0) scale(1.08); }
+  66%      { transform: translate3d(-40px, 60px, 0) scale(0.95); }
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/></svg>");
+}
+
+[data-theme="light"] .grain { opacity: 0.25; }

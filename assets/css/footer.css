@@ -1,0 +1,28 @@
+/* ============================================================
+   页脚
+   ============================================================ */
+footer {
+  padding: 40px var(--gutter) 32px;
+  border-top: 1px solid var(--border);
+}
+
+.footer-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.footer-inner a {
+  color: var(--fg-soft);
+  transition: color 0.2s;
+}
+
+.footer-inner a:hover { color: var(--accent); }

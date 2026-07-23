@@ -1,0 +1,19 @@
+{
+  "name": "Joyin Joester",
+  "short_name": "Joyin",
+  "description": "前端工程师 · Make it a better place · Tokyo",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0e111c",
+  "theme_color": "#0e111c",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

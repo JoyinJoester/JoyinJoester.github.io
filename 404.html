@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 · 这个页面不存在 — Joyin Joester</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<style>
+  body {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: var(--gutter);
+  }
+  .num {
+    font-family: var(--font-display);
+    font-size: clamp(80px, 18vw, 180px);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--fg);
+    margin-bottom: 24px;
+  }
+  .num span {
+    background: linear-gradient(135deg, var(--accent), var(--orb-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-style: italic;
+    font-weight: 400;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 500;
+    color: var(--fg);
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+  p {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 32px;
+    max-width: 42ch;
+    line-height: 1.6;
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    background: var(--accent);
+    color: var(--accent-fg);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+  .back:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px var(--accent-glow);
+  }
+</style>
+</head>
+<body>
+  <main>
+    <div class="num">4<span>0</span>4</div>
+    <h1>这条路通向虚空</h1>
+    <p>这个页面不存在,或者从来没存在过。也许你输错了地址,也许我曾经写过它然后又删掉了。</p>
+    <a href="/" class="back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      回到首页
+    </a>
+  </main>
+</body>
+</html>

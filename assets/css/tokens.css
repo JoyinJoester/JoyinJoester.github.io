@@ -1,0 +1,66 @@
+/* ============================================================
+   Tokens — 现代极简 × 科技工具型
+   全局共享变量，不可拆散。--accent 全站引用 63 次。
+   ============================================================ */
+:root {
+  /* 字体 */
+  --font-display: 'Space Grotesk', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-body:    'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Noto Sans SC', ui-monospace, Menlo, monospace;
+
+  /* 中英文混排优化：让 Noto Sans SC 用比例间距，避免中英文之间过宽 */
+  --font-feature-cn: "palt" 1;
+
+  /* 尺度 */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 0.6s;
+  --maxw: 1200px;
+  --gutter: clamp(20px, 5vw, 64px);
+  --radius: 14px;
+  --radius-sm: 8px;
+}
+
+/* 深色（默认） */
+[data-theme="dark"] {
+  --bg:        oklch(14% 0.012 250);
+  --bg-soft:   oklch(18% 0.014 250);
+  --surface:   oklch(20% 0.016 250);
+  --surface-2: oklch(24% 0.018 250);
+  --fg:        oklch(96% 0.005 240);
+  --fg-soft:   oklch(82% 0.008 240);
+  --muted:     oklch(58% 0.014 240);
+  --border:    rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.16);
+  --accent:    oklch(82% 0.19 152);
+  --accent-soft: oklch(82% 0.19 152 / 0.18);
+  --accent-glow: oklch(82% 0.19 152 / 0.45);
+  --accent-fg: oklch(14% 0.012 250);
+  --accent-quiet: oklch(58% 0.06 152);
+  --orb-1:     oklch(72% 0.20 152);
+  --orb-2:     oklch(68% 0.18 250);
+  --orb-3:     oklch(60% 0.12 320);
+  color-scheme: dark;
+}
+
+/* 浅色 */
+[data-theme="light"] {
+  --bg:        oklch(98.5% 0.003 240);
+  --bg-soft:   oklch(97% 0.004 240);
+  --surface:   oklch(100% 0 0);
+  --surface-2: oklch(96% 0.005 240);
+  --fg:        oklch(16% 0.014 250);
+  --fg-soft:   oklch(28% 0.012 250);
+  --muted:     oklch(52% 0.014 240);
+  --border:    oklch(88% 0.008 240);
+  --border-strong: oklch(70% 0.014 240);
+  --accent:    oklch(55% 0.20 152);
+  --accent-soft: oklch(55% 0.20 152 / 0.14);
+  --accent-glow: oklch(55% 0.20 152 / 0.30);
+  --accent-fg: oklch(98.5% 0.003 240);
+  --accent-quiet: oklch(45% 0.08 152);
+  --orb-1:     oklch(80% 0.18 152);
+  --orb-2:     oklch(82% 0.10 250);
+  --orb-3:     oklch(82% 0.10 320);
+  color-scheme: light;
+}
