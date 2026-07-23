@@ -21,6 +21,7 @@ Monica 开发者 · Tokyo · 部署在 GitHub Pages
 | 最近提交 | `data/commits.json` ← Actions |
 | Monica Pass 组织仓库 | `data/repos.json` ← Actions |
 | 关于 / 联系 | 手写（非动态数据） |
+| [Win98 桌面](win98/) | 独立子页，仿 Windows 98 桌面交互 |
 
 ## 本地预览
 

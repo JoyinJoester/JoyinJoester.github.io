@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Joyin Joester · Windows 98 风格桌面">
+<meta name="theme-color" content="#008080">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="canonical" href="https://joyinjoester.github.io/win98/">
+<title>Joyin's PC — Windows 98</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="boot" class="boot" aria-hidden="true" hidden>
+    <div class="boot-logo">Microsoft<span>Windows<sub>98</sub></span></div>
+    <div class="boot-bar"><div class="boot-bar-fill"></div></div>
+  </div>
+
+  <div id="desktop" class="desktop" role="application" aria-label="Joyin 的 Windows 98 桌面">
+    <div class="icons" id="desktopIcons">
+      <!-- icons injected by app.js -->
+    </div>
+
+    <div class="window-layer" id="windowLayer"></div>
+
+    <div class="taskbar" id="taskbar">
+      <button type="button" class="start-btn" id="startBtn" aria-haspopup="menu" aria-expanded="false">
+        <span class="start-logo" aria-hidden="true"></span>
+        <span>开始</span>
+      </button>
+      <div class="task-buttons" id="taskButtons"></div>
+      <div class="tray">
+        <span class="tray-icon" title="音量" aria-hidden="true">🔊</span>
+        <time class="clock" id="clock" datetime="">--:--</time>
+      </div>
+    </div>
+
+    <div class="start-menu" id="startMenu" role="menu" hidden>
+      <div class="start-banner" aria-hidden="true">
+        <span>Windows</span><strong>98</strong>
+      </div>
+      <ul class="start-list">
+        <li><button type="button" data-open="about" role="menuitem"><span class="sm-icon">📄</span>简介.txt</button></li>
+        <li><button type="button" data-open="monica" role="menuitem"><span class="sm-icon">🔐</span>Monica.exe</button></li>
+        <li><button type="button" data-open="github" role="menuitem"><span class="sm-icon">🐙</span>GitHub.url</button></li>
+        <li><button type="button" data-open="contact" role="menuitem"><span class="sm-icon">✉️</span>联系我.txt</button></li>
+        <li class="sep"></li>
+        <li><a href="../" role="menuitem"><span class="sm-icon">🏠</span>返回主站</a></li>
+        <li class="sep"></li>
+        <li><button type="button" id="shutdownBtn" role="menuitem"><span class="sm-icon">⏻</span>关闭电脑…</button></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="shutdown" class="shutdown" hidden>
+    <p>现在可以安全地关闭计算机了。</p>
+    <p class="shutdown-sub">（其实只是回到主站）</p>
+    <a class="win-btn" href="../">返回主站</a>
+    <button type="button" class="win-btn" id="restartBtn">重新启动</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
