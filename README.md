@@ -1,6 +1,6 @@
 # Joyin Joester · 个人主页
 
-前端工程师 · Tokyo · 部署在 GitHub Pages
+Monica 开发者 · Tokyo · 部署在 GitHub Pages
 
 站点只展示能从 GitHub **自动拉取** 的真实数据，没有手写假笔记 / 假项目 / 假技能清单。
 
