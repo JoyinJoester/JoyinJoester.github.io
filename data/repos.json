@@ -19,8 +19,8 @@
       "stargazers_count": 863,
       "forks_count": 51,
       "open_issues_count": 13,
-      "updated_at": "2026-07-24T03:43:16Z",
-      "pushed_at": "2026-07-24T01:32:26Z",
+      "updated_at": "2026-07-24T05:31:42Z",
+      "pushed_at": "2026-07-24T05:31:10Z",
       "license": "GPL-3.0",
       "topics": [
         "android",
@@ -71,8 +71,8 @@
       "html_url": "https://github.com/Monica-Pass/Monica-for-Extension",
       "language": "TypeScript",
       "stargazers_count": 3,
-      "forks_count": 0,
-      "open_issues_count": 0,
+      "forks_count": 1,
+      "open_issues_count": 1,
       "updated_at": "2026-07-21T10:39:46Z",
       "pushed_at": "2026-07-21T10:39:42Z",
       "license": "GPL-3.0",
@@ -93,5 +93,5 @@
       "topics": []
     }
   ],
-  "updated_at": "2026-07-24T04:35:37.392Z"
+  "updated_at": "2026-07-24T07:21:03.364Z"
 }
