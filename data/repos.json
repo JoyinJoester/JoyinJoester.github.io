@@ -5,9 +5,9 @@
     "avatar_url": "https://avatars.githubusercontent.com/u/289669198?v=4",
     "description": "这里是Monica Pass的组织",
     "html_url": "https://github.com/Monica-Pass",
-    "public_repos": 5,
+    "public_repos": 6,
     "followers": 11,
-    "total_stars": 915
+    "total_stars": 916
   },
   "repos": [
     {
@@ -19,8 +19,8 @@
       "stargazers_count": 887,
       "forks_count": 51,
       "open_issues_count": 11,
-      "updated_at": "2026-08-04T13:43:44Z",
-      "pushed_at": "2026-08-04T13:51:38Z",
+      "updated_at": "2026-08-04T18:09:58Z",
+      "pushed_at": "2026-08-04T18:07:19Z",
       "license": "GPL-3.0",
       "topics": [
         "android",
@@ -91,7 +91,21 @@
       "pushed_at": "2026-08-01T04:13:53Z",
       "license": "MIT",
       "topics": []
+    },
+    {
+      "name": "MonicaDocs",
+      "full_name": "Monica-Pass/MonicaDocs",
+      "description": "Monica‘s DocsWebsite Repoistory",
+      "html_url": "https://github.com/Monica-Pass/MonicaDocs",
+      "language": "Vue",
+      "stargazers_count": 1,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "updated_at": "2026-08-04T18:09:42Z",
+      "pushed_at": "2026-08-04T17:51:34Z",
+      "license": "GPL-3.0",
+      "topics": []
     }
   ],
-  "updated_at": "2026-08-04T17:04:52.655Z"
+  "updated_at": "2026-08-04T18:55:50.520Z"
 }
