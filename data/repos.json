@@ -95,17 +95,17 @@
     {
       "name": "MonicaDocs",
       "full_name": "Monica-Pass/MonicaDocs",
-      "description": "Monica‘s DocsWebsite Repoistory",
+      "description": "Monica DocsWebsite Repoistory",
       "html_url": "https://github.com/Monica-Pass/MonicaDocs",
       "language": "Vue",
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-08-09T06:36:45Z",
+      "updated_at": "2026-08-09T15:04:17Z",
       "pushed_at": "2026-08-09T06:36:41Z",
       "license": "GPL-3.0",
       "topics": []
     }
   ],
-  "updated_at": "2026-08-09T14:20:26.019Z"
+  "updated_at": "2026-08-09T15:14:37.060Z"
 }
