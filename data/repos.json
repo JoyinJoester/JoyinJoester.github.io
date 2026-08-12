@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 6,
     "followers": 11,
-    "total_stars": 932
+    "total_stars": 933
   },
   "repos": [
     {
@@ -18,7 +18,7 @@
       "language": "Kotlin",
       "stargazers_count": 903,
       "forks_count": 54,
-      "open_issues_count": 17,
+      "open_issues_count": 18,
       "updated_at": "2026-08-12T04:37:24Z",
       "pushed_at": "2026-08-11T17:16:04Z",
       "license": "GPL-3.0",
@@ -42,10 +42,10 @@
       "description": null,
       "html_url": "https://github.com/Monica-Pass/Monica-by-Avalonia",
       "language": "C#",
-      "stargazers_count": 17,
+      "stargazers_count": 18,
       "forks_count": 1,
       "open_issues_count": 11,
-      "updated_at": "2026-07-31T03:06:48Z",
+      "updated_at": "2026-08-12T06:46:45Z",
       "pushed_at": "2026-08-09T19:04:46Z",
       "license": "GPL-3.0",
       "topics": []
@@ -101,11 +101,11 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-08-11T06:45:11Z",
-      "pushed_at": "2026-08-11T06:45:01Z",
+      "updated_at": "2026-08-12T07:07:00Z",
+      "pushed_at": "2026-08-12T07:06:00Z",
       "license": "GPL-3.0",
       "topics": []
     }
   ],
-  "updated_at": "2026-08-12T06:44:45.347Z"
+  "updated_at": "2026-08-12T08:06:02.013Z"
 }
