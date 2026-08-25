@@ -5,9 +5,9 @@
     "avatar_url": "https://avatars.githubusercontent.com/u/289669198?v=4",
     "description": "这里是Monica Pass的组织",
     "html_url": "https://github.com/Monica-Pass",
-    "public_repos": 8,
+    "public_repos": 9,
     "followers": 14,
-    "total_stars": 959
+    "total_stars": 958
   },
   "repos": [
     {
@@ -93,19 +93,19 @@
       "topics": []
     },
     {
-      "name": "Monica-Cloud",
-      "full_name": "Monica-Pass/Monica-Cloud",
+      "name": "Monica-Fdroid",
+      "full_name": "Monica-Pass/Monica-Fdroid",
       "description": null,
-      "html_url": "https://github.com/Monica-Pass/Monica-Cloud",
-      "language": "TypeScript",
-      "stargazers_count": 1,
+      "html_url": "https://github.com/Monica-Pass/Monica-Fdroid",
+      "language": null,
+      "stargazers_count": 0,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-08-12T11:52:29Z",
-      "pushed_at": "2026-08-05T09:51:41Z",
-      "license": "AGPL-3.0",
+      "updated_at": "2026-08-25T16:15:56Z",
+      "pushed_at": "2026-08-25T16:16:28Z",
+      "license": "NOASSERTION",
       "topics": []
     }
   ],
-  "updated_at": "2026-08-25T15:28:13.375Z"
+  "updated_at": "2026-08-25T16:19:19.835Z"
 }
