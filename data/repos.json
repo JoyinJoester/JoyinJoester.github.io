@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 9,
     "followers": 14,
-    "total_stars": 959
+    "total_stars": 960
   },
   "repos": [
     {
@@ -19,8 +19,8 @@
       "stargazers_count": 934,
       "forks_count": 60,
       "open_issues_count": 19,
-      "updated_at": "2026-08-25T16:40:28Z",
-      "pushed_at": "2026-08-25T14:08:18Z",
+      "updated_at": "2026-08-26T01:38:09Z",
+      "pushed_at": "2026-08-26T01:37:57Z",
       "license": "GPL-3.0",
       "topics": [
         "android",
@@ -87,8 +87,8 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-08-25T14:29:17Z",
-      "pushed_at": "2026-08-25T14:08:56Z",
+      "updated_at": "2026-08-26T01:41:19Z",
+      "pushed_at": "2026-08-26T01:38:21Z",
       "license": "GPL-3.0",
       "topics": []
     },
@@ -98,14 +98,14 @@
       "description": null,
       "html_url": "https://github.com/Monica-Pass/Monica-Fdroid",
       "language": "Kotlin",
-      "stargazers_count": 0,
+      "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-08-25T16:33:05Z",
-      "pushed_at": "2026-08-25T16:16:28Z",
+      "updated_at": "2026-08-26T01:22:35Z",
+      "pushed_at": "2026-08-26T01:22:29Z",
       "license": "NOASSERTION",
       "topics": []
     }
   ],
-  "updated_at": "2026-08-26T00:01:16.141Z"
+  "updated_at": "2026-08-26T02:00:28.480Z"
 }
