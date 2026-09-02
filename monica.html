@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark" class="nd">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Monica Pass — 开源、本地优先的跨平台密码管理器与 2FA 验证器。Android / iOS / 桌面 / 浏览器扩展，GPL-3.0。">
+<meta name="author" content="Joyin Joester">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="canonical" href="https://joyinjoester.github.io/monica.html">
+<link rel="manifest" href="site.webmanifest">
+
+<script>
+  (function() {
+    var stored = localStorage.getItem('jj-theme');
+    var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    document.documentElement.setAttribute('data-theme', stored || (prefersLight ? 'light' : 'dark'));
+  })();
+</script>
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Monica Pass · 开源本地优先密码管理器">
+<meta property="og:description" content="密码管理 + 2FA 验证器。本地优先、端到端加密、GPL-3.0 开源。覆盖 Android / iOS / 桌面 / 浏览器扩展。">
+<meta property="og:url" content="https://joyinjoester.github.io/monica.html">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="Joyin Joester">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@JoyinJoester">
+<meta name="twitter:title" content="Monica Pass · 开源本地优先密码管理器">
+<meta name="twitter:description" content="密码管理 + 2FA 验证器。本地优先、端到端加密、GPL-3.0 开源。">
+
+<title>Monica Pass · 开源本地优先密码管理器</title>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Monica Pass",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Android, iOS, Windows, macOS, Linux",
+  "description": "开源、本地优先的跨平台密码管理器与 2FA 验证器。",
+  "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+  "codeRepository": "https://github.com/Monica-Pass/Monica",
+  "author": {
+    "@type": "Person",
+    "name": "Joyin Joester",
+    "url": "https://github.com/JoyinJoester"
+  },
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@400..700&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/background.css">
+<link rel="stylesheet" href="assets/css/animations.css">
+<link rel="stylesheet" href="assets/css/nav.css">
+<link rel="stylesheet" href="assets/css/hero.css">
+<link rel="stylesheet" href="assets/css/footer.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/css/nothing.css">
+<link rel="stylesheet" href="assets/css/monica.css">
+</head>
+
+<body>
+<div class="ambient" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="nav" aria-label="主导航">
+  <a href="index.html" class="nav-logo">
+    <span class="dot" aria-hidden="true"></span>
+    <span>Joyin<span style="color:var(--fg-soft)">·</span>Joester</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">← Index</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#platforms">Platforms</a></li>
+    <li><a href="#security">Security</a></li>
+    <li><a href="#repos">Repos</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" id="themeToggle" aria-label="切换主题" aria-pressed="false">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+      </svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+    <a href="https://github.com/Monica-Pass" target="_blank" rel="noopener" class="nav-cta">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A12 12 0 0 0 0 12a12 12 0 0 0 8.21 11.39c.6.11.82-.26.82-.58v-2c-3.34.73-4-1.61-4-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.08-.73.08-.73 1.2.08 1.84 1.23 1.84 1.23 1.07 1.83 2.81 1.3 3.5.99.1-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.16 0 0 1-.32 3.3 1.23A11.5 11.5 0 0 1 12 6.8a11.5 11.5 0 0 1 3 .4c2.28-1.55 3.29-1.23 3.29-1.23.66 1.64.25 2.86.12 3.16.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 24 12 12 12 0 0 0 12 .5z"/></svg>
+      组织
+    </a>
+    <button class="nav-menu-toggle" id="navMenuToggle" aria-label="打开菜单" aria-expanded="false" aria-controls="navOverlay">
+      <svg class="icon-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6l-12 12"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="导航菜单" aria-hidden="true">
+  <a href="#features" class="overlay-link">Features</a>
+  <a href="#platforms" class="overlay-link">Platforms</a>
+  <a href="#security" class="overlay-link">Security</a>
+  <a href="#repos" class="overlay-link">Repos</a>
+  <div class="overlay-actions">
+    <a href="index.html" class="btn btn-ghost">返回主站</a>
+    <a href="https://github.com/Monica-Pass" target="_blank" rel="noopener" class="btn btn-primary">GitHub</a>
+  </div>
+</div>
+
+<main id="top">
+
+<section class="mn-hero">
+  <div class="container">
+    <div class="mn-hero-inner">
+      <div>
+        <div class="mn-badges">
+          <span class="mn-badge accent">Open Source</span>
+          <span class="mn-badge">GPL-3.0</span>
+          <span class="mn-badge">Local-First</span>
+          <span class="mn-badge">TOTP / 2FA</span>
+        </div>
+
+        <h1 class="mn-title">Monica<em>Pass</em></h1>
+
+        <p class="mn-lede">
+          一个开源、本地优先的跨平台密码管理器与 2FA 验证器。数据留在你的设备上，密钥永不离开你的手。
+        </p>
+
+        <div class="mn-hero-actions">
+          <a href="https://github.com/Monica-Pass/Monica" target="_blank" rel="noopener" class="btn btn-primary magnetic">
+            View on GitHub
+          </a>
+          <a href="#platforms" class="btn btn-ghost magnetic">All Platforms</a>
+        </div>
+
+        <div class="mn-hero-stats" id="mnStats">
+          <div class="mn-stat-row">
+            <span class="mn-stat-label">GitHub Stars</span>
+            <span class="mn-stat-num" data-mn="total_stars">—</span>
+            <div class="mn-segbar" data-mn-bar="total_stars" data-mn-max="1000" aria-hidden="true"></div>
+          </div>
+          <div class="mn-stat-row">
+            <span class="mn-stat-label">Repositories</span>
+            <span class="mn-stat-num" data-mn="public_repos">—</span>
+            <div class="mn-segbar" data-mn-bar="public_repos" data-mn-max="12" aria-hidden="true"></div>
+          </div>
+          <div class="mn-stat-row">
+            <span class="mn-stat-label">Followers</span>
+            <span class="mn-stat-num" data-mn="followers">—</span>
+            <div class="mn-segbar" data-mn-bar="followers" data-mn-max="30" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mn-hero-visual">
+        <div class="mn-phone" aria-hidden="true">
+          <div class="mn-screen">
+            <div class="mn-screen-bar">
+              <span>9:41</span>
+              <span>◍ ▮▮▮</span>
+            </div>
+            <div class="mn-screen-head">
+              <strong>Vault</strong>
+              <span>4 Entries · Encrypted Locally</span>
+            </div>
+            <div class="mn-vault">
+              <div class="mn-entry">
+                <span class="mn-entry-txt"><b>GitHub</b><span>joyin8888</span></span>
+                <span class="mn-entry-totp">418 902</span>
+              </div>
+              <div class="mn-entry">
+                <span class="mn-entry-txt"><b>Mail</b><span>foxmail</span></span>
+                <span class="mn-entry-totp">725 143</span>
+              </div>
+              <div class="mn-entry">
+                <span class="mn-entry-txt"><b>AWS Console</b><span>root</span></span>
+                <span class="mn-entry-totp">063 517</span>
+              </div>
+              <div class="mn-entry">
+                <span class="mn-entry-txt"><b>NAS</b><span>admin</span></span>
+                <span class="mn-entry-totp">839 264</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+    <div data-reveal>
+      <div class="section-eyebrow">01 Features</div>
+      <h2 class="section-title">密码管理该有的样子</h2>
+      <p class="section-subtitle">不做云端账号体系，不做订阅墙。密码库是一个你可以带走的文件。</p>
+    </div>
+
+    <div class="mn-features">
+      <div class="mn-feature magnetic-card" data-reveal>
+        <div class="mn-feature-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3>Vault</h3>
+        <p>账号、密码、备注、自定义字段。分组与标签，全文搜索，弱密码与重复密码检测。</p>
+      </div>
+
+      <div class="mn-feature magnetic-card" data-reveal data-reveal-delay="1">
+        <div class="mn-feature-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        </div>
+        <h3>TOTP Generator</h3>
+        <p>内置 2FA 验证码生成，兼容标准 otpauth:// 二维码。密码和验证码在同一个条目里，不用来回切 App。</p>
+      </div>
+
+      <div class="mn-feature magnetic-card" data-reveal data-reveal-delay="2">
+        <div class="mn-feature-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <h3>Local First</h3>
+        <p>默认不联网。数据库在本地加密存储，同步与备份由你决定放在哪里——不存在"我们的服务器"。</p>
+      </div>
+
+      <div class="mn-feature magnetic-card" data-reveal>
+        <div class="mn-feature-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2"/><path d="M4 7h16v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M9 12h6"/></svg>
+        </div>
+        <h3>Import / Export</h3>
+        <p>从常见密码管理器迁入，也能随时把数据完整导出。没有锁定，离开的成本应该是零。</p>
+      </div>
+
+      <div class="mn-feature magnetic-card" data-reveal data-reveal-delay="1">
+        <div class="mn-feature-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 20h8M12 18v2"/></svg>
+        </div>
+        <h3>Cross Platform</h3>
+        <p>Android、iOS、桌面、浏览器扩展共享同一套数据格式，由独立的 Mdbx 存储层保证兼容。</p>
+      </div>
+
+      <div class="mn-feature magnetic-card" data-reveal data-reveal-delay="2">
+        <div class="mn-feature-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+        </div>
+        <h3>Fully Open</h3>
+        <p>GPL-3.0。加密实现、存储格式、同步逻辑全部可审计，欢迎提 issue 或直接读源码。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="platforms">
+  <div class="container">
+    <div data-reveal>
+      <div class="section-eyebrow">02 Platforms</div>
+      <h2 class="section-title">四个客户端，<br>一套数据格式</h2>
+      <p class="section-subtitle">Stars / 语言 / 更新时间由 GitHub Actions 定时刷新，卡片信息与仓库真实状态一致。</p>
+    </div>
+
+    <div class="mn-platforms" id="mnPlatforms">
+      <!-- 由 monica.js 用 data/repos.json 填充状态，静态文案作为兜底 -->
+    </div>
+  </div>
+</section>
+
+<section id="security">
+  <div class="container">
+    <div data-reveal>
+      <div class="section-eyebrow">03 Security</div>
+      <h2 class="section-title">密钥不离开设备</h2>
+      <p class="section-subtitle">主密码只用来派生密钥，从不被存储、也从不被上传。</p>
+    </div>
+
+    <div class="mn-security">
+      <ol class="mn-sec-list" data-reveal>
+        <li>
+          <span class="mn-sec-num">01</span>
+          <div>
+            <b>Key Derivation</b>
+            <p>主密码经内存硬化 KDF 派生出加密密钥。数据库里没有主密码，也没有可逆的哈希。</p>
+          </div>
+        </li>
+        <li>
+          <span class="mn-sec-num">02</span>
+          <div>
+            <b>Encrypted at Rest</b>
+            <p>条目在写入磁盘前就已加密。文件被复制走也读不出内容，除非同时拿到主密码。</p>
+          </div>
+        </li>
+        <li>
+          <span class="mn-sec-num">03</span>
+          <div>
+            <b>Zero Server Trust</b>
+            <p>没有账号系统，没有中心服务器。同步走你自己的通道，服务端只看到密文。</p>
+          </div>
+        </li>
+        <li>
+          <span class="mn-sec-num">04</span>
+          <div>
+            <b>Auditable</b>
+            <p>GPL-3.0 全量开源。加密与存储在 Mdbx 层集中实现，读一个仓库就能看完全部逻辑。</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="mn-flow" data-reveal data-reveal-delay="1">
+        <div class="mn-flow-title">Data Flow</div>
+        <div class="mn-flow-step"><i>01</i><span>输入 <em>主密码</em></span></div>
+        <div class="mn-flow-arrow">↓</div>
+        <div class="mn-flow-step"><i>02</i><span>KDF 派生 <em>加密密钥</em>（仅内存）</span></div>
+        <div class="mn-flow-arrow">↓</div>
+        <div class="mn-flow-step"><i>03</i><span>解密 <em>本地密码库</em></span></div>
+        <div class="mn-flow-arrow">↓</div>
+        <div class="mn-flow-step"><i>04</i><span>使用后 <em>清除内存密钥</em></span></div>
+        <div class="mn-flow-arrow">↓</div>
+        <div class="mn-flow-step"><i>05</i><span>同步仅传输 <em>密文</em></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="repos">
+  <div class="container">
+    <div class="projects-head" data-reveal>
+      <div>
+        <div class="section-eyebrow">04 Repositories</div>
+        <h2 class="section-title">Monica-Pass 组织全部仓库</h2>
+        <p class="section-subtitle">数据来自 GitHub API，由 Actions 定时刷新。</p>
+      </div>
+    </div>
+
+    <div class="mn-repos" data-reveal data-reveal-delay="1">
+      <div class="mn-repos-head">
+        <span>Repository</span>
+        <span>Language</span>
+        <span style="text-align:right">Stars</span>
+        <span>Updated</span>
+      </div>
+      <div id="mnRepoList">
+        <div class="mn-repos-empty">[ LOADING ]</div>
+      </div>
+    </div>
+
+    <div class="mn-timeline" data-reveal>
+      <div class="mn-tl-item now">
+        <div class="mn-tl-date">In Progress</div>
+        <h3>四端并行迭代</h3>
+        <p>Android 主线持续维护，iOS / Avalonia 桌面 / 浏览器扩展跟进，Mdbx 作为共享存储层统一数据格式。</p>
+      </div>
+      <div class="mn-tl-item">
+        <div class="mn-tl-date">2026</div>
+        <h3>Mdbx 存储层独立</h3>
+        <p>把加密与存储从各端实现里抽出来，用 Rust 写成独立仓库，避免四个客户端各写一套格式。</p>
+      </div>
+      <div class="mn-tl-item">
+        <div class="mn-tl-date">Origin</div>
+        <h3>Monica for Android</h3>
+        <p>Kotlin 写的第一个客户端，也是目前 stars 最多的仓库，后续所有平台都以它的行为为基准。</p>
+      </div>
+    </div>
+
+    <div class="mn-cta" data-reveal>
+      <h2>Own Your<br>Passwords</h2>
+      <p>Monica Pass 是我在持续维护的开源项目。欢迎试用、提 issue、提 PR，或者只是读一读源码。</p>
+      <div class="mn-cta-actions">
+        <a href="https://github.com/Monica-Pass/Monica" target="_blank" rel="noopener" class="btn btn-primary magnetic">
+          Monica for Android
+        </a>
+        <a href="https://github.com/Monica-Pass" target="_blank" rel="noopener" class="btn btn-ghost magnetic">Organization</a>
+        <a href="mailto:joyin8888@foxmail.com" class="btn btn-ghost magnetic">Contact</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 Monica Pass · GPL-3.0 · <span style="color:var(--accent)">■</span> Maintained</div>
+    <div>Data via GitHub API · <a href="index.html">Index</a> · <a href="win98/">Win98</a></div>
+    <div><a href="#top">Top ↑</a></div>
+  </div>
+</footer>
+
+<script src="assets/js/theme.js"></script>
+<script src="assets/js/reveal.js"></script>
+<script src="assets/js/count-up.js"></script>
+<script src="assets/js/magnetic.js"></script>
+<script src="assets/js/smooth-scroll.js"></script>
+<script src="assets/js/nav-scroll.js"></script>
+<script src="assets/js/monica.js"></script>
+</body>
+</html>

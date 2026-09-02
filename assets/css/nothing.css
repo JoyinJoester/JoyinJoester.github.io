@@ -1,0 +1,386 @@
+/* ============================================================
+   Nothing 设计层 — index.html / monica.html 共用
+   作用域 .nd（挂在 <html> 上），未标记的页面不受影响
+   规范来源: nothing-design skill
+   偏离项 1: accent 沿用站点绿，不用 Nothing 红 #D71921
+   偏离项 2: 保留光球辉光与位移动效，只把它们收进单色+绿的调性
+   ============================================================ */
+.nd {
+  --nd-dot:  'Doto', 'Space Mono', ui-monospace, monospace;
+  --nd-mono: 'Space Mono', 'JetBrains Mono', ui-monospace, monospace;
+  --nd-sans: 'Space Grotesk', 'Noto Sans SC', system-ui, sans-serif;
+  --nd-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --nd-track: 0.09em;
+
+  /* 接管三个字体 token，既有样式表自动切换到 Nothing 字体栈 */
+  --font-display: var(--nd-sans);
+  --font-body:    var(--nd-sans);
+  --font-mono:    var(--nd-mono);
+
+  /* 技术圆角 */
+  --radius: 4px;
+  --radius-sm: 4px;
+}
+
+[data-theme="dark"].nd {
+  --bg:        #000000;
+  --bg-soft:   #0a0a0a;
+  --surface:   #111111;
+  --surface-2: #1a1a1a;
+  --fg:        #ffffff;
+  --fg-soft:   #e8e8e8;
+  --muted:     #999999;
+  --border:    #222222;
+  --border-strong: #333333;
+  --accent:      oklch(82% 0.19 152);
+  --accent-soft: oklch(82% 0.19 152 / 0.16);
+  --accent-glow: oklch(82% 0.19 152 / 0.55);
+  --accent-fg:   #000000;
+  --accent-quiet: oklch(72% 0.15 152);
+  /* 光球收进绿—青色域，保留辉光但不再出现紫色 */
+  --orb-1: oklch(74% 0.20 152);
+  --orb-2: oklch(62% 0.11 196);
+  --orb-3: oklch(56% 0.09 152);
+}
+
+[data-theme="light"].nd {
+  --bg:        #f5f5f5;
+  --bg-soft:   #fafafa;
+  --surface:   #ffffff;
+  --surface-2: #f0f0f0;
+  --fg:        #000000;
+  --fg-soft:   #1a1a1a;
+  --muted:     #666666;
+  --border:    #e8e8e8;
+  --border-strong: #cccccc;
+  --accent:      oklch(55% 0.20 152);
+  --accent-soft: oklch(55% 0.20 152 / 0.14);
+  --accent-glow: oklch(55% 0.20 152 / 0.35);
+  --accent-fg:   #ffffff;
+  --accent-quiet: oklch(45% 0.14 152);
+  --orb-1: oklch(82% 0.16 152);
+  --orb-2: oklch(84% 0.08 196);
+  --orb-3: oklch(86% 0.06 152);
+}
+
+/* ---------- 基底：点阵网格 + 保留的光球辉光 ---------- */
+.nd body {
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, var(--border-strong) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-attachment: fixed;
+}
+
+/* 光球保留，但 z-index 让它压在点阵网格之上 */
+.nd .ambient { z-index: -3; }
+.nd .grain { opacity: 0.18; }
+[data-theme="light"].nd .grain { opacity: 0.12; }
+
+/* ---------- 动效：全部保留，只换调性 ----------
+   光球漂移、头像浮动、环形旋转、词组入场、hover 抬升、
+   涟漪主题切换 —— 一个都不删，改成绿色辉光 + 更利落的曲线 */
+
+.nd .orb { opacity: 0.42; }
+[data-theme="light"].nd .orb { opacity: 0.5; }
+
+/* 辉光统一到绿色，取代原来的黑色投影 */
+.nd .btn-primary {
+  box-shadow: 0 8px 32px -10px var(--accent-glow);
+}
+
+.nd .btn-primary:hover {
+  box-shadow: 0 16px 44px -10px var(--accent-glow);
+}
+
+.nd .project-card:hover,
+.nd .org-banner:hover {
+  box-shadow: 0 0 0 1px var(--accent-soft), 0 20px 50px -24px var(--accent-glow);
+}
+
+.nd .avatar-frame {
+  box-shadow: 0 0 60px -18px var(--accent-glow);
+}
+
+.nd .nav-cta:hover {
+  box-shadow: 0 8px 24px -8px var(--accent-glow);
+}
+
+/* 指示灯改方块，但保持呼吸动画 */
+.nd .nav-logo .dot,
+.nd .hero-meta .status::before,
+.nd .project-status.active::before,
+.nd .commits-pulse {
+  border-radius: 1px;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.nd .nav-logo .dot { width: 7px; height: 7px; }
+.nd .project-status.exploring::before { border-radius: 1px; }
+
+/* 揭示动效：位移幅度收窄，曲线换成 Nothing 的 ease-out */
+.nd [data-reveal] {
+  transform: translateY(16px);
+  transition: opacity 0.5s var(--nd-ease), transform 0.5s var(--nd-ease);
+}
+
+.nd [data-reveal].in-view { transform: translateY(0); }
+
+/* 头像框：方形技术圆角，浮动保留；旋转虚线环换成扫描线 */
+.nd .avatar-frame { border-radius: 6px; padding: 6px; }
+.nd .avatar-frame img { border-radius: 3px; }
+
+.nd .avatar-ring {
+  inset: -14px;
+  border-radius: 6px;
+  border: 1px dashed var(--border-strong);
+  animation: none;
+  overflow: hidden;
+}
+
+/* 1px 绿线自上而下扫过，取代原来的环上小球 */
+.nd .avatar-ring::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 1px;
+  transform: none;
+  border-radius: 0;
+  background: var(--accent);
+  box-shadow: 0 0 12px 1px var(--accent-glow);
+  animation: ndScan 4.5s var(--nd-ease) infinite;
+}
+
+@keyframes ndScan {
+  0%        { transform: translateY(0); opacity: 0; }
+  8%        { opacity: 1; }
+  92%       { opacity: 1; }
+  100%      { transform: translateY(calc(clamp(240px, 30vw, 360px) + 28px)); opacity: 0; }
+}
+
+.nd .avatar-frame.avatar-fallback::after { color: var(--accent); }
+
+/* ---------- 导航 ---------- */
+.nd .nav {
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.nd .nav-logo,
+.nd .nav-links a,
+.nd .nav-cta {
+  font-family: var(--nd-mono);
+  text-transform: uppercase;
+  letter-spacing: var(--nd-track);
+}
+
+.nd .nav-logo { font-size: 13px; }
+.nd .nav-links a { font-size: 12px; border-radius: 0; color: var(--muted); }
+.nd .nav-links a:hover { background: transparent; color: var(--fg); }
+
+.nd .nav-cta {
+  font-size: 12px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 700;
+}
+
+.nd .nav-overlay a.overlay-link {
+  font-family: var(--nd-mono);
+  font-weight: 700;
+  font-size: clamp(22px, 5vw, 34px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---------- 按钮：Space Mono 全大写 ---------- */
+.nd .btn {
+  font-family: var(--nd-mono);
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 13px 24px;
+  min-height: 44px;
+}
+
+.nd .btn-primary { background: var(--accent); color: var(--accent-fg); }
+.nd .btn-ghost { border: 1px solid var(--border-strong); }
+.nd .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- 章节标题 ---------- */
+.nd .section-eyebrow {
+  font-family: var(--nd-mono);
+  font-size: 11px;
+  letter-spacing: var(--nd-track);
+}
+
+.nd .section-eyebrow::before { width: 20px; background: var(--border-strong); opacity: 1; }
+.nd .section-title { font-weight: 500; letter-spacing: -0.02em; }
+
+/* ---------- Hero：点阵大标题 ---------- */
+.nd .hero-title {
+  font-family: var(--nd-dot);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+
+.nd .hero-title .accent {
+  font-style: normal;
+  font-weight: 700;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  color: var(--accent);
+}
+
+.nd .hero-meta {
+  font-family: var(--nd-mono);
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: var(--nd-track);
+}
+
+.nd .hero-meta .status { border-radius: 3px; }
+
+.nd .hero-tagline strong {
+  font-style: normal;
+  font-family: var(--nd-mono);
+  color: var(--accent);
+  text-transform: uppercase;
+  font-size: 0.86em;
+  letter-spacing: 0.04em;
+}
+
+.nd .hero-stat-num {
+  font-family: var(--nd-mono);
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.nd .hero-stat-label,
+.nd .gh-stat-label {
+  font-family: var(--nd-mono);
+  letter-spacing: var(--nd-track);
+}
+
+/* ---------- 关于 ---------- */
+.nd .about-prose p:first-child {
+  font-family: var(--nd-sans);
+  font-weight: 500;
+}
+
+.nd .about-row span:first-child { letter-spacing: var(--nd-track); }
+
+.nd .quote {
+  font-family: var(--nd-sans);
+  font-style: normal;
+  border-left: 2px solid var(--accent);
+  border-radius: 0;
+}
+
+.nd .quote::before { color: var(--accent); }
+.nd .quote cite { letter-spacing: var(--nd-track); }
+
+/* ---------- GitHub 区 ---------- */
+.nd .gh-title {
+  font-family: var(--nd-mono);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.nd .gh-meta,
+.nd .gh-link,
+.nd .gh-legend {
+  font-family: var(--nd-mono);
+  letter-spacing: var(--nd-track);
+  text-transform: uppercase;
+}
+
+.nd .gh-legend .sw { border-radius: 0; }
+.nd .gh-stat-num { font-family: var(--nd-mono); font-weight: 700; }
+
+/* ghchart 返回白底绿格；invert 后绿变洋红(~310°)，+180° 才回到绿。
+   原先的 150° 会转到黄绿，叠上 brightness 后读作土褐色。 */
+[data-theme="dark"].nd .gh-chart img {
+  filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(1);
+}
+
+/* ---------- 提交流 ---------- */
+.nd .commits-title {
+  font-family: var(--nd-mono);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.nd .commits-row { border-radius: 0; }
+.nd .commits-row:hover { background: var(--surface-2); }
+.nd .commits-repo { border-radius: 2px; }
+
+/* ---------- 项目卡 ---------- */
+.nd .project-title {
+  font-family: var(--nd-sans);
+  font-weight: 500;
+}
+
+.nd .project-num,
+.nd .project-status,
+.nd .project-tag {
+  font-family: var(--nd-mono);
+  letter-spacing: var(--nd-track);
+  text-transform: uppercase;
+}
+
+.nd .project-status { border-radius: 3px; }
+.nd .project-tag { border-radius: 2px; }
+.nd .project-meta .lang-dot { border-radius: 1px; }
+
+.nd .org-info .org-name { font-family: var(--nd-sans); font-weight: 500; }
+.nd .org-avatar { border-radius: 4px; }
+.nd .org-stats .stat-num { font-family: var(--nd-mono); font-weight: 700; }
+.nd .org-stats .stat-label { letter-spacing: var(--nd-track); }
+
+/* ---------- 联系 ---------- */
+.nd .contact-card { border-radius: 6px; }
+
+.nd .contact-card h2 {
+  font-family: var(--nd-dot);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.06;
+}
+
+.nd .contact-card h2 em { color: var(--accent); font-weight: 700; }
+
+.nd .contact-social a { border-radius: 4px; }
+.nd .contact-social a:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px -6px var(--accent-glow);
+}
+
+/* ---------- 页脚 ---------- */
+.nd footer { border-top: 1px solid var(--border-strong); }
+
+.nd .footer-inner {
+  font-family: var(--nd-mono);
+  font-size: 10px;
+  letter-spacing: var(--nd-track);
+  text-transform: uppercase;
+}
+
+.nd .footer-inner a:hover { color: var(--accent); }
+
+/* ---------- 窄屏：Space Mono 大写比原字体宽，导航需要腾地方 ---------- */
+@media (max-width: 430px) {
+  /* 汉堡菜单里已有 GitHub 按钮，顶栏这颗可以让位 */
+  .nd .nav-cta { display: none; }
+  .nd .nav-logo { font-size: 11px; letter-spacing: 0.05em; }
+  .nd .nav-logo .dot { width: 6px; height: 6px; }
+}
