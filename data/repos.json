@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 9,
     "followers": 16,
-    "total_stars": 989
+    "total_stars": 997
   },
   "repos": [
     {
@@ -16,10 +16,10 @@
       "description": " Monica Pass，Password Management, 2FA Generator",
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
-      "stargazers_count": 962,
+      "stargazers_count": 964,
       "forks_count": 60,
       "open_issues_count": 22,
-      "updated_at": "2026-09-06T06:40:57Z",
+      "updated_at": "2026-09-06T14:38:51Z",
       "pushed_at": "2026-09-05T16:29:03Z",
       "license": "GPL-3.0",
       "topics": [
@@ -56,11 +56,25 @@
       "description": "Monica for Extension",
       "html_url": "https://github.com/Monica-Pass/Monica-for-Extension",
       "language": "TypeScript",
-      "stargazers_count": 5,
+      "stargazers_count": 6,
       "forks_count": 1,
       "open_issues_count": 0,
-      "updated_at": "2026-08-31T16:30:03Z",
+      "updated_at": "2026-09-06T14:29:45Z",
       "pushed_at": "2026-08-31T16:26:47Z",
+      "license": "GPL-3.0",
+      "topics": []
+    },
+    {
+      "name": "Monica-for-iOS",
+      "full_name": "Monica-Pass/Monica-for-iOS",
+      "description": "Monica iOS 客户端",
+      "html_url": "https://github.com/Monica-Pass/Monica-for-iOS",
+      "language": "Swift",
+      "stargazers_count": 6,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "updated_at": "2026-09-06T14:29:45Z",
+      "pushed_at": "2026-06-24T01:47:19Z",
       "license": "GPL-3.0",
       "topics": []
     },
@@ -91,21 +105,7 @@
       "pushed_at": "2026-09-06T11:27:28Z",
       "license": "GPL-3.0",
       "topics": []
-    },
-    {
-      "name": "Monica-Fdroid",
-      "full_name": "Monica-Pass/Monica-Fdroid",
-      "description": null,
-      "html_url": "https://github.com/Monica-Pass/Monica-Fdroid",
-      "language": "Kotlin",
-      "stargazers_count": 1,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "updated_at": "2026-08-31T15:29:28Z",
-      "pushed_at": "2026-08-31T15:18:17Z",
-      "license": "NOASSERTION",
-      "topics": []
     }
   ],
-  "updated_at": "2026-09-06T13:10:56.195Z"
+  "updated_at": "2026-09-06T16:19:07.142Z"
 }
