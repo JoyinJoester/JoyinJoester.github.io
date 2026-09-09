@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 9,
     "followers": 16,
-    "total_stars": 1012
+    "total_stars": 1014
   },
   "repos": [
     {
@@ -16,10 +16,10 @@
       "description": " Monica Pass，Password Management, 2FA Generator",
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
-      "stargazers_count": 977,
+      "stargazers_count": 978,
       "forks_count": 61,
-      "open_issues_count": 24,
-      "updated_at": "2026-09-09T06:05:07Z",
+      "open_issues_count": 23,
+      "updated_at": "2026-09-09T15:13:40Z",
       "pushed_at": "2026-09-09T06:20:37Z",
       "license": "GPL-3.0",
       "topics": [
@@ -51,6 +51,20 @@
       "topics": []
     },
     {
+      "name": "Monica-Fdroid",
+      "full_name": "Monica-Pass/Monica-Fdroid",
+      "description": null,
+      "html_url": "https://github.com/Monica-Pass/Monica-Fdroid",
+      "language": "Kotlin",
+      "stargazers_count": 6,
+      "forks_count": 0,
+      "open_issues_count": 1,
+      "updated_at": "2026-09-09T14:29:50Z",
+      "pushed_at": "2026-09-08T12:30:17Z",
+      "license": "NOASSERTION",
+      "topics": []
+    },
+    {
       "name": "Monica-for-Extension",
       "full_name": "Monica-Pass/Monica-for-Extension",
       "description": "Monica for Extension",
@@ -79,20 +93,6 @@
       "topics": []
     },
     {
-      "name": "Monica-Fdroid",
-      "full_name": "Monica-Pass/Monica-Fdroid",
-      "description": null,
-      "html_url": "https://github.com/Monica-Pass/Monica-Fdroid",
-      "language": "Kotlin",
-      "stargazers_count": 5,
-      "forks_count": 0,
-      "open_issues_count": 1,
-      "updated_at": "2026-09-08T15:22:31Z",
-      "pushed_at": "2026-09-08T12:30:17Z",
-      "license": "NOASSERTION",
-      "topics": []
-    },
-    {
       "name": "MonicaDocs",
       "full_name": "Monica-Pass/MonicaDocs",
       "description": "Monica DocsWebsite Repoistory",
@@ -101,11 +101,11 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-09-09T10:19:08Z",
-      "pushed_at": "2026-09-09T10:18:28Z",
+      "updated_at": "2026-09-09T12:05:37Z",
+      "pushed_at": "2026-09-09T12:03:47Z",
       "license": "GPL-3.0",
       "topics": []
     }
   ],
-  "updated_at": "2026-09-09T11:29:30.264Z"
+  "updated_at": "2026-09-09T15:19:04.043Z"
 }
