@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 9,
     "followers": 16,
-    "total_stars": 1016
+    "total_stars": 1021
   },
   "repos": [
     {
@@ -16,11 +16,11 @@
       "description": " Monica Pass，Password Management, 2FA Generator",
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
-      "stargazers_count": 979,
+      "stargazers_count": 982,
       "forks_count": 61,
-      "open_issues_count": 25,
-      "updated_at": "2026-09-11T08:43:34Z",
-      "pushed_at": "2026-09-11T09:02:50Z",
+      "open_issues_count": 12,
+      "updated_at": "2026-09-11T13:51:16Z",
+      "pushed_at": "2026-09-11T13:14:04Z",
       "license": "GPL-3.0",
       "topics": [
         "android",
@@ -51,6 +51,34 @@
       "topics": []
     },
     {
+      "name": "Monica-for-iOS",
+      "full_name": "Monica-Pass/Monica-for-iOS",
+      "description": "Monica iOS 客户端",
+      "html_url": "https://github.com/Monica-Pass/Monica-for-iOS",
+      "language": "Swift",
+      "stargazers_count": 7,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "updated_at": "2026-09-11T13:51:13Z",
+      "pushed_at": "2026-06-24T01:47:19Z",
+      "license": "GPL-3.0",
+      "topics": []
+    },
+    {
+      "name": "Monica-for-Extension",
+      "full_name": "Monica-Pass/Monica-for-Extension",
+      "description": "Monica for Extension",
+      "html_url": "https://github.com/Monica-Pass/Monica-for-Extension",
+      "language": "TypeScript",
+      "stargazers_count": 7,
+      "forks_count": 1,
+      "open_issues_count": 0,
+      "updated_at": "2026-09-11T13:51:11Z",
+      "pushed_at": "2026-08-31T16:26:47Z",
+      "license": "GPL-3.0",
+      "topics": []
+    },
+    {
       "name": "Monica-Fdroid",
       "full_name": "Monica-Pass/Monica-Fdroid",
       "description": null,
@@ -65,34 +93,6 @@
       "topics": []
     },
     {
-      "name": "Monica-for-Extension",
-      "full_name": "Monica-Pass/Monica-for-Extension",
-      "description": "Monica for Extension",
-      "html_url": "https://github.com/Monica-Pass/Monica-for-Extension",
-      "language": "TypeScript",
-      "stargazers_count": 6,
-      "forks_count": 1,
-      "open_issues_count": 0,
-      "updated_at": "2026-09-06T14:29:45Z",
-      "pushed_at": "2026-08-31T16:26:47Z",
-      "license": "GPL-3.0",
-      "topics": []
-    },
-    {
-      "name": "Monica-for-iOS",
-      "full_name": "Monica-Pass/Monica-for-iOS",
-      "description": "Monica iOS 客户端",
-      "html_url": "https://github.com/Monica-Pass/Monica-for-iOS",
-      "language": "Swift",
-      "stargazers_count": 6,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "updated_at": "2026-09-06T14:29:45Z",
-      "pushed_at": "2026-06-24T01:47:19Z",
-      "license": "GPL-3.0",
-      "topics": []
-    },
-    {
       "name": "MonicaDocs",
       "full_name": "Monica-Pass/MonicaDocs",
       "description": "Monica DocsWebsite Repoistory",
@@ -101,11 +101,11 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-09-11T08:44:07Z",
-      "pushed_at": "2026-09-11T08:44:03Z",
+      "updated_at": "2026-09-11T12:54:29Z",
+      "pushed_at": "2026-09-11T12:54:25Z",
       "license": "GPL-3.0",
       "topics": []
     }
   ],
-  "updated_at": "2026-09-11T09:46:39.229Z"
+  "updated_at": "2026-09-11T13:53:09.662Z"
 }
