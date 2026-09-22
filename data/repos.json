@@ -5,9 +5,9 @@
     "avatar_url": "https://avatars.githubusercontent.com/u/289669198?v=4",
     "description": "这里是Monica Pass的组织",
     "html_url": "https://github.com/Monica-Pass",
-    "public_repos": 9,
+    "public_repos": 10,
     "followers": 19,
-    "total_stars": 1067
+    "total_stars": 1061
   },
   "repos": [
     {
@@ -79,20 +79,6 @@
       "topics": []
     },
     {
-      "name": "Monica-for-iOS",
-      "full_name": "Monica-Pass/Monica-for-iOS",
-      "description": "Monica iOS 客户端",
-      "html_url": "https://github.com/Monica-Pass/Monica-for-iOS",
-      "language": "Swift",
-      "stargazers_count": 6,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "updated_at": "2026-09-12T00:47:59Z",
-      "pushed_at": "2026-06-24T01:47:19Z",
-      "license": "GPL-3.0",
-      "topics": []
-    },
-    {
       "name": "MonicaDocs",
       "full_name": "Monica-Pass/MonicaDocs",
       "description": "Monica DocsWebsite Repoistory",
@@ -101,11 +87,25 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-09-21T13:29:49Z",
-      "pushed_at": "2026-09-21T13:29:45Z",
+      "updated_at": "2026-09-22T12:13:57Z",
+      "pushed_at": "2026-09-22T12:13:53Z",
       "license": "GPL-3.0",
+      "topics": []
+    },
+    {
+      "name": "Monica-cli",
+      "full_name": "Monica-Pass/Monica-cli",
+      "description": null,
+      "html_url": "https://github.com/Monica-Pass/Monica-cli",
+      "language": "Rust",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "updated_at": "2026-09-22T12:41:33Z",
+      "pushed_at": "2026-09-22T12:30:16Z",
+      "license": null,
       "topics": []
     }
   ],
-  "updated_at": "2026-09-22T10:02:26.382Z"
+  "updated_at": "2026-09-22T14:58:57.510Z"
 }
