@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 20,
-    "total_stars": 1072
+    "total_stars": 1074
   },
   "repos": [
     {
@@ -16,10 +16,10 @@
       "description": " Monica Pass，Password Management, 2FA Generator",
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
-      "stargazers_count": 1034,
+      "stargazers_count": 1035,
       "forks_count": 62,
       "open_issues_count": 8,
-      "updated_at": "2026-09-26T16:38:35Z",
+      "updated_at": "2026-09-26T18:04:54Z",
       "pushed_at": "2026-09-26T02:53:30Z",
       "license": "GPL-3.0",
       "topics": [
@@ -51,6 +51,20 @@
       "topics": []
     },
     {
+      "name": "Monica-for-Extension",
+      "full_name": "Monica-Pass/Monica-for-Extension",
+      "description": "Monica for Extension",
+      "html_url": "https://github.com/Monica-Pass/Monica-for-Extension",
+      "language": "TypeScript",
+      "stargazers_count": 9,
+      "forks_count": 1,
+      "open_issues_count": 0,
+      "updated_at": "2026-09-26T19:00:41Z",
+      "pushed_at": "2026-09-13T12:06:25Z",
+      "license": "GPL-3.0",
+      "topics": []
+    },
+    {
       "name": "Monica-Fdroid",
       "full_name": "Monica-Pass/Monica-Fdroid",
       "description": null,
@@ -62,20 +76,6 @@
       "updated_at": "2026-09-20T12:44:32Z",
       "pushed_at": "2026-09-26T02:37:46Z",
       "license": "NOASSERTION",
-      "topics": []
-    },
-    {
-      "name": "Monica-for-Extension",
-      "full_name": "Monica-Pass/Monica-for-Extension",
-      "description": "Monica for Extension",
-      "html_url": "https://github.com/Monica-Pass/Monica-for-Extension",
-      "language": "TypeScript",
-      "stargazers_count": 8,
-      "forks_count": 1,
-      "open_issues_count": 0,
-      "updated_at": "2026-09-26T17:45:56Z",
-      "pushed_at": "2026-09-13T12:06:25Z",
-      "license": "GPL-3.0",
       "topics": []
     },
     {
@@ -107,5 +107,5 @@
       "topics": []
     }
   ],
-  "updated_at": "2026-09-26T18:04:46.126Z"
+  "updated_at": "2026-09-26T21:14:32.764Z"
 }
