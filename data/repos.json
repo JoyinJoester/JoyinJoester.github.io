@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 20,
-    "total_stars": 1078
+    "total_stars": 1081
   },
   "repos": [
     {
@@ -16,11 +16,11 @@
       "description": " Monica Pass，Password Management, 2FA Generator",
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
-      "stargazers_count": 1038,
+      "stargazers_count": 1040,
       "forks_count": 62,
       "open_issues_count": 8,
-      "updated_at": "2026-09-28T11:52:42Z",
-      "pushed_at": "2026-09-28T11:30:34Z",
+      "updated_at": "2026-09-28T19:05:31Z",
+      "pushed_at": "2026-09-28T15:36:01Z",
       "license": "GPL-3.0",
       "topics": [
         "android",
@@ -42,10 +42,10 @@
       "description": null,
       "html_url": "https://github.com/Monica-Pass/Monica-by-Avalonia",
       "language": "C#",
-      "stargazers_count": 20,
+      "stargazers_count": 21,
       "forks_count": 2,
       "open_issues_count": 1,
-      "updated_at": "2026-09-28T10:02:23Z",
+      "updated_at": "2026-09-28T13:05:30Z",
       "pushed_at": "2026-09-28T10:12:16Z",
       "license": "GPL-3.0",
       "topics": []
@@ -59,8 +59,8 @@
       "stargazers_count": 9,
       "forks_count": 0,
       "open_issues_count": 1,
-      "updated_at": "2026-09-28T11:17:52Z",
-      "pushed_at": "2026-09-28T11:17:47Z",
+      "updated_at": "2026-09-28T15:23:50Z",
+      "pushed_at": "2026-09-28T15:22:41Z",
       "license": "NOASSERTION",
       "topics": []
     },
@@ -87,8 +87,8 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-09-28T11:18:17Z",
-      "pushed_at": "2026-09-28T11:18:12Z",
+      "updated_at": "2026-09-28T15:25:02Z",
+      "pushed_at": "2026-09-28T16:36:10Z",
       "license": "GPL-3.0",
       "topics": []
     },
@@ -102,10 +102,10 @@
       "forks_count": 0,
       "open_issues_count": 0,
       "updated_at": "2026-09-28T10:24:16Z",
-      "pushed_at": "2026-09-28T10:24:11Z",
+      "pushed_at": "2026-09-28T16:36:06Z",
       "license": "GPL-3.0",
       "topics": []
     }
   ],
-  "updated_at": "2026-09-28T12:01:16.306Z"
+  "updated_at": "2026-09-28T19:42:06.412Z"
 }
