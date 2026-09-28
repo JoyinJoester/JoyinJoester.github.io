@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 20,
-    "total_stars": 1076
+    "total_stars": 1078
   },
   "repos": [
     {
@@ -16,11 +16,11 @@
       "description": " Monica Pass，Password Management, 2FA Generator",
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
-      "stargazers_count": 1037,
+      "stargazers_count": 1038,
       "forks_count": 62,
-      "open_issues_count": 9,
-      "updated_at": "2026-09-27T18:11:29Z",
-      "pushed_at": "2026-09-26T02:53:30Z",
+      "open_issues_count": 8,
+      "updated_at": "2026-09-28T11:52:42Z",
+      "pushed_at": "2026-09-28T11:30:34Z",
       "license": "GPL-3.0",
       "topics": [
         "android",
@@ -44,10 +44,24 @@
       "language": "C#",
       "stargazers_count": 20,
       "forks_count": 2,
-      "open_issues_count": 11,
-      "updated_at": "2026-09-28T02:17:18Z",
-      "pushed_at": "2026-09-28T02:17:15Z",
+      "open_issues_count": 1,
+      "updated_at": "2026-09-28T10:02:23Z",
+      "pushed_at": "2026-09-28T10:12:16Z",
       "license": "GPL-3.0",
+      "topics": []
+    },
+    {
+      "name": "Monica-Fdroid",
+      "full_name": "Monica-Pass/Monica-Fdroid",
+      "description": null,
+      "html_url": "https://github.com/Monica-Pass/Monica-Fdroid",
+      "language": "Kotlin",
+      "stargazers_count": 9,
+      "forks_count": 0,
+      "open_issues_count": 1,
+      "updated_at": "2026-09-28T11:17:52Z",
+      "pushed_at": "2026-09-28T11:17:47Z",
+      "license": "NOASSERTION",
       "topics": []
     },
     {
@@ -65,20 +79,6 @@
       "topics": []
     },
     {
-      "name": "Monica-Fdroid",
-      "full_name": "Monica-Pass/Monica-Fdroid",
-      "description": null,
-      "html_url": "https://github.com/Monica-Pass/Monica-Fdroid",
-      "language": "Kotlin",
-      "stargazers_count": 9,
-      "forks_count": 0,
-      "open_issues_count": 1,
-      "updated_at": "2026-09-20T12:44:32Z",
-      "pushed_at": "2026-09-26T02:37:46Z",
-      "license": "NOASSERTION",
-      "topics": []
-    },
-    {
       "name": "MonicaDocs",
       "full_name": "Monica-Pass/MonicaDocs",
       "description": "Monica DocsWebsite Repoistory",
@@ -87,8 +87,8 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-09-27T12:36:23Z",
-      "pushed_at": "2026-09-27T12:36:19Z",
+      "updated_at": "2026-09-28T11:18:17Z",
+      "pushed_at": "2026-09-28T11:18:12Z",
       "license": "GPL-3.0",
       "topics": []
     },
@@ -98,14 +98,14 @@
       "description": null,
       "html_url": "https://github.com/Monica-Pass/Monica-cli",
       "language": "Rust",
-      "stargazers_count": 0,
+      "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-09-27T23:04:04Z",
-      "pushed_at": "2026-09-27T23:04:00Z",
+      "updated_at": "2026-09-28T10:24:16Z",
+      "pushed_at": "2026-09-28T10:24:11Z",
       "license": "GPL-3.0",
       "topics": []
     }
   ],
-  "updated_at": "2026-09-28T05:30:01.225Z"
+  "updated_at": "2026-09-28T12:01:16.306Z"
 }
