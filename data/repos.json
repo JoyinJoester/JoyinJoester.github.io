@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 21,
-    "total_stars": 1101
+    "total_stars": 1104
   },
   "repos": [
     {
@@ -16,10 +16,10 @@
       "description": " Monica Pass，Password Management, 2FA Generator",
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
-      "stargazers_count": 1056,
+      "stargazers_count": 1058,
       "forks_count": 62,
-      "open_issues_count": 10,
-      "updated_at": "2026-10-03T15:11:31Z",
+      "open_issues_count": 9,
+      "updated_at": "2026-10-04T16:48:15Z",
       "pushed_at": "2026-10-03T03:40:17Z",
       "license": "GPL-3.0",
       "topics": [
@@ -56,10 +56,10 @@
       "description": null,
       "html_url": "https://github.com/Monica-Pass/Monica-Fdroid",
       "language": "Kotlin",
-      "stargazers_count": 12,
+      "stargazers_count": 13,
       "forks_count": 0,
       "open_issues_count": 1,
-      "updated_at": "2026-10-03T10:24:03Z",
+      "updated_at": "2026-10-04T15:22:30Z",
       "pushed_at": "2026-10-03T03:22:13Z",
       "license": "NOASSERTION",
       "topics": []
@@ -87,8 +87,8 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-10-04T11:28:06Z",
-      "pushed_at": "2026-10-04T11:28:02Z",
+      "updated_at": "2026-10-04T14:19:38Z",
+      "pushed_at": "2026-10-04T14:19:34Z",
       "license": "GPL-3.0",
       "topics": []
     },
@@ -107,5 +107,5 @@
       "topics": []
     }
   ],
-  "updated_at": "2026-10-04T12:28:28.310Z"
+  "updated_at": "2026-10-04T17:04:06.607Z"
 }
