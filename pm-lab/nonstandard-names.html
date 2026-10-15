@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>26 非标准命名 · PM Autofill Lab</title>
+<meta name="description" content="非标准 name / id / 类型伪装 — 密码管理器自动填充调试台">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到表单</a>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+<main id="main" class="wrap">
+<section class="pagehead">
+  <div class="pagehead__id">
+    <span class="pagehead__num">26</span>
+    <h1 class="pagehead__title">非标准 name / id / 类型伪装</h1>
+  </div>
+  <p class="pagehead__lede">没有 autocomplete 时，实现只能读 <strong>name/id 关键字</strong>。这里用 12 种真实世界出现过的写法，包括<strong>把密码放在 type=text 里</strong>的移动端骗术。</p>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">heuristic</span><span class="tag">name-keyword</span>
+    <span class="tag tag--on">GROUP · edge</span></div>
+</section>
+
+
+<section class="panel panel--raised stack-sm" style="margin-bottom:var(--s-xl)">
+  <div class="row row--between">
+    <span class="label">FIELD COVERAGE</span>
+    <span class="mono display" data-coverage-readout>—</span>
+  </div>
+  <div class="segbar segbar--hero" data-coverage></div>
+  <div class="row" style="margin-top:var(--s-sm)">
+    <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
+    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
+  </div>
+  <div data-checkout></div>
+</section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>pwd</td><td>Nth0ng!26-A</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="pwd">COPY</button></td></tr><tr><td>user_name</td><td>pm26@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="user_name">COPY</button></td></tr><tr><td>upwd</td><td>Nth0ng!26-B</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="upwd">COPY</button></td></tr></tbody></table></section>
+<div class="stack-lg">
+<div class="panel stack-sm"><span class="label">组 1 · 关键字命中（无 autocomplete）</span>
+<div class="grid-2">
+<div class="field"><div class="field__top"><label class="field__label" for="n-pwd">name=pwd</label></div><input class="field__input" id="n-pwd" name="pwd" type="password" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="n-pass">name=pass</label></div><input class="field__input" id="n-pass" name="pass" type="password" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="n-user_name">name=user_name</label></div><input class="field__input" id="n-user_name" name="user_name" type="text" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="n-upwd">name=upwd</label></div><input class="field__input" id="n-upwd" name="upwd" type="password" data-pm-uid=""><p class="field__msg"></p></div>
+</div></div>
+<div class="panel stack-sm"><span class="label">组 2 · 类型伪装与无关键字</span>
+<div class="grid-2">
+<div class="field"><div class="field__top"><label class="field__label" for="n-textpw">type=text 冒充密码框</label><span class="field__ac field__ac--none">无 autocomplete</span></div><input class="field__input" id="n-textpw" name="login_pin" type="text" inputmode="text" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="n-uuid">name=UUID</label></div><input class="field__input" id="n-uuid" name="3f2a9c1e-7b4d-4a11-9c2f-88de1a0b5c77" type="password" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="n-zh">name=密码（中文）</label></div><input class="field__input" id="n-zh" name="密码" type="password" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="n-emailpw">name=email 但其实是账号</label></div><input class="field__input" id="n-emailpw" name="email" type="text" data-pm-uid=""><p class="field__msg"></p></div>
+</div></div>
+<div class="panel stack-sm"><span class="label">组 3 · 只有 id 有语义，name 无语义</span>
+<div class="field"><div class="field__top"><label class="field__label" for="login_email">name=q1 / id=login_email</label></div><input class="field__input" id="login_email" name="q1" type="text" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="login_password">name=q2 / id=login_password</label></div><input class="field__input" id="login_password" name="q2" type="password" data-pm-uid=""><p class="field__msg"></p></div>
+</div></div>
+
+<hr class="hairline">
+<section class="stack-sm" aria-label="已知失败模式">
+  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
+  <ul class="issues"><li><strong>pwd / upwd / pass / user_name / login_email</strong> 这类缩写命中靠字典；字典里没有的实现就完全不填。</li><li><strong>type=text 冒充密码框</strong>（iOS 常见：为避免系统键盘遮挡而用 text + 自定义掩码）会让管理器<strong>认不出这是密码字段</strong>——这是可预期失败。</li><li><strong>name 带中文/全角</strong> 与 <strong>name 是 UUID</strong> 是启发式的两个死角。</li></ul>
+</section>
+<section data-pager style="margin-top:var(--s-2xl)"></section>
+</main>
+<footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · nonstandard-names.html</span></div></footer>
+<script type="application/json" data-pm-page>{"num":"26","slug":"nonstandard-names","group":"edge","title":"非标准 name / id / 类型伪装"}</script>
+<script type="application/json" data-pm-expected>{"pwd":"Nth0ng!26-A","user_name":"pm26@example.com","upwd":"Nth0ng!26-B"}</script>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/site.js"></script>
+
+</body>
+</html>

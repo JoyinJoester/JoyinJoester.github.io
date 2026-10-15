@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>16 结账 3 · PM Autofill Lab</title>
+<meta name="description" content="结账第三步 · 确认（只读回显） — 密码管理器自动填充调试台">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到表单</a>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+<main id="main" class="wrap">
+<section class="pagehead">
+  <div class="pagehead__id">
+    <span class="pagehead__num">16</span>
+    <h1 class="pagehead__title">结账第三步 · 确认（只读回显）</h1>
+  </div>
+  <p class="pagehead__lede">确认页把前两步的值渲染成<strong>只读文本</strong>，但表单仍以 hidden input 存在——这是"看起来填好了，其实字段根本不在 DOM 里"的典型。</p>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">wizard</span><span class="tag">step-3</span><span class="tag">hidden-inputs</span>
+    <span class="tag tag--on">GROUP · billing</span></div>
+</section>
+<div class="panel stack-sm"><span class="label">REVIEW · 由 URL query 回显</span><div data-review class="stack-xs"></div></div>
+
+<section class="panel panel--raised stack-sm" style="margin-bottom:var(--s-xl)">
+  <div class="row row--between">
+    <span class="label">FIELD COVERAGE</span>
+    <span class="mono display" data-coverage-readout>—</span>
+  </div>
+  <div class="segbar segbar--hero" data-coverage></div>
+  <div class="row" style="margin-top:var(--s-sm)">
+    <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
+    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
+  </div>
+  <div data-checkout></div>
+</section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>cc-last4</td><td>4242</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-last4">COPY</button></td></tr><tr><td>postal-code</td><td>94107</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="postal-code">COPY</button></td></tr></tbody></table></section>
+<form class="form" id="f-co3" data-pm-id="f-co3" method="POST" action="#" autocomplete="on"><div class="formgrid"><div class="field field--4"><div class="field__top"><label class="field__label" for="f-postal-code">确认账单邮编（可编辑，最后一步校验）<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=postal-code</span></div><input class="field__input" id="f-postal-code" name="postal-code" type="text" autocomplete="postal-code" required data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="f-cc-last4">卡末四位（HIDDEN）</label><span class="field__ac"><span class="field__ac field__ac--none">无 autocomplete 属性</span></span></div><input class="field__input" id="f-cc-last4" name="cc-last4" type="hidden" data-pm-from="checkout-1" data-pm-uid=""><p class="caption">↑ type=hidden：不参与填充，仅用于回显上一步数据</p><p class="field__msg"></p></div></div><div class="form__foot"><button class="btn btn--primary" type="submit">PLACE ORDER</button><span class="formstatus" data-formstatus></span></div></form>
+
+<hr class="hairline">
+<section class="stack-sm" aria-label="已知失败模式">
+  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
+  <ul class="issues"><li>hidden input 不会被任何管理器填充（正确行为）。如果确认页数据错，是<strong>站点自己的序列化</strong>问题，不是管理器问题。</li><li><strong>只读展示 + hidden 提交</strong> 的结构下，管理器的"填充完成度"显示会是 0%，容易误判。</li><li>本页 fixture 里 <strong>cc-last4 期望 4242</strong>：它只能由 JS 从 query 写入，因此 CHECK 会判它 FAIL——这是设计如此，用来确认"隐藏字段不参与填充"。</li></ul>
+</section>
+<section data-pager style="margin-top:var(--s-2xl)"></section>
+</main>
+<footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · checkout-3-review.html</span></div></footer>
+<script type="application/json" data-pm-page>{"num":"16","slug":"checkout-3-review","group":"billing","title":"结账第三步 · 确认（只读回显）"}</script>
+<script type="application/json" data-pm-expected>{"cc-last4":"4242","postal-code":"94107"}</script>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/site.js"></script>
+<script>
+var q = new URLSearchParams(location.search);
+var card = (q.get('cc-number') || '').replace(/\s/g, '');
+var hid = document.querySelector('#f-cc-last4');
+if (hid) hid.value = card.slice(-4);
+var rows = [['卡末四位', card ? '****' + card.slice(-4) : '(空)'], ['街道', q.get('address-line1') || '(空)'], ['城市', q.get('address-level2') || '(空)'], ['邮编', q.get('postal-code') || '(空)'], ['邮箱', q.get('email') || '(空)']];
+document.querySelector('[data-review]').innerHTML = rows.map(function (r) {
+  return '<div class="stat"><span class="stat__k">' + r[0] + '</span><span class="stat__v">' + r[1] + '</span></div>';
+}).join('');
+PM.log('info', 'checkout-3 从 query 回显 ' + rows.filter(function (r) { return r[1] !== '(空)'; }).length + '/5 项；hidden 字段由脚本写入，非填充', null);
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>13 支付卡 · PM Autofill Lab</title>
+<meta name="description" content="支付卡 · cc-* 语义与格式化 — 密码管理器自动填充调试台">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到表单</a>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+<main id="main" class="wrap">
+<section class="pagehead">
+  <div class="pagehead__id">
+    <span class="pagehead__num">13</span>
+    <h1 class="pagehead__title">支付卡 · cc-* 语义与格式化</h1>
+  </div>
+  <p class="pagehead__lede"><strong>cc-name / cc-number / cc-exp-month / cc-exp-year / cc-csc</strong>。卡的自动填充受三重限制：<strong>安全上下文、HTTPS、站点是否被识别为"可支付"</strong>。</p>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">payment</span><span class="tag">cc-autofill</span>
+    <span class="tag tag--on">GROUP · billing</span></div>
+</section>
+
+
+<section class="panel panel--raised stack-sm" style="margin-bottom:var(--s-xl)">
+  <div class="row row--between">
+    <span class="label">FIELD COVERAGE</span>
+    <span class="mono display" data-coverage-readout>—</span>
+  </div>
+  <div class="segbar segbar--hero" data-coverage></div>
+  <div class="row" style="margin-top:var(--s-sm)">
+    <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
+    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
+  </div>
+  <div data-checkout></div>
+</section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>cc-name</td><td>MONICA JOYIN</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-name">COPY</button></td></tr><tr><td>cc-number</td><td>4242424242424242</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-number">COPY</button></td></tr><tr><td>cc-exp-month</td><td>03</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-exp-month">COPY</button></td></tr><tr><td>cc-exp-year</td><td>2031</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-exp-year">COPY</button></td></tr><tr><td>cc-csc</td><td>737</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-csc">COPY</button></td></tr></tbody></table></section>
+<form class="form" id="f-card" data-pm-id="f-card" method="POST" action="#" autocomplete="on"><div class="formgrid"><div class="field field--8"><div class="field__top"><label class="field__label" for="f-cc-name">NAME ON CARD<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=cc-name</span></div><input class="field__input" id="f-cc-name" name="cc-name" type="text" autocomplete="cc-name" required data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field field--4"><div class="field__top"><label class="field__label" for="f-postal-code">BILLING POSTAL<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=postal-code</span></div><input class="field__input" id="f-postal-code" name="postal-code" type="text" autocomplete="postal-code" required data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="f-cc-number">CARD NUMBER<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=cc-number</span></div><input class="field__input" id="f-cc-number" name="cc-number" type="text" autocomplete="cc-number" required inputmode="numeric" data-pm-uid=""><p class="caption">4242 4242 4242 4242（VISA 测试号）</p><p class="field__msg"></p></div>
+<div class="field field--4"><div class="field__top"><label class="field__label" for="f-cc-exp-month">EXP MONTH<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=cc-exp-month</span></div><select class="field__input" id="f-cc-exp-month" name="cc-exp-month" type="select" autocomplete="cc-exp-month" required data-pm-uid=""><option value="">MM</option><option value="01">1</option><option value="02">2</option><option value="03">3</option><option value="04">4</option><option value="05">5</option><option value="06">6</option><option value="07">7</option><option value="08">8</option><option value="09">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select><p class="field__msg"></p></div>
+<div class="field field--4"><div class="field__top"><label class="field__label" for="f-cc-exp-year">EXP YEAR<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=cc-exp-year</span></div><select class="field__input" id="f-cc-exp-year" name="cc-exp-year" type="select" autocomplete="cc-exp-year" required data-pm-uid=""><option value="">YYYY</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option><option value="2031">2031</option><option value="2032">2032</option><option value="2033">2033</option><option value="2034">2034</option><option value="2035">2035</option><option value="2036">2036</option><option value="2037">2037</option><option value="2038">2038</option><option value="2039">2039</option><option value="2040">2040</option></select><p class="field__msg"></p></div>
+<div class="field field--4"><div class="field__top"><label class="field__label" for="f-cc-csc">CSC / CVV<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=cc-csc</span></div><input class="field__input" id="f-cc-csc" name="cc-csc" type="text" autocomplete="cc-csc" required inputmode="numeric" data-pm-uid=""><p class="caption">737</p><p class="field__msg"></p></div></div><div class="form__foot"><button class="btn btn--primary" type="submit">PAY $42.00</button><span class="formstatus" data-formstatus></span></div></form>
+<div class="row row--between" style="margin-top:var(--s-md)">
+<span class="caption">LUHN <span data-luhn>—</span> · BRAND <span data-brand>—</span></span>
+<span class="caption">填充后由格式化脚本重新分格，观察是否出现 SCRIPT 事件</span>
+</div>
+<hr class="hairline">
+<section class="stack-sm" aria-label="已知失败模式">
+  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
+  <ul class="issues"><li>卡号字段必须<strong>type=text + inputmode=numeric + autocomplete=cc-number</strong>。用 type=number 会让管理器放弃填充。</li><li>把 <strong>cc-exp</strong> 拆成 month/year 两个 select 是最常见布局，也是填充失败最多的地方：<strong>期望 cc-exp-month="3"，而 UI 显示 "03"</strong>。</li><li>浏览器保存的卡<strong>默认不弹 CSC</strong>：出于合规，安全码几乎从不自填。这一格保持空是正常的，不是 bug。</li><li>格式化脚本（每 4 位加空格）会在填充后触发<strong>二次 input</strong>，诊断日志里会出现 SCRIPT 事件——注意区分。</li></ul>
+</section>
+<section data-pager style="margin-top:var(--s-2xl)"></section>
+</main>
+<footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · payment-card.html</span></div></footer>
+<script type="application/json" data-pm-page>{"num":"13","slug":"payment-card","group":"billing","title":"支付卡 · cc-* 语义与格式化"}</script>
+<script type="application/json" data-pm-expected>{"cc-name":"MONICA JOYIN","cc-number":"4242424242424242","cc-exp-month":"03","cc-exp-year":"2031","cc-csc":"737"}</script>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/site.js"></script>
+<script>
+var num = document.querySelector('#f-cc-number');
+function brandOf(v) { v = v.replace(/\D/g,''); if (/^4/.test(v)) return 'VISA'; if (/^5[1-5]/.test(v)) return 'MASTERCARD'; if (/^3[47]/.test(v)) return 'AMEX'; if (/^6/.test(v)) return 'DISCOVER/UnionPay'; return v ? 'UNKNOWN' : '—'; }
+function luhn(v) { v = v.replace(/\D/g,''); if (!v) return '—'; var s = 0, alt = false; for (var i = v.length - 1; i >= 0; i--) { var n = +v[i]; if (alt) { n *= 2; if (n > 9) n -= 9; } s += n; alt = !alt; } return s % 10 === 0 ? 'VALID' : 'INVALID'; }
+num.addEventListener('input', function () { var d = num.value.replace(/\D/g,'').slice(0,19); num.value = d.replace(/(.{4})/g,'$1 ').trim(); document.querySelector('[data-luhn]').textContent = luhn(d); document.querySelector('[data-brand]').textContent = brandOf(d); });
+</script>
+</body>
+</html>

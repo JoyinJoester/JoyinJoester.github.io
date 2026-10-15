@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>SWEEP · 全站自检</title>
+<style>
+  body { background: #000; color: #e8e8e8; font: 12px/1.5 ui-monospace, monospace; margin: 0; padding: 16px; }
+  iframe { position: fixed; left: 0; top: 0; width: 1280px; height: 900px; border: 0; opacity: 0; pointer-events: none; z-index: -1; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border-bottom: 1px solid #222; padding: 4px 8px; text-align: left; vertical-align: top; }
+  th { color: #999; text-transform: uppercase; letter-spacing: .08em; font-size: 10px; }
+  .bad { color: #d71921; } .ok { color: #4a9e5c; } .warn { color: #d4a843; }
+  #out { white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<h2>SWEEP · 每个页面在真实浏览器里跑一遍</h2>
+<p>做法：同域 iframe 逐个加载页面 → 收集 JS 错误 → 扫描控件 → 用<strong>不派发任何事件</strong>的方式写入 fixture（模拟 silent fill）→ 等轮询发现 → CHECK。输出即实测结果。</p>
+<div id="status">RUNNING…</div>
+<table id="tbl"><thead><tr><th>PAGE</th><th>CTRL</th><th>SHDW</th><th>FRAME</th><th>NOFORM</th><th>NOLABEL</th><th>HIDDEN</th><th>SILENT</th><th>CHECK</th><th>ERRORS</th></tr></thead><tbody></tbody></table>
+<h3>RAW</h3>
+<pre id="out"></pre>
+<div id="host"></div>
+<script src="../assets/pages.js"></script>
+<script>
+(function () {
+  var PAGES = (window.PM_PAGES || [])
+    .map(function (p) { return p.slug; })
+    .filter(function (s) { return s !== 'index' && s !== 'diagnostics' && s !== 'iframe-inner'; })
+    .concat(['iframe-inner']);
+
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+  function load(slug) {
+    return new Promise(function (resolve) {
+      var f = document.createElement('iframe');
+      f.setAttribute('data-slug', slug);
+      f.src = '../' + slug + '.html?theme=dark';
+      var done = false;
+      var finish = function () { if (done) return; done = true; resolve(f); };
+      f.onload = function () { setTimeout(finish, 300); };
+      document.getElementById('host').appendChild(f);
+      setTimeout(finish, 8000);
+    });
+  }
+
+  async function run(f, slug) {
+    var w = f.contentWindow, d = w.document;
+    var errs = [];
+    w.addEventListener('error', function (e) { errs.push(String(e.message)); });
+    var PM = w.PM;
+    if (!PM || !PM.fields) return { page: slug, fatal: 'PM 未定义（diag.js 没加载或提前抛错）', errors: errs };
+
+    /* init() writes a PAGE entry — its presence proves the boot path completed */
+    var initOk = PM.logs().some(function (e) { return /^PAGE /.test(e.msg); });
+    var exp = PM.expected() || {};
+
+    /* Wait out the late-insertion timers before taking the census, otherwise the
+     * dynamic-form page is scored against a DOM that legitimately has no fields yet. */
+    await sleep(2300);
+    PM.scan();
+    var fields = PM.fields();
+    var base = PM.logs().length;
+
+    /* silent fill: mutate values only — no input/change event is dispatched */
+    var wrote = 0;
+    fields.forEach(function (x) {
+      var key = x.el.name || x.el.id;
+      if (x.type === 'hidden' || x.type === 'checkbox' || x.type === 'radio' || x.type === 'submit' || x.type === 'button') return;
+      if (exp[key] === undefined) return;
+      try { x.el.value = exp[key]; wrote++; } catch (e) { errs.push('write ' + key + ': ' + e.message); }
+    });
+
+    await sleep(1400);
+
+    var silent = PM.logs().slice(base).filter(function (e) { return /SILENT-FILL/.test(e.msg); });
+    var r = PM.check({ at: 'sweep' });
+    var bad = r.results.filter(function (x) { return !x.ok; });
+    return {
+      page: slug,
+      initOk: initOk,
+      controls: fields.length,
+      shadow: fields.filter(function (x) { return x.inShadow; }).length,
+      frame: fields.filter(function (x) { return x.inFrame; }).length,
+      noform: fields.filter(function (x) { return x.form === '(no form)'; }).length,
+      nolabel: fields.filter(function (x) { return x.label.via === 'none'; }).length,
+      hidden: fields.filter(function (x) { return x.vis !== 'visible'; }).length,
+      fixtureKeys: Object.keys(exp).length,
+      wrote: wrote,
+      silent: silent.length,
+      pass: r.passed,
+      total: r.total,
+      scored: r.scored,
+      fails: bad.map(function (x) { return x.key + (x.present ? '' : '(ABSENT)'); }),
+      dock: !!d.querySelector('.dock'),
+      coverage: (d.querySelector('[data-coverage-readout]') || {}).textContent,
+      errors: errs
+    };
+  }
+
+  async function main() {
+    var rows = [];
+    for (var i = 0; i < PAGES.length; i++) {
+      var slug = PAGES[i];
+      var f = await load(slug);
+      var r;
+      try { r = await run(f, slug); } catch (e) { r = { page: slug, fatal: String((e && e.message) || e), errors: [] }; }
+      rows.push(r);
+      f.remove();
+      document.getElementById('status').textContent = 'RUNNING… ' + (i + 1) + '/' + PAGES.length;
+    }
+    document.getElementById('out').textContent = JSON.stringify(rows, null, 1);
+    document.querySelector('#tbl tbody').innerHTML = rows.map(function (r) {
+      if (r.fatal) return '<tr><td>' + r.page + '</td><td colspan="9" class="bad">FATAL ' + r.fatal + '</td></tr>';
+      var tone = r.errors.length || !r.initOk ? 'bad' : r.fails.length ? 'warn' : 'ok';
+      return '<tr class="' + tone + '"><td>' + r.page + '</td><td>' + r.controls + '</td><td>' + r.shadow +
+        '</td><td>' + r.frame + '</td><td>' + r.noform + '</td><td>' + r.nolabel + '</td><td>' + r.hidden +
+        '</td><td>' + r.silent + '/' + r.wrote + '</td><td>' + (r.scored ? r.pass + '/' + r.total : 'cov ' + r.coverage) +
+        '</td><td>' + (r.errors.length ? r.errors.join('; ') : '—') + (r.fails.length ? '<br>FAIL: ' + r.fails.join(', ') : '') + '</td></tr>';
+    }).join('');
+    document.getElementById('status').textContent = 'DONE · ' + rows.length + ' pages';
+    document.title = 'SWEEP DONE';
+  }
+
+  main();
+})();
+</script>
+</body>
+</html>

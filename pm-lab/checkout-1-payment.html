@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>14 结账 1 · PM Autofill Lab</title>
+<meta name="description" content="结账第一步 · 支付 — 密码管理器自动填充调试台">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到表单</a>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+<main id="main" class="wrap">
+<section class="pagehead">
+  <div class="pagehead__id">
+    <span class="pagehead__num">14</span>
+    <h1 class="pagehead__title">结账第一步 · 支付</h1>
+  </div>
+  <p class="pagehead__lede">真实电商常把<strong>支付、地址、确认拆成三步跨页面导航</strong>。每一步只有部分字段，且用 URL query 或 sessionStorage 传状态。</p>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">wizard</span><span class="tag">step-1</span>
+    <span class="tag tag--on">GROUP · billing</span></div>
+</section>
+
+
+<section class="panel panel--raised stack-sm" style="margin-bottom:var(--s-xl)">
+  <div class="row row--between">
+    <span class="label">FIELD COVERAGE</span>
+    <span class="mono display" data-coverage-readout>—</span>
+  </div>
+  <div class="segbar segbar--hero" data-coverage></div>
+  <div class="row" style="margin-top:var(--s-sm)">
+    <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
+    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
+  </div>
+  <div data-checkout></div>
+</section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>cc-number</td><td>4242424242424242</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-number">COPY</button></td></tr><tr><td>cc-name</td><td>MONICA JOYIN</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-name">COPY</button></td></tr></tbody></table></section>
+<form class="form" id="f-co1" data-pm-id="f-co1" method="get" action="checkout-2-address.html" data-pm-live="1" autocomplete="on"><div class="formgrid"><div class="field field--6"><div class="field__top"><label class="field__label" for="f-cc-name">NAME ON CARD<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=cc-name</span></div><input class="field__input" id="f-cc-name" name="cc-name" type="text" autocomplete="cc-name" required data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field field--6"><div class="field__top"><label class="field__label" for="f-cc-number">CARD NUMBER<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=cc-number</span></div><input class="field__input" id="f-cc-number" name="cc-number" type="text" autocomplete="cc-number" required inputmode="numeric" data-pm-uid=""><p class="field__msg"></p></div></div><div class="form__foot"><button class="btn btn--primary" type="submit">CONTINUE TO ADDRESS</button><span class="formstatus" data-formstatus></span></div></form>
+
+<hr class="hairline">
+<section class="stack-sm" aria-label="已知失败模式">
+  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
+  <ul class="issues"><li>跨页向导里，管理器通常<strong>按整站记忆卡</strong>，但不会在 step2 重新建议；观察 step2 是否还弹。</li><li><strong>sessionStorage 在手改 URL 时会丢</strong>——若从地址栏直接进 step2，会看到"未收到上一步数据"。</li></ul>
+</section>
+<section data-pager style="margin-top:var(--s-2xl)"></section>
+</main>
+<footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · checkout-1-payment.html</span></div></footer>
+<script type="application/json" data-pm-page>{"num":"14","slug":"checkout-1-payment","group":"billing","title":"结账第一步 · 支付"}</script>
+<script type="application/json" data-pm-expected>{"cc-number":"4242424242424242","cc-name":"MONICA JOYIN"}</script>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/site.js"></script>
+
+</body>
+</html>

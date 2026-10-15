@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04 注册 · PM Autofill Lab</title>
+<meta name="description" content="注册 · new-password — 密码管理器自动填充调试台">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到表单</a>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+<main id="main" class="wrap">
+<section class="pagehead">
+  <div class="pagehead__id">
+    <span class="pagehead__num">04</span>
+    <h1 class="pagehead__title">注册 · new-password</h1>
+  </div>
+  <p class="pagehead__lede">注册表单。<strong>autocomplete=new-password</strong> 会触发管理器的"生成强密码"路径，与登录用的 current-password 是两条完全不同的代码分支。</p>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">signup</span><span class="tag">password-generator</span>
+    <span class="tag tag--on">GROUP · auth</span></div>
+</section>
+
+
+<section class="panel panel--raised stack-sm" style="margin-bottom:var(--s-xl)">
+  <div class="row row--between">
+    <span class="label">FIELD COVERAGE</span>
+    <span class="mono display" data-coverage-readout>—</span>
+  </div>
+  <div class="segbar segbar--hero" data-coverage></div>
+  <div class="row" style="margin-top:var(--s-sm)">
+    <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
+    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
+  </div>
+  <div data-checkout></div>
+</section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>username</td><td>pm04-new</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="username">COPY</button></td></tr><tr><td>email</td><td>pm04-new@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="email">COPY</button></td></tr><tr><td>password</td><td>Nth0ng!04-Signup-Test</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="password">COPY</button></td></tr><tr><td>password_confirm</td><td>Nth0ng!04-Signup-Test</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="password_confirm">COPY</button></td></tr></tbody></table></section>
+<form class="form" id="f-signup" data-pm-id="f-signup" method="POST" action="#" autocomplete="on"><div class="formgrid"><div class="field"><div class="field__top"><label class="field__label" for="f-username">USERNAME<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=username</span></div><input class="field__input" id="f-username" name="username" type="text" autocomplete="username" required data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="f-email">EMAIL<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=email</span></div><input class="field__input" id="f-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="f-password">PASSWORD<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=new-password</span></div><input class="field__input" id="f-password" name="password" type="password" autocomplete="new-password" required data-pm-uid=""><p class="caption">12+ 位，含大小写与符号</p><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="f-confirm">CONFIRM PASSWORD<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=new-password</span></div><input class="field__input" id="f-confirm" name="password_confirm" type="password" autocomplete="new-password" required data-pm-uid=""><p class="caption">第二个 new-password，看管理器是否同步填充</p><p class="field__msg"></p></div></div><div class="form__foot"><button class="btn btn--primary" type="submit">CREATE ACCOUNT</button><span class="formstatus" data-formstatus></span></div></form>
+
+<hr class="hairline">
+<section class="stack-sm" aria-label="已知失败模式">
+  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
+  <ul class="issues"><li><strong>new-password</strong> 时，多数管理器<strong>拒绝填充已保存的密码</strong>（这是正确行为），只肯"建议新密码"。若你想测填充，用 current-password 的页面。</li><li>确认密码框（<strong>re-enter / confirm</strong>）常被漏填：它是第二个 password 字段，规范上应写 <strong>autocomplete=new-password</strong> 同名。</li><li>注册页的<strong>保存提示</strong>最容易丢：提交后若无真导航，浏览器不会记录新凭据。</li></ul>
+</section>
+<section data-pager style="margin-top:var(--s-2xl)"></section>
+</main>
+<footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · signup.html</span></div></footer>
+<script type="application/json" data-pm-page>{"num":"04","slug":"signup","group":"auth","title":"注册 · new-password"}</script>
+<script type="application/json" data-pm-expected>{"username":"pm04-new","email":"pm04-new@example.com","password":"Nth0ng!04-Signup-Test","password_confirm":"Nth0ng!04-Signup-Test"}</script>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/site.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>18 无 LABEL · PM Autofill Lab</title>
+<meta name="description" content="标签缺失的四种变体 — 密码管理器自动填充调试台">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到表单</a>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+<main id="main" class="wrap">
+<section class="pagehead">
+  <div class="pagehead__id">
+    <span class="pagehead__num">18</span>
+    <h1 class="pagehead__title">标签缺失的四种变体</h1>
+  </div>
+  <p class="pagehead__lede">管理器判断"这是哪个字段"依赖 <strong>label[for] / aria-label / placeholder / name / id / autocomplete</strong>。这里逐条剥掉，看还剩什么能用。</p>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">label-less</span><span class="tag">a11y</span><span class="tag">heuristic</span>
+    <span class="tag tag--on">GROUP · edge</span></div>
+</section>
+
+
+<section class="panel panel--raised stack-sm" style="margin-bottom:var(--s-xl)">
+  <div class="row row--between">
+    <span class="label">FIELD COVERAGE</span>
+    <span class="mono display" data-coverage-readout>—</span>
+  </div>
+  <div class="segbar segbar--hero" data-coverage></div>
+  <div class="row" style="margin-top:var(--s-sm)">
+    <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
+    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
+  </div>
+  <div data-checkout></div>
+</section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>v1</td><td>pm18-v1@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="v1">COPY</button></td></tr><tr><td>v2</td><td>pm18-v2@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="v2">COPY</button></td></tr><tr><td>v3</td><td>pm18-v3@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="v3">COPY</button></td></tr><tr><td>z9x_kf_input</td><td>pm18-v4@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="z9x_kf_input">COPY</button></td></tr></tbody></table></section>
+<div class="stack-lg">
+<div class="panel stack-sm"><span class="label">A · label[for] + autocomplete（最好情况）</span>
+<div class="field"><div class="field__top"><label class="field__label" for="v1">EMAIL</label><span class="field__ac">autocomplete=username</span></div>
+<input class="field__input" id="v1" name="v1" type="email" autocomplete="username" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="v1p">PASSWORD</label><span class="field__ac">current-password</span></div>
+<input class="field__input" id="v1p" name="password_v1" type="password" autocomplete="current-password" data-pm-uid=""><p class="field__msg"></p></div></div>
+
+<div class="panel stack-sm"><span class="label">B · 只有 aria-label（无可见 label）</span>
+<div class="field"><input class="field__input" aria-label="Email address" name="v2" type="email" autocomplete="username" id="v2" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><input class="field__input" aria-label="Password" name="password_v2" type="password" autocomplete="current-password" id="v2p" data-pm-uid=""><p class="field__msg"></p></div></div>
+
+<div class="panel stack-sm"><span class="label">C · 只有 placeholder（无 label / 无 autocomplete）</span>
+<div class="field"><input class="field__input" placeholder="you@example.com" name="v3" type="email" id="v3" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><input class="field__input" placeholder="Password" name="password" type="password" id="v3p" data-pm-uid=""><p class="field__msg"></p></div></div>
+
+<div class="panel stack-sm"><span class="label">D · 全剥离：随机 name/id，无 label、无 autocomplete、无 placeholder</span>
+<div class="field"><input class="field__input" name="z9x_kf_input" type="text" id="q7f2a" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><input class="field__input" name="zz_pw_field_88" type="password" id="k1l0m" data-pm-uid=""><p class="field__msg"></p></div></div>
+</div>
+
+<hr class="hairline">
+<section class="stack-sm" aria-label="已知失败模式">
+  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
+  <ul class="issues"><li><strong>variant C 只有 placeholder</strong>：可访问性上 placeholder 不是标签；且部分管理器<strong>忽略 placeholder</strong>，只按 name/autocomplete 猜。</li><li><strong>variant D 全部剥离</strong>（随机 name/id、无 autocomplete、无 label）：此时只剩<strong>DOM 顺序与相邻文本</strong>，各实现分歧最大。</li><li>若 A/B 正常、C 失败 ⇒ 该管理器<strong>不读 placeholder</strong>；若 D 也正常 ⇒ 它在按位置猜，可靠性差。</li></ul>
+</section>
+<section data-pager style="margin-top:var(--s-2xl)"></section>
+</main>
+<footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · no-label.html</span></div></footer>
+<script type="application/json" data-pm-page>{"num":"18","slug":"no-label","group":"edge","title":"标签缺失的四种变体"}</script>
+<script type="application/json" data-pm-expected>{"v1":"pm18-v1@example.com","v2":"pm18-v2@example.com","v3":"pm18-v3@example.com","z9x_kf_input":"pm18-v4@example.com"}</script>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/site.js"></script>
+<script>
+PM.log('warn','D 组无任何语义线索——若仍被填充，说明该管理器在按 DOM 位置猜测', null);
+</script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>06 PASSKEY 创建 · PM Autofill Lab</title>
+<meta name="description" content="WebAuthn create() 参数矩阵与可用性判定">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到主内容</a>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <section class="pagehead">
+    <div class="pagehead__id">
+      <span class="pagehead__num">06</span>
+      <h1 class="pagehead__title">Passkey 创建 · navigator.credentials.create()</h1>
+    </div>
+    <p class="pagehead__lede">这一页测的不是"能不能签出签名"，而是 <strong>密码管理器是否愿意在这个 origin 上帮你建 passkey</strong>：它有没有弹选择器、有没有把凭据存进自己的库、以及 <strong>discoverable / userVerification / attachment</strong> 三个参数怎么改变它的行为。</p>
+    <div class="row" style="margin-top:var(--s-md)">
+      <span class="tag">webauthn</span><span class="tag">create()</span><span class="tag">no-server</span>
+      <span class="tag tag--on">GROUP · passkey</span>
+    </div>
+  </section>
+
+  <section class="panel panel--accent stack-md" style="margin-bottom:var(--s-xl)">
+    <div class="row row--between">
+      <span class="label">RP 上下文 · 决定 passkey 归属</span>
+      <span class="caption">改这个 = 换站点，管理器的既有条目会全部失效</span>
+    </div>
+    <div class="grid-2">
+      <div class="stat"><span class="stat__k">rp.id</span><span class="stat__v" data-rp-id>…</span></div>
+      <div class="stat"><span class="stat__k">origin</span><span class="stat__v" data-rp-origin>…</span></div>
+      <div class="stat"><span class="stat__k">isSecureContext</span><span class="stat__v" data-rp-secure>…</span></div>
+      <div class="stat"><span class="stat__k">公后缀域 (PSL)</span><span class="stat__v" data-rp-psl>…</span></div>
+    </div>
+    <p class="caption">PSL 判定：若 <strong>rp.id 本身就在 Public Suffix List</strong>（如 github.io），浏览器会警告"public-suffix 域上的 passkey"，部分管理器直接拒绝。详见 <a href="index.html#deploy">index.html#deploy</a>。</p>
+  </section>
+
+  <section class="panel stack-lg" style="margin-bottom:var(--s-xl)">
+    <div class="stack-md">
+      <span class="label">IDENTITY · 写入 create() 的 user 对象</span>
+      <div class="formgrid">
+        <div class="field field--6"><div class="field__top"><label class="field__label" for="pk-user">USER NAME</label><span class="field__ac">autocomplete=username</span></div><input class="field__input" id="pk-user" name="username" type="text" autocomplete="username" value="pm06@example.com" data-pm-uid=""><p class="field__msg"></p></div>
+        <div class="field field--6"><div class="field__top"><label class="field__label" for="pk-display">DISPLAY NAME</label><span class="field__ac">autocomplete=name</span></div><input class="field__input" id="pk-display" name="displayName" type="text" autocomplete="name" value="PM Tester 06" data-pm-uid=""><p class="field__msg"></p></div>
+      </div>
+    </div>
+
+    <hr class="hairline">
+
+    <div class="grid-2 stack-md">
+      <div class="stack-sm">
+        <span class="label">RESIDENT KEY (可发现性)</span>
+        <div class="segctrl" data-seg="residentKey">
+          <button type="button" data-v="required" aria-pressed="true">REQUIRED</button>
+          <button type="button" data-v="preferred" aria-pressed="false">PREFERRED</button>
+          <button type="button" data-v="discouraged" aria-pressed="false">DISCOURAGED</button>
+        </div>
+        <p class="caption">required = 钥匙存在设备上，才能被"无 allowCredentials 的登录"和自动建议发现</p>
+      </div>
+      <div class="stack-sm">
+        <span class="label">USER VERIFICATION</span>
+        <div class="segctrl" data-seg="userVerification">
+          <button type="button" data-v="required" aria-pressed="false">REQUIRED</button>
+          <button type="button" data-v="preferred" aria-pressed="true">PREFERRED</button>
+          <button type="button" data-v="discouraged" aria-pressed="false">DISCOURAGED</button>
+        </div>
+        <p class="caption">required 强制生物识别/PIN；discouraged 可无 UV 登录（很多管理器不允许）</p>
+      </div>
+      <div class="stack-sm">
+        <span class="label">AUTHENTICATOR ATTACHMENT</span>
+        <div class="segctrl" data-seg="attachment">
+          <button type="button" data-v="any" aria-pressed="true">ANY</button>
+          <button type="button" data-v="platform" aria-pressed="false">PLATFORM</button>
+          <button type="button" data-v="cross-platform" aria-pressed="false">CROSS</button>
+        </div>
+        <p class="caption">platform=本机 TouchID/Hello；cross=安全Key/手机扫码</p>
+      </div>
+      <div class="stack-sm">
+        <span class="label">ATTESTATION</span>
+        <div class="segctrl" data-seg="attestation">
+          <button type="button" data-v="none" aria-pressed="true">NONE</button>
+          <button type="button" data-v="indirect" aria-pressed="false">INDIRECT</button>
+          <button type="button" data-v="direct" aria-pressed="false">DIRECT</button>
+        </div>
+        <p class="caption">enterprise/direct 会触发企业策略与额外确认弹窗</p>
+      </div>
+    </div>
+
+    <hr class="hairline">
+
+    <div class="row">
+      <label class="switch"><input type="checkbox" id="pk-exclude" data-pm-uid=""><span class="switch__track"></span><span class="label">带 EXCLUDECREDENTIALS（重复创建应报 InvalidStateError）</span></label>
+      <span class="stack-xs" style="display:inline-flex;align-items:baseline;gap:8px"><span class="label">TIMEOUT(S)</span><input class="field__input" id="pk-timeout" type="number" min="5" max="180" value="60" style="width:88px;margin:0" data-pm-uid=""></span>
+      <label class="switch"><input type="checkbox" id="pk-signal" checked data-pm-uid=""><span class="switch__track"></span><span class="label">挂 ABORTSIGNAL</span></label>
+    </div>
+
+    <div class="form__foot">
+      <button type="button" class="btn btn--primary" id="btn-create">CREATE PASSKEY</button>
+      <button type="button" class="btn btn--secondary" id="btn-create-conditional">CREATE + CONDITIONAL GET 预演</button>
+      <span class="formstatus" id="create-status"></span>
+    </div>
+  </section>
+
+  <section class="panel stack-sm" style="margin-bottom:var(--s-xl)" aria-live="polite">
+    <div class="row row--between"><span class="label">RESULT · create() 返回值解剖</span><span class="caption" id="result-at">—</span></div>
+    <div data-result><p class="dim caption">按 CREATE PASSKEY 开始。未创建时这里为空。</p></div>
+  </section>
+
+  <section class="panel stack-sm" style="margin-bottom:var(--s-xl)">
+    <div class="row row--between">
+      <span class="label">STORED CREDENTIALS · 本页 localStorage 记录</span>
+      <span class="row">
+        <button type="button" class="btn btn--sm btn--ghost" id="btn-refresh">REFRESH</button>
+        <button type="button" class="btn btn--sm btn--danger" id="btn-wipe">WIPE ALL</button>
+      </span>
+    </div>
+    <p class="caption">这里只是本站自己的登记簿。<strong>管理器是否也存了一份，要到管理器的应用内界面去确认</strong>——这是本测试唯一无法自动判定的部分。</p>
+    <div data-stored></div>
+  </section>
+
+  <section class="panel stack-sm" style="margin-bottom:var(--s-xl)">
+    <span class="label">CAPABILITY PROBE</span>
+    <div data-cap-list class="stack-xs" style="margin-top:var(--s-sm)"></div>
+  </section>
+
+  <section class="stack-sm" aria-label="已知失败模式">
+    <span class="label">KNOWN FAILURE MODES</span>
+    <ul class="issues">
+      <li><strong>SecurityError</strong>：不在 HTTPS（或 localhost）下必然出现，<strong>file:// 打开本站一定失败</strong>。</li>
+      <li><strong>NotAllowedError</strong> 最常见：用户取消、超时、或本机没有平台认证器却指定了 <strong>attachment=platform</strong>。</li>
+      <li><strong>无服务器的局限</strong>：challenge 由页面生成、也只由页面校验，签名<strong>没有经服务端验证</strong>。测"能否弹选择器/是否入库"够用，测真实认证强度不够。</li>
+      <li>某些管理器把 <strong>discoverable credential</strong> 视为"账号"，创建完立刻出现在密码建议里；另一些只在 <strong>rp.id 完全一致</strong>时才列出来。切子域去对比。</li>
+      <li>带 <strong>att=enterprise/direct</strong> 时，企业受管设备可能弹额外同意框，或整体被策略禁用。</li>
+    </ul>
+  </section>
+
+  <section data-pager style="margin-top:var(--s-2xl)"></section>
+</main>
+
+<footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a> · <a href="passkey-login.html">用刚建的 KEY 登录 →</a></span><span>passkey-signup.html</span></div></footer>
+
+<script type="application/json" data-pm-page>{"num":"06","slug":"passkey-signup","group":"passkey","title":"Passkey 创建"}</script>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/passkey.js"></script>
+<script src="assets/site.js"></script>
+<script>
+var OPTS = { residentKey: 'required', userVerification: 'preferred', attachment: 'any', attestation: 'none' };
+document.querySelectorAll('[data-seg]').forEach(function (group) {
+  var key = group.getAttribute('data-seg');
+  group.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-v]'); if (!b) return;
+    group.querySelectorAll('[data-v]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+    OPTS[key] = b.getAttribute('data-v');
+    PM.log('info', '参数 ' + key + ' → ' + OPTS[key], null);
+  });
+});
+
+var env = PM.env();
+document.querySelector('[data-rp-id]').textContent = PK.rp.id;
+document.querySelector('[data-rp-origin]').textContent = env.origin;
+document.querySelector('[data-rp-secure]').textContent = String(env.secure);
+var psl = document.querySelector('[data-rp-psl]');
+fetch('https://publicsuffix.org/list/public_suffix_list.dat')
+  .then(function (r) { return r.text(); })
+  .then(function (txt) {
+    var lines = txt.split('\n').map(function (s) { return s.trim(); }).filter(function (s) { return s && s.indexOf('//') !== 0; });
+    var h = location.hostname;
+    var parts = h.split('.');
+    var hit = null;
+    for (var i = 1; i < parts.length; i++) {
+      var cand = parts.slice(i).join('.');
+      if (lines.indexOf(cand) !== -1) { hit = cand; break; }
+    }
+    psl.textContent = hit ? '是 · ' + hit + ' 在 PSL 上（会被警告）' : '否 · 可注册的域名';
+    psl.className = 'stat__v ' + (hit ? 'stat__v--bad' : 'stat__v--ok');
+    PM.log(hit ? 'warn' : 'info', 'PSL 检查：' + h + ' → ' + (hit || '非公共后缀'), null);
+  })
+  .catch(function (e) { psl.textContent = '无法在线校验（' + e.name + '）'; });
+
+function statRows(pairs) {
+  return pairs.map(function (p) {
+    return '<div class="stat"><span class="stat__k">' + PM.esc(p[0]) + '</span><span class="stat__v ' + (p[2] || '') + '">' + PM.esc(p[1]) + '</span></div>';
+  }).join('');
+}
+
+function currentOptions() {
+  return Object.assign({}, OPTS, {
+    userName: document.querySelector('#pk-user').value,
+    userDisplayName: document.querySelector('#pk-display').value,
+    exclude: document.querySelector('#pk-exclude').checked,
+    timeoutSec: Number(document.querySelector('#pk-timeout').value) || 60
+  });
+}
+
+function doCreate(withConditional) {
+  var o = currentOptions();
+  var status = document.querySelector('#create-status');
+  status.className = 'formstatus';
+  status.textContent = '[WAITING] 等待认证器…';
+  PM.log('info', 'create() 请求 ' + JSON.stringify({ rk: o.residentKey, uv: o.userVerification, at: o.attachment, att: o.attestation, ex: o.exclude }), null);
+  var opt = PK.createOptions(o);
+  var challenge = opt.publicKey.challenge;
+  var ctl = new AbortController();
+  opt.signal = ctl.signal;
+  var t = setTimeout(function () { ctl.abort(); }, (o.timeoutSec + 5) * 1000);
+  var startedAt = performance.now();
+  navigator.credentials.create(opt).then(function (cred) {
+    clearTimeout(t);
+    var ms = Math.round(performance.now() - startedAt);
+    if (!cred) throw new Error('返回 null');
+    var s = PK.summarize(cred, challenge);
+    var rec = { id: s.id, userName: o.userName, displayName: o.userDisplayName, rpId: PK.rp.id, createdAt: new Date().toISOString(), transports: s.transports, flags: s.flags, ms: ms };
+    PK.put(rec);
+    status.className = 'formstatus formstatus--ok';
+    status.textContent = '[CREATED] ' + s.id.slice(0, 12) + '… · ' + ms + 'ms';
+    document.querySelector('#result-at').textContent = new Date().toLocaleTimeString('en-GB', { hour12: false });
+    document.querySelector('[data-result]').innerHTML = statRows([
+      ['credential id', s.id],
+      ['type', s.type],
+      ['clientData.origin', s.clientData.origin || '(无)', s.clientData.origin === location.origin ? 'stat__v--ok' : 'stat__v--bad'],
+      ['challenge 回传一致', String(s.challengeMatches), s.challengeMatches ? 'stat__v--ok' : 'stat__v--bad'],
+      ['flags UP / UV / AT', (s.flags && (s.flags.UP ? 'UP' : '-')) + ' / ' + (s.flags && (s.flags.UV ? 'UV' : '-')) + ' / ' + (s.flags && (s.flags.AT ? 'AT' : '-'))],
+      ['transports', (s.transports || []).join(', ') || '(未报)'],
+      ['AAGUID', s.aaguid || '(无)'],
+      ['signCount', s.counter],
+      ['attestation fmt', s.attFmt || '(none)'],
+      ['rp.id', PK.rp.id],
+      ['residentKey 请求值', o.residentKey],
+      ['耗时(ms)', String(ms)]
+    ]) + '<p class="caption" style="margin-top:var(--s-md)">签名未经服务端验证（本页无后端）。这里的重点是选择器是否弹出、凭据是否进入管理器的库。</p>';
+    renderStored();
+    PM.log('fill', 'passkey 创建成功 ' + s.id.slice(0, 16) + '…', { ms: ms, transports: (s.transports || []).join(',') });
+    if (withConditional) PM.log('info', 'CONDITIONAL 预演：现在打开 07 登录页，看新 key 是否出现在建议里', null);
+  }).catch(function (err) {
+    clearTimeout(t);
+    var info = PK.explain(err);
+    status.className = 'formstatus formstatus--err';
+    status.textContent = '[ERROR] ' + info.name;
+    document.querySelector('[data-result]').innerHTML = statRows([
+      ['error name', info.name, 'stat__v--bad'],
+      ['message', info.message || '(无)', 'stat__v--bad'],
+      ['排查提示', info.hint],
+      ['请求参数', JSON.stringify(o)],
+      ['当前 origin', env.origin],
+      ['secure', String(env.secure)]
+    ]) + '<p class="caption" style="margin-top:var(--s-md)">原文栈：<code>' + PM.esc(info.stack) + '</code></p>';
+    PM.log('error', 'create() 失败 ' + info.name + ' · ' + info.message, { hint: info.hint });
+  });
+}
+
+document.querySelector('#btn-create').addEventListener('click', function () { doCreate(false); });
+document.querySelector('#btn-create-conditional').addEventListener('click', function () { doCreate(true); });
+document.querySelector('#btn-refresh').addEventListener('click', renderStored);
+document.querySelector('#btn-wipe').addEventListener('click', function () {
+  PK.wipe();
+  PM.log('warn', '本站登记簿已清空（管理器内那份仍在，需去应用内删除）', null);
+  renderStored();
+});
+
+function renderStored() {
+  var all = PK.list();
+  var host = document.querySelector('[data-stored]');
+  if (!all.length) {
+    host.innerHTML = '<p class="dim caption" style="padding:var(--s-lg) 0">EMPTY · 还没有创建过 passkey</p>';
+    return;
+  }
+  host.innerHTML = '<table class="table"><thead><tr><th>ID</th><th>USER</th><th>RP</th><th>创建</th><th>TRANS</th><th></th></tr></thead><tbody>' +
+    all.map(function (r) {
+      return '<tr><td class="mono">' + PM.esc(r.id.slice(0, 14)) + '…</td><td>' + PM.esc(r.userName) + '</td><td class="mono">' + PM.esc(r.rpId) + '</td><td class="caption">' + PM.esc(r.createdAt.slice(11, 19)) + '</td><td class="caption">' + PM.esc((r.transports || []).join(',')) + '</td>' +
+        '<td><button type="button" class="btn btn--sm btn--ghost" data-del="' + PM.esc(r.id) + '">DELETE</button></td></tr>';
+    }).join('') + '</tbody></table>';
+  host.querySelectorAll('[data-del]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      PK.remove(b.getAttribute('data-del'));
+      PM.log('warn', '从本站登记簿删除 ' + b.getAttribute('data-del').slice(0, 10) + '…', null);
+      renderStored();
+    });
+  });
+}
+renderStored();
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+{
+  "enroll": "/passkey-signup.html",
+  "signin": "/passkey-login.html"
+}

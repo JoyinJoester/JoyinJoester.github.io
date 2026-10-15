@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>22 隐藏/只读 · PM Autofill Lab</title>
+<meta name="description" content="隐藏、只读、禁用、蜜罐 — 密码管理器自动填充调试台">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到表单</a>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+<main id="main" class="wrap">
+<section class="pagehead">
+  <div class="pagehead__id">
+    <span class="pagehead__num">22</span>
+    <h1 class="pagehead__title">隐藏、只读、禁用、蜜罐</h1>
+  </div>
+  <p class="pagehead__lede">八种"看得见或看不见的字段状态"，逐条验证管理器<strong>会不会往不可交互的字段里写值</strong>——以及隐藏蜜罐字段会不会被填（这是机器人检测常见的坑）。</p>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">hidden</span><span class="tag">readonly</span><span class="tag">honeypot</span>
+    <span class="tag tag--on">GROUP · edge</span></div>
+</section>
+
+
+<section class="panel panel--raised stack-sm" style="margin-bottom:var(--s-xl)">
+  <div class="row row--between">
+    <span class="label">FIELD COVERAGE</span>
+    <span class="mono display" data-coverage-readout>—</span>
+  </div>
+  <div class="segbar segbar--hero" data-coverage></div>
+  <div class="row" style="margin-top:var(--s-sm)">
+    <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
+    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
+  </div>
+  <div data-checkout></div>
+</section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>hp_company</td><td></td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="hp_company">COPY</button></td></tr><tr><td>state_visible</td><td>Nth0ng!22-Visible</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="state_visible">COPY</button></td></tr><tr><td>state_ro</td><td>Nth0ng!22-Readonly</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="state_ro">COPY</button></td></tr></tbody></table></section>
+<form class="stack-lg" id="f-22" data-pm-id="states">
+<div class="panel stack-sm"><span class="label">A · 正常可见（对照）</span>
+<div class="field"><div class="field__top"><label class="field__label" for="state_visible">PASSWORD · VISIBLE</label><span class="field__ac">current-password</span></div><input class="field__input" id="state_visible" name="state_visible" type="password" autocomplete="current-password" data-pm-uid=""><p class="field__msg"></p></div></div>
+
+<div class="panel stack-sm"><span class="label">B · readonly</span>
+<div class="field"><div class="field__top"><label class="field__label" for="state_ro">PASSWORD · READONLY</label><span class="field__ac">current-password</span></div><input class="field__input" id="state_ro" name="state_ro" type="password" autocomplete="current-password" readonly value="locked-bytes" data-pm-uid=""><p class="field__msg"></p></div></div>
+
+<div class="panel stack-sm"><span class="label">C · disabled</span>
+<div class="field"><div class="field__top"><label class="field__label" for="state_dis">PASSWORD · DISABLED</label><span class="field__ac">current-password</span></div><input class="field__input" id="state_dis" name="state_dis" type="password" autocomplete="current-password" disabled data-pm-uid=""><p class="field__msg"></p></div></div>
+
+<div class="panel stack-sm"><span class="label">D · display:none</span>
+<div class="field" style="display:none"><input class="field__input" id="state_dn" name="state_dn" type="password" autocomplete="current-password" data-pm-uid=""><span class="field__label">display:none</span></div>
+<p class="caption">字段存在于 DOM 但布局不可见</p></div>
+
+<div class="panel stack-sm"><span class="label">E · visibility:hidden</span>
+<div class="field" style="visibility:hidden"><input class="field__input" id="state_vh" name="state_vh" type="password" autocomplete="current-password" data-pm-uid=""><span class="field__label">visibility:hidden</span></div>
+<p class="caption">占位但仍不可见</p></div>
+
+<div class="panel stack-sm"><span class="label">F · opacity:0（视觉隐藏，实际可点）</span>
+<div class="field"><input class="field__input" id="state_op" name="state_op" type="password" autocomplete="current-password" style="opacity:0" data-pm-uid=""><p class="field__msg"></p></div>
+<p class="caption">上面那格是透明的，试着点它</p></div>
+
+<div class="panel stack-sm"><span class="label">G · 移出视口（left:-9999px）</span>
+<div class="field"><input class="field__input" id="state_off" name="state_off" type="email" autocomplete="email" style="position:absolute;left:-9999px" data-pm-uid=""></div>
+<p class="caption">不可见但会参与自动填充——常被用在"隐藏的真实用户名框"</p></div>
+
+<div class="panel stack-sm"><span class="label">H · 蜜罐（期望：不被填）</span>
+<div class="field"><div class="field__top"><label class="field__label" for="hp_company">COMPANY（留空）</label><span class="field__ac">organization</span></div><input class="field__input" id="hp_company" name="hp_company" type="text" autocomplete="organization" data-pm-uid=""><p class="field__msg"></p></div></div>
+
+<div class="panel stack-sm"><span class="label">I · autocomplete=off / no</span>
+<div class="field"><div class="field__top"><label class="field__label" for="ac_off">PASSWORD · autocomplete=off</label></div><input class="field__input" id="ac_off" name="ac_off" type="password" autocomplete="off" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="ac_no">PASSWORD · autocomplete=no</label></div><input class="field__input" id="ac_no" name="ac_no" type="password" autocomplete="no" data-pm-uid=""><p class="field__msg"></p></div></div>
+
+<div class="form__foot"><button class="btn btn--secondary" type="submit">SUBMIT STATES</button><span class="formstatus" data-formstatus></span></div>
+</form>
+
+<hr class="hairline">
+<section class="stack-sm" aria-label="已知失败模式">
+  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
+  <ul class="issues"><li><strong>readonly</strong>：规范上仍可被脚本赋值，多数管理器会跳过填充。<strong>disabled</strong>：完全不提交，也基本不填。</li><li><strong>display:none / visibility:hidden / opacity:0 / 移出视口</strong> 四种隐藏方式对管理器的可见性不同，Chrome 对 <strong>offscreen</strong> 的字段仍可能填。</li><li><strong>蜜罐字段（hp_company）期望为空</strong>：一旦被填即视为机器人。本行显示为 FAIL 才是"安全上正常"的结果。</li><li><strong>autocomplete=off / no</strong>：规范要求 off 只是"建议"，多数实现照样填；这是浏览器行为，不是站点能控制的。</li></ul>
+</section>
+<section data-pager style="margin-top:var(--s-2xl)"></section>
+</main>
+<footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · hidden-states.html</span></div></footer>
+<script type="application/json" data-pm-page>{"num":"22","slug":"hidden-states","group":"edge","title":"隐藏、只读、禁用、蜜罐"}</script>
+<script type="application/json" data-pm-expected>{"hp_company":"","state_visible":"Nth0ng!22-Visible","state_ro":"Nth0ng!22-Readonly"}</script>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/site.js"></script>
+<script>
+PM.onLog(function (e) {
+  if (e.kind === 'fill' && /hp_company/.test(e.msg)) {
+    PM.log('warn','蜜罐字段被填了——真实站点会据此判定为机器人', null);
+  }
+});
+</script>
+</body>
+</html>

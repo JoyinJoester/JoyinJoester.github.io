@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>21 顺序反常 · PM Autofill Lab</title>
+<meta name="description" content="DOM 顺序反常 / 结构打断 — 密码管理器自动填充调试台">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到表单</a>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+<main id="main" class="wrap">
+<section class="pagehead">
+  <div class="pagehead__id">
+    <span class="pagehead__num">21</span>
+    <h1 class="pagehead__title">DOM 顺序反常 / 结构打断</h1>
+  </div>
+  <p class="pagehead__lede">密码在账号之前、按钮夹在两个字段中间、label 与 input 被 div 打断、字段用 <strong>form=</strong> 属性外挂到表单。位置启发式（很多实现的第一依据）在这里全部受考验。</p>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">dom-order</span><span class="tag">heuristic</span>
+    <span class="tag tag--on">GROUP · edge</span></div>
+</section>
+
+
+<section class="panel panel--raised stack-sm" style="margin-bottom:var(--s-xl)">
+  <div class="row row--between">
+    <span class="label">FIELD COVERAGE</span>
+    <span class="mono display" data-coverage-readout>—</span>
+  </div>
+  <div class="segbar segbar--hero" data-coverage></div>
+  <div class="row" style="margin-top:var(--s-sm)">
+    <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
+    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
+  </div>
+  <div data-checkout></div>
+</section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>p1_password</td><td>Nth0ng!21-Reversed</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="p1_password">COPY</button></td></tr><tr><td>p2_email</td><td>pm21@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="p2_email">COPY</button></td></tr></tbody></table></section>
+<form class="panel stack-sm" id="f-21" data-pm-id="reversed">
+<span class="label">变体 1 · PASSWORD 先于 USERNAME</span>
+<div class="field"><div class="field__top"><label class="field__label" for="p1_password">PASSWORD</label><span class="field__ac">current-password</span></div><input class="field__input" id="p1_password" name="p1_password" type="password" autocomplete="current-password" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="form__foot"><button type="button" class="btn btn--ghost btn--sm">A BUTTON IN THE MIDDLE</button></div>
+<div class="field"><div class="field__top"><label class="field__label" for="p1_email">EMAIL / USERNAME</label><span class="field__ac">username</span></div><input class="field__input" id="p1_email" name="p1_email" type="email" autocomplete="username" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="form__foot"><button class="btn btn--secondary" type="submit">SIGN IN REVERSED</button><span class="formstatus" data-formstatus></span></div>
+</form>
+<hr class="hairline">
+<div class="stack-sm">
+<span class="label">变体 2 · 字段用 form="f-21b" 外挂（input 不在 form 标签内部）</span>
+<form id="f-21b" class="panel" data-pm-id="external-form"><span class="caption">这个 form 元素本身是空的</span></form>
+<div class="field"><div class="field__top"><label class="field__label" for="p2_email">EMAIL</label><span class="field__ac">username · form=f-21b</span></div><input class="field__input" id="p2_email" name="p2_email" type="email" autocomplete="username" form="f-21b" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="p2_password">PASSWORD</label><span class="field__ac">current-password · form=f-21b</span></div><input class="field__input" id="p2_password" name="p2_password" type="password" autocomplete="current-password" form="f-21b" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="row"><button class="btn btn--secondary" type="submit" form="f-21b">SIGN IN VIA FORM ATTR</button></div>
+</div>
+
+<hr class="hairline">
+<section class="stack-sm" aria-label="已知失败模式">
+  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
+  <ul class="issues"><li><strong>password 在 username 之前</strong>：按位置猜的实现会把密码填进用户名，或整组不填。</li><li>button 夹在中间会<strong>切断"相邻字段"判定</strong>。</li><li><strong>form 属性外联</strong>（input 在 form 标签之外但 form="f-21"）：Chrome 支持，部分扩展管理器忽略——字段看起来在页面里却"不在表单里"。</li></ul>
+</section>
+<section data-pager style="margin-top:var(--s-2xl)"></section>
+</main>
+<footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · odd-order.html</span></div></footer>
+<script type="application/json" data-pm-page>{"num":"21","slug":"odd-order","group":"edge","title":"DOM 顺序反常 / 结构打断"}</script>
+<script type="application/json" data-pm-expected>{"p1_password":"Nth0ng!21-Reversed","p2_email":"pm21@example.com"}</script>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/site.js"></script>
+
+</body>
+</html>

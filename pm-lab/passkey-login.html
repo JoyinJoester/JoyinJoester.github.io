@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>07 PASSKEY 验证 · PM Autofill Lab</title>
+<meta name="description" content="WebAuthn get()、可发现凭据与 conditional 自动建议">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到主内容</a>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html" aria-current="page">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <section class="pagehead">
+    <div class="pagehead__id">
+      <span class="pagehead__num">07</span>
+      <h1 class="pagehead__title">Passkey 验证 · get() 与"自动建议"</h1>
+    </div>
+    <p class="pagehead__lede">两条完全不同的路径：<strong>按钮触发（弹窗选择器）</strong>与 <strong>conditional（passkey 出现在密码管理器下拉建议里，点一下就登录）</strong>。后者才是"可用性"的真实指标——用户不会去找按钮。</p>
+    <div class="row" style="margin-top:var(--s-md)">
+      <span class="tag">webauthn</span><span class="tag">get()</span><span class="tag">conditional</span>
+      <span class="tag tag--on">GROUP · passkey</span>
+    </div>
+  </section>
+
+  <section class="panel stack-md" style="margin-bottom:var(--s-xl)">
+    <span class="label">登录表单 · 观察管理器把 passkey 放进了哪个入口</span>
+    <div class="formgrid">
+      <div class="field field--6"><div class="field__top"><label class="field__label" for="li-user">EMAIL / USERNAME</label><span class="field__ac">autocomplete=username</span></div><input class="field__input" id="li-user" name="username" type="text" autocomplete="username" placeholder="pm06@example.com" data-pm-uid=""><p class="field__msg"></p></div>
+      <div class="field field--6"><div class="field__top"><label class="field__label" for="li-pass">PASSWORD（备用路径）</label><span class="field__ac">current-password</span></div><input class="field__input" id="li-pass" name="password" type="password" autocomplete="current-password" data-pm-uid=""><p class="field__msg"></p></div>
+    </div>
+    <p class="caption">同一个 form 里既有密码字段又支持 passkey 时，Chrome 会把两者合并进一个建议列表——这是最容易看出管理器实现差异的地方。</p>
+    <div class="row" style="margin-top:var(--s-md)">
+      <span class="label">FIXTURE · 与 06 页同一个账号</span>
+      <span class="mono">username = pm06@example.com</span>
+      <button type="button" class="btn btn--sm btn--ghost" data-copy-expected="username">COPY USERNAME</button>
+      <button type="button" class="btn btn--sm btn--ghost" data-copy-expected="password">COPY PASSWORD</button>
+    </div>
+  </section>
+
+  <section class="panel stack-lg" style="margin-bottom:var(--s-xl)">
+    <div class="grid-2 stack-md">
+      <div class="stack-sm">
+        <span class="label">ALLOWCREDENTIALS</span>
+        <div class="segctrl" data-seg="allow">
+          <button type="button" data-v="discoverable" aria-pressed="true">留空（可发现）</button>
+          <button type="button" data-v="stored" aria-pressed="false">限定本机登记的</button>
+        </div>
+        <p class="caption">留空才能测出"这台设备的 passkey 列表"；限定时若 id 不匹配会直接失败</p>
+      </div>
+      <div class="stack-sm">
+        <span class="label">USER VERIFICATION</span>
+        <div class="segctrl" data-seg="userVerification">
+          <button type="button" data-v="required" aria-pressed="false">REQUIRED</button>
+          <button type="button" data-v="preferred" aria-pressed="true">PREFERRED</button>
+          <button type="button" data-v="discouraged" aria-pressed="false">DISCOURAGED</button>
+        </div>
+        <p class="caption">DISCOURAGED 下若仍弹生物识别，说明该实现拒绝无 UV 登录</p>
+      </div>
+      <div class="stack-sm">
+        <span class="label">MEDIATION</span>
+        <div class="segctrl" data-seg="mediation">
+          <button type="button" data-v="optional" aria-pressed="true">OPTIONAL</button>
+          <button type="button" data-v="required" aria-pressed="false">REQUIRED</button>
+          <button type="button" data-v="silent" aria-pressed="false">SILENT</button>
+          <button type="button" data-v="conditional" aria-pressed="false">CONDITIONAL</button>
+        </div>
+        <p class="caption">SILENT = 不弹 UI，没有可用凭据立即失败；CONDITIONAL = 进入密码建议下拉</p>
+      </div>
+      <div class="stack-sm">
+        <span class="label">TIMEOUT(S)</span>
+        <input class="field__input" id="li-timeout" type="number" min="5" max="180" value="60" style="width:110px;margin-top:var(--s-xs)" data-pm-uid="">
+        <label class="switch" style="margin-top:var(--s-sm)"><input type="checkbox" id="li-rp-alt" data-pm-uid=""><span class="switch__track"></span><span class="label">用非法 RP ID（预期 SecurityError）</span></label>
+      </div>
+    </div>
+
+    <div class="form__foot">
+      <button type="button" class="btn btn--primary" id="btn-get">GET PASSKEY（弹窗）</button>
+      <button type="button" class="btn btn--secondary" id="btn-conditional">启动 CONDITIONAL</button>
+      <button type="button" class="btn btn--ghost" id="btn-cancel">取消监听</button>
+      <span class="formstatus" id="get-status"></span>
+    </div>
+  </section>
+
+  <section class="panel stack-sm" style="margin-bottom:var(--s-xl)" aria-live="polite">
+    <div class="row row--between"><span class="label">RESULT · get() 返回值解剖</span><span class="caption" id="get-at">—</span></div>
+    <div data-getresult><p class="dim caption">尚未调用 get()。</p></div>
+  </section>
+
+  <section class="panel stack-sm" style="margin-bottom:var(--s-xl)">
+    <div class="row row--between"><span class="label">CONDITIONAL 状态</span><span class="tag" id="cond-tag">IDLE</span></div>
+    <p class="caption" id="cond-msg">CONDITIONAL 模式下浏览器不会弹框：passkey 会出现在用户名输入框的<strong>密码管理器建议下拉</strong>里，选中即完成 get()。启动后请点上面那个输入框。</p>
+  </section>
+
+  <section class="panel stack-sm" style="margin-bottom:var(--s-xl)">
+    <div class="row row--between"><span class="label">本机登记簿</span><span class="caption">来自 06 页</span></div>
+    <div data-stored></div>
+  </section>
+
+  <section class="stack-sm" aria-label="已知失败模式">
+    <span class="label">KNOWN FAILURE MODES</span>
+    <ul class="issues">
+      <li><strong>CONDITIONAL 需要安全上下文 + 可发现凭据</strong>（residentKey=required 建的那批）。用 discouraged 建的 key 不会出现在建议里。</li>
+      <li><strong>SILENT</strong> 在没有凭据时立刻 NotAllowedError，这正是"无 UI 静默登录"的判定方式。</li>
+      <li>限定 allowCredentials 却选了别的设备建的 id ⇒ <strong>NotAllowedError</strong>，容易被误读成"passkey 坏了"。</li>
+      <li>没有后端：challenge 由本页生成、由本页比对。<strong>签名与 counter 未做服务端校验</strong>，counter 回退（克隆密钥检测）只能人工看趋势。</li>
+      <li>反复点 GET 会累积多条同源凭据；某些管理器的建议列表会开始重复显示，这是它的去重策略问题，不是本站的。</li>
+    </ul>
+  </section>
+
+  <section data-pager style="margin-top:var(--s-2xl)"></section>
+</main>
+
+<footer class="footer wrap"><div class="row row--between"><span><a href="passkey-signup.html">先建一个 KEY →</a> · <a href="diagnostics.html">SESSION LOG</a> · <a href="credential-api.html">PasswordCredential →</a></span><span>passkey-login.html</span></div></footer>
+
+<script type="application/json" data-pm-page>{"num":"07","slug":"passkey-login","group":"passkey","title":"Passkey 验证"}</script>
+<script type="application/json" data-pm-expected>{"username":"pm06@example.com","password":"Nth0ng!06-Fallback"}</script>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/passkey.js"></script>
+<script src="assets/site.js"></script>
+<script>
+var O = { allow: 'discoverable', userVerification: 'preferred', mediation: 'optional' };
+document.querySelectorAll('[data-seg]').forEach(function (group) {
+  var key = group.getAttribute('data-seg');
+  group.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-v]'); if (!b) return;
+    group.querySelectorAll('[data-v]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+    O[key] = b.getAttribute('data-v');
+    PM.log('info', 'get 参数 ' + key + ' → ' + O[key], null);
+  });
+});
+
+function statRows(pairs) {
+  return pairs.map(function (p) {
+    return '<div class="stat"><span class="stat__k">' + PM.esc(p[0]) + '</span><span class="stat__v ' + (p[2] || '') + '">' + PM.esc(p[1]) + '</span></div>';
+  }).join('');
+}
+
+var condCtl = null;
+function buildOptions() {
+  var o = {
+    userVerification: O.userVerification,
+    timeoutSec: Number(document.querySelector('#li-timeout').value) || 60,
+    allowStored: O.allow === 'stored',
+    mediation: O.mediation === 'conditional' ? 'conditional' : O.mediation
+  };
+  var opt = PK.getOptions(o);
+  if (document.querySelector('#li-rp-alt').checked) opt.publicKey.rpId = 'this-origin-does-not-exist.invalid';
+  return opt;
+}
+
+function render(cred, opt, ms) {
+  var s = PK.summarize(cred, null);
+  var challengeB64 = s.clientData.challenge;
+  var known = PK.list().filter(function (r) { return r.id === s.id; });
+  document.querySelector('#get-at').textContent = new Date().toLocaleTimeString('en-GB', { hour12: false });
+  document.querySelector('[data-getresult]').innerHTML = statRows([
+    ['credential id', s.id],
+    ['在登记簿中', known.length ? '是 · ' + known[0].userName : '否（别的设备/别的站点建的）', known.length ? 'stat__v--ok' : 'stat__v--warn'],
+    ['clientData.origin', s.clientData.origin || '(无)', s.clientData.origin === location.origin ? 'stat__v--ok' : 'stat__v--bad'],
+    ['challenge 回传', challengeB64 ? '有 · ' + challengeB64.slice(0, 12) + '…' : '缺失', challengeB64 ? 'stat__v--ok' : 'stat__v--bad'],
+    ['challenge 类型', '页面随机生成，未经服务端下发'],
+    ['flags UP / UV', (s.flags && s.flags.UP ? 'UP' : '-') + ' / ' + (s.flags && s.flags.UV ? 'UV' : '-')],
+    ['signCount', s.counter === undefined ? '(无)' : String(s.counter)],
+    ['signature 长度', cred.response.signature ? new Uint8Array(cred.response.signature).length + ' bytes' : '(无)'],
+    ['authenticatorData', cred.response.authenticatorData ? new Uint8Array(cred.response.authenticatorData).length + ' bytes' : '(无)'],
+    ['userHandle', cred.response.userHandle ? b64(cred.response.userHandle) : '(无 — 非可发现凭据)', cred.response.userHandle ? 'stat__v--ok' : 'stat__v--warn'],
+    ['请求 mediation', O.mediation],
+    ['耗时(ms)', String(ms)]
+  ]);
+  return s;
+
+  function b64(buf) { return PK.b64u(buf); }
+}
+
+function status(msg, ok) {
+  var el = document.querySelector('#get-status');
+  el.className = 'formstatus ' + (ok ? 'formstatus--ok' : 'formstatus--err');
+  el.textContent = msg;
+}
+
+function doGet(conditional) {
+  var opt = buildOptions();
+  var ctl = new AbortController();
+  opt.signal = ctl.signal;
+  if (conditional) condCtl = ctl;
+  var started = performance.now();
+  status('[WAITING] 等待认证器…', false);
+  PM.log('info', 'get() ' + JSON.stringify({ med: opt.mediation, uv: O.userVerification, allow: O.allow, rpAlt: document.querySelector('#li-rp-alt').checked }), null);
+  navigator.credentials.get(opt).then(function (cred) {
+    if (!cred) throw new DOMException('返回 null（conditional 被取消）', 'AbortError');
+    var ms = Math.round(performance.now() - started);
+    var s = render(cred, opt, ms);
+    status('[OK] ' + s.id.slice(0, 12) + '… · ' + ms + 'ms', true);
+    if (conditional) {
+      document.querySelector('#cond-tag').textContent = 'RESOLVED';
+      document.querySelector('#cond-tag').className = 'tag tag--ok';
+      document.querySelector('#cond-msg').textContent = 'CONDITIONAL 已被用户从建议下拉里选中并完成。这说明该管理器支持"passkey 出现在自动填充建议中"。';
+    }
+    PM.log('fill', 'passkey 验证成功 ' + s.id.slice(0, 16) + '…（mediation=' + O.mediation + '）', { ms: ms, uv: !!(s.flags && s.flags.UV) });
+  }).catch(function (err) {
+    var info = PK.explain(err);
+    status('[ERROR] ' + info.name, false);
+    document.querySelector('[data-getresult]').innerHTML = statRows([
+      ['error name', info.name, 'stat__v--bad'],
+      ['message', info.message || '(无)', 'stat__v--bad'],
+      ['排查提示', info.hint],
+      ['请求', JSON.stringify({ mediation: opt.mediation, uv: O.userVerification, allow: O.allow, rpId: opt.publicKey.rpId })],
+      ['本机登记凭据数', String(PK.list().length)]
+    ]);
+    if (conditional) {
+      document.querySelector('#cond-tag').textContent = 'FAILED';
+      document.querySelector('#cond-tag').className = 'tag tag--bad';
+    }
+    PM.log('error', 'get() 失败 ' + info.name + ' · ' + info.message, { hint: info.hint });
+  });
+}
+
+document.querySelector('#btn-get').addEventListener('click', function () { doGet(O.mediation === 'conditional'); });
+document.querySelector('#btn-conditional').addEventListener('click', function () {
+  O.mediation = 'conditional';
+  document.querySelectorAll('[data-seg="mediation"] [data-v]').forEach(function (x) { x.setAttribute('aria-pressed', String(x.getAttribute('data-v') === 'conditional')); });
+  document.querySelector('#cond-tag').textContent = 'LISTENING';
+  document.querySelector('#cond-tag').className = 'tag tag--warn';
+  document.querySelector('#cond-msg').textContent = '监听已启动：点上面 EMAIL 输入框，看下拉里有没有 passkey 条目。没有 UI 弹窗属正常。';
+  PM.log('warn', 'CONDITIONAL 监听启动（30s 后自动取消）', null);
+  doGet(true);
+  setTimeout(function () { if (condCtl) { document.querySelector('#btn-cancel').click(); } }, 30000);
+});
+document.querySelector('#btn-cancel').addEventListener('click', function () {
+  if (condCtl) { condCtl.abort(); condCtl = null; }
+  document.querySelector('#cond-tag').textContent = 'IDLE';
+  document.querySelector('#cond-tag').className = 'tag';
+  PM.log('info', 'CONDITIONAL 监听已取消', null);
+});
+
+function renderStored() {
+  var all = PK.list();
+  var host = document.querySelector('[data-stored]');
+  if (!all.length) { host.innerHTML = '<p class="dim caption" style="padding:var(--s-md) 0">EMPTY · 先去 06 页建一个 · <a href="passkey-signup.html">OPEN 06</a></p>'; return; }
+  host.innerHTML = '<table class="table"><thead><tr><th>ID</th><th>USER</th><th>RP</th><th>FLAGS</th></tr></thead><tbody>' +
+    all.map(function (r) {
+      return '<tr><td class="mono">' + PM.esc(r.id.slice(0, 14)) + '…</td><td>' + PM.esc(r.userName) + '</td><td class="mono">' + PM.esc(r.rpId) + '</td><td class="caption">' + PM.esc(JSON.stringify(r.flags || {})) + '</td></tr>';
+    }).join('') + '</tbody></table>';
+}
+renderStored();
+</script>
+</body>
+</html>

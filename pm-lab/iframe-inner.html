@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark" data-pm-nodock data-pm-logkey="pm.diag.frame.log">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IFRAME 内部 · 同域登录框</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=localStorage.getItem('pm.theme');if(t)document.documentElement.dataset.theme=t}catch(e){}})();</script>
+</head>
+<body>
+<main id="main" class="wrap">
+<section class="pagehead" style="padding-top:var(--s-lg)">
+  <div class="pagehead__id">
+    <span class="pagehead__num" style="font-size:var(--display-md)">IFRAME</span>
+    <h1 class="h3">同域 IFRAME 内的登录表单</h1>
+  </div>
+  <p class="caption" style="margin-top:var(--s-sm)">origin=<span data-origin>…</span> · parent=<span data-parent>…</span> · secure=<span data-secure>…</span></p>
+</section>
+
+<form class="form" id="f-frame" data-pm-id="iframe-login" method="POST" action="#" autocomplete="on">
+  <div class="formgrid">
+    <div class="field"><div class="field__top"><label class="field__label" for="f-frame_email">EMAIL / USERNAME</label><span class="field__ac">autocomplete=username</span></div><input class="field__input" id="f-frame_email" name="frame_email" type="email" autocomplete="username" placeholder="you@example.com" data-pm-uid=""><p class="field__msg"></p></div>
+    <div class="field"><div class="field__top"><label class="field__label" for="f-frame_password">PASSWORD</label><span class="field__ac">autocomplete=current-password</span></div><input class="field__input" id="f-frame_password" name="frame_password" type="password" autocomplete="current-password" data-pm-uid=""><p class="field__msg"></p></div>
+  </div>
+  <div class="form__foot"><button class="btn btn--primary" type="submit">SIGN IN (IN FRAME)</button><span class="formstatus" data-formstatus></span></div>
+</form>
+
+<hr class="hairline">
+<ul class="issues stack-xs">
+  <li>本文件的日志写到 <strong>pm.diag.frame.log</strong>，与父页面分开，避免两个 document 互相覆盖同一个数组。</li>
+  <li>父页面 <strong>iframe-form.html</strong> 的扫描会把这里的控件一并列出（同域可读）。</li>
+  <li>诊断条在本帧内被 <strong>data-pm-nodock</strong> 关闭——去父页面看事件流。</li>
+</ul>
+</main>
+<script type="application/json" data-pm-page>{"slug":"iframe-inner"}</script>
+<script type="application/json" data-pm-expected>{"frame_email":"pm25@example.com","frame_password":"Nth0ng!25-Frame"}</script>
+<script src="assets/diag.js"></script>
+<script>
+document.querySelector('[data-origin]').textContent = location.origin;
+document.querySelector('[data-secure]').textContent = String(window.isSecureContext);
+try { document.querySelector('[data-parent]').textContent = parent !== window ? '存在（本站顶层页面）' : '无'; } catch (e) { document.querySelector('[data-parent]').textContent = e.name; }
+document.addEventListener('DOMContentLoaded', function () { PM.init(); });
+</script>
+</body>
+</html>

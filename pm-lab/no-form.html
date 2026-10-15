@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>17 无 FORM · PM Autofill Lab</title>
+<meta name="description" content="没有 &amp;lt;form&amp;gt; 的裸输入框 — 密码管理器自动填充调试台">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到表单</a>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+<main id="main" class="wrap">
+<section class="pagehead">
+  <div class="pagehead__id">
+    <span class="pagehead__num">17</span>
+    <h1 class="pagehead__title">没有 &amp;lt;form&amp;gt; 的裸输入框</h1>
+  </div>
+  <p class="pagehead__lede">SPA 里极常见：字段直接躺在 <strong>div</strong> 里，靠按钮的 click 事件提交。规范要求登录表单必须在 form 内，多数实现<strong>仍能</strong>识别，但保存提示会丢。</p>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">no-form</span><span class="tag">spa</span>
+    <span class="tag tag--on">GROUP · edge</span></div>
+</section>
+
+
+<section class="panel panel--raised stack-sm" style="margin-bottom:var(--s-xl)">
+  <div class="row row--between">
+    <span class="label">FIELD COVERAGE</span>
+    <span class="mono display" data-coverage-readout>—</span>
+  </div>
+  <div class="segbar segbar--hero" data-coverage></div>
+  <div class="row" style="margin-top:var(--s-sm)">
+    <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
+    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
+  </div>
+  <div data-checkout></div>
+</section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>email</td><td>pm17@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="email">COPY</button></td></tr><tr><td>password</td><td>Nth0ng!17-NoForm</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="password">COPY</button></td></tr></tbody></table></section>
+<div class="panel stack-sm">
+<span class="label">VARIANT A · 无 form（错误示范）</span>
+<div class="field"><div class="field__top"><label class="field__label" for="a-email">EMAIL</label><span class="field__ac">autocomplete=username</span></div>
+<input class="field__input" id="a-email" name="email" type="email" autocomplete="username" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="a-password">PASSWORD</label><span class="field__ac">autocomplete=current-password</span></div>
+<input class="field__input" id="a-password" name="password" type="password" autocomplete="current-password" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="row"><button type="button" class="btn btn--primary" data-noform-submit>SIGN IN (JS ONLY)</button><span class="caption" data-noform-status></span></div>
+</div>
+<hr class="hairline">
+<div class="panel stack-sm">
+<span class="label">VARIANT B · 有 form（对照组）</span>
+<form class="form" id="f-b" data-pm-id="form-b">
+<div class="field"><div class="field__top"><label class="field__label" for="b-email">EMAIL</label><span class="field__ac">autocomplete=username</span></div>
+<input class="field__input" id="b-email" name="email" type="email" autocomplete="username" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="b-password">PASSWORD</label><span class="field__ac">autocomplete=current-password</span></div>
+<input class="field__input" id="b-password" name="password" type="password" autocomplete="current-password" data-pm-uid=""><p class="field__msg"></p></div>
+<div class="form__foot"><button class="btn btn--secondary" type="submit">SIGN IN (SUBMIT)</button></div>
+</form>
+</div>
+<div class="caption">注意：期望值只绑定在 name=email/password 上，两组同名 ⇒ 检查表会各命中一组。用 <strong>CHECK</strong> 时看的是先出现的那个。</div>
+
+<hr class="hairline">
+<section class="stack-sm" aria-label="已知失败模式">
+  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
+  <ul class="issues"><li>无 form ⇒ <strong>没有 submit 事件</strong>，浏览器不会触发"保存密码"流程。自动填充可能仍工作，保存一定不工作。</li><li>用 <strong>button[type=button] + JS</strong> 提交时，Chrome 会把这页判定为"非登录表单"的概率显著上升。</li><li>对照：下方有 form 的对照组若正常、上方失败，即可确认是 <strong>form 缺失</strong>而非字段属性问题。</li></ul>
+</section>
+<section data-pager style="margin-top:var(--s-2xl)"></section>
+</main>
+<footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · no-form.html</span></div></footer>
+<script type="application/json" data-pm-page>{"num":"17","slug":"no-form","group":"edge","title":"没有 &lt;form&gt; 的裸输入框"}</script>
+<script type="application/json" data-pm-expected>{"email":"pm17@example.com","password":"Nth0ng!17-NoForm"}</script>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.querySelector('[data-noform-submit]').addEventListener('click', function (e) {
+  var email = document.querySelector('#a-email'), pw = document.querySelector('#a-password');
+  PM.log('warn','无 form 的按钮提交（不会触发浏览器保存流程）', { email: email.value ? 1 : 0, len: pw.value.length });
+  document.querySelector('[data-noform-status]').textContent = '[JS SUBMIT] 已提交，但浏览器不会弹保存';
+});
+</script>
+</body>
+</html>

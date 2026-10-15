@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>23 延迟渲染 · PM Autofill Lab</title>
+<meta name="description" content="延迟 / 动态插入的表单 — 密码管理器自动填充调试台">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到表单</a>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+<main id="main" class="wrap">
+<section class="pagehead">
+  <div class="pagehead__id">
+    <span class="pagehead__num">23</span>
+    <h1 class="pagehead__title">延迟 / 动态插入的表单</h1>
+  </div>
+  <p class="pagehead__lede">字段<strong>不在初始 HTML 里</strong>：0.5s、2s 后各插入一组，另一个由按钮触发。管理器需要在运行时重新扫描 DOM，否则永远填不上。</p>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">late-dom</span><span class="tag">spa</span>
+    <span class="tag tag--on">GROUP · edge</span></div>
+</section>
+
+
+<section class="panel panel--raised stack-sm" style="margin-bottom:var(--s-xl)">
+  <div class="row row--between">
+    <span class="label">FIELD COVERAGE</span>
+    <span class="mono display" data-coverage-readout>—</span>
+  </div>
+  <div class="segbar segbar--hero" data-coverage></div>
+  <div class="row" style="margin-top:var(--s-sm)">
+    <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
+    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
+  </div>
+  <div data-checkout></div>
+</section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>dyn_late</td><td>Nth0ng!23-Late</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="dyn_late">COPY</button></td></tr><tr><td>dyn_click</td><td>Nth0ng!23-OnClick</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="dyn_click">COPY</button></td></tr></tbody></table></section>
+<div class="stack-lg">
+<div class="panel stack-sm"><span class="label">A · 初始就在</span>
+<div class="field"><div class="field__top"><label class="field__label" for="dyn_now">PASSWORD · 立即存在</label><span class="field__ac">current-password</span></div><input class="field__input" id="dyn_now" name="dyn_now" type="password" autocomplete="current-password" data-pm-uid=""><p class="field__msg"></p></div></div>
+<div class="panel stack-sm" data-slot-late><span class="label">B · 0.5 秒后插入（本页加载中）</span><p class="dim caption">等待…</p></div>
+<div class="panel stack-sm" data-slot-late2><span class="label">C · 2 秒后插入</span><p class="dim caption">等待…</p></div>
+<div class="panel stack-sm" data-slot-click><span class="label">D · 点按钮才出现</span><div class="row"><button type="button" class="btn btn--secondary" data-reveal-field>REVEAL FIELD</button></div></div>
+</div>
+
+<hr class="hairline">
+<section class="stack-sm" aria-label="已知失败模式">
+  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
+  <ul class="issues"><li>只扫描一次 DOM 的实现会<strong>完全漏掉晚插入的字段</strong>；扩展类管理器通常靠 MutationObserver 补救。</li><li>点击按钮后才出现的字段（模态框、折叠面板）是最常见的"手动点了密码管理器图标却没反应"来源。</li><li>注意诊断日志里的 <strong>SCRIPT</strong> 事件：脚本赋值与用户填充要分开看。</li></ul>
+</section>
+<section data-pager style="margin-top:var(--s-2xl)"></section>
+</main>
+<footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · dynamic-form.html</span></div></footer>
+<script type="application/json" data-pm-page>{"num":"23","slug":"dynamic-form","group":"edge","title":"延迟 / 动态插入的表单"}</script>
+<script type="application/json" data-pm-expected>{"dyn_late":"Nth0ng!23-Late","dyn_click":"Nth0ng!23-OnClick"}</script>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/site.js"></script>
+<script>
+function mk(id, name, label, ac) {
+  var d = document.createElement('div'); d.className = 'field';
+  d.innerHTML = '<div class="field__top"><label class="field__label" for="' + id + '">' + label + '</label><span class="field__ac">' + ac + '</span></div><input class="field__input" id="' + id + '" name="' + name + '" type="password" autocomplete="' + ac + '"><p class="field__msg"></p>';
+  return d;
+}
+setTimeout(function () { var s = document.querySelector('[data-slot-late]'); s.appendChild(mk('dyn_late','dyn_late','PASSWORD · +500MS','current-password')); PM.log('warn','DOM 于 +500ms 插入 dyn_late', null); P_scan(); }, 500);
+setTimeout(function () { var s = document.querySelector('[data-slot-late2]'); s.appendChild(mk('dyn_late2','dyn_late2','PASSWORD · +2000MS','current-password')); PM.log('warn','DOM 于 +2000ms 插入 dyn_late2', null); P_scan(); }, 2000);
+document.querySelector('[data-reveal-field]').addEventListener('click', function () {
+  var s = document.querySelector('[data-slot-click]'); this.remove();
+  s.appendChild(mk('dyn_click','dyn_click','PASSWORD · 用户点击后出现','current-password'));
+  PM.log('warn','用户点击后插入 dyn_click（模态框场景）', null); P_scan();
+});
+function P_scan() { PM.scan(); }
+</script>
+</body>
+</html>

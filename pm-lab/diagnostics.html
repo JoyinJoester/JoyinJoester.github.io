@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark" data-pm-nodock>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>90 诊断台 · PM Autofill Lab</title>
+<meta name="description" content="跨页合并诊断日志 · 密码管理器自动填充调试台">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到日志</a>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+<main id="main" class="wrap wrap--wide">
+
+<section class="pagehead">
+  <div class="pagehead__id">
+    <span class="pagehead__num">90</span>
+    <h1 class="pagehead__title">跨页诊断汇总台</h1>
+  </div>
+  <p class="pagehead__lede">把本站每个文档（含同域 iframe）写进 localStorage 的事件合并成一条时间线。这里能回答三个问题：<strong>管理器到底填没填、填的值对不对、以及它是不是绕过 DOM 直接写进了输入框</strong>。</p>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">merged-log</span><span class="tag">localStorage</span><span class="tag">no-network</span>
+    <span class="tag tag--on">GROUP · meta</span></div>
+</section>
+
+<!-- ------------------------------------------------------------------ headline -->
+<section class="panel panel--raised stack-sm" style="margin-bottom:var(--s-2xl)">
+  <div class="row" style="align-items:baseline;gap:var(--s-xl);flex-wrap:wrap">
+    <span class="mono display" data-stat-total style="font-size:var(--display-lg)">0</span>
+    <span class="stack-xs"><span class="label">EVENTS · 合并事件</span><p class="caption" data-stat-window>—</p></span>
+    <span style="flex:1"></span>
+    <span class="stack-xs"><span class="label">FILL / TYPE</span><p class="mono display" data-stat-fill>0 / 0</p></span>
+    <span class="stack-xs"><span class="label">VERDICT</span><p class="mono display" data-stat-verdict>0</p></span>
+    <span class="stack-xs"><span class="label">PAGES SEEN</span><p class="mono display" data-stat-pages>0</p></span>
+  </div>
+  <div class="segbar segbar--compact" data-kind-bar></div>
+  <div class="row" style="margin-top:var(--s-sm)"><span class="caption">每格一类事件，宽度按数量分配；顺序按事件数降序</span></div>
+</section>
+
+<!-- -------------------------------------------------------------------- filters -->
+<section class="panel stack-sm" style="margin-bottom:var(--s-2xl)">
+  <div class="row row--between">
+    <span class="label">SCOPE · 数据源</span>
+    <div class="row">
+      <button type="button" class="btn btn--sm btn--secondary" data-act="dl">DOWNLOAD</button>
+      <button type="button" class="btn btn--sm btn--secondary" data-act="copy">COPY JSON</button>
+      <button type="button" class="btn btn--sm btn--ghost" data-act="refresh">REFRESH</button>
+      <button type="button" class="btn btn--sm btn--ghost" data-act="clear" data-wait="0">CLEAR LOGS…</button>
+    </div>
+  </div>
+  <div class="segctrl" data-seg="scope" style="margin-top:var(--s-sm)">
+    <button type="button" data-val="all" aria-pressed="true">ALL DOCS · 合并</button>
+    <button type="button" data-val="doc" aria-pressed="false">本页文档</button>
+  </div>
+  <div class="row" style="margin-top:var(--s-sm)"><span class="caption" data-keys>—</span></div>
+
+  <hr class="hairline" style="margin:var(--s-md) 0">
+
+  <div class="filterbar">
+    <span class="label">KIND</span>
+    <div class="segctrl" data-seg="kind">
+      <button type="button" data-val="" aria-pressed="true">ALL</button>
+    </div>
+    <span class="label" style="margin-left:var(--s-md)">PAGE</span>
+    <select class="field__input" data-filter="page" data-pm-ignore style="max-width:220px">
+      <option value="">ALL PAGES</option>
+    </select>
+    <input class="field__input" data-filter="text" data-pm-ignore placeholder="FILTER TEXT" aria-label="按文本过滤" style="max-width:240px">
+    <label class="switch"><input type="checkbox" data-filter="hidefocus" data-pm-ignore><span class="switch__track"></span><span class="label">隐藏 FOCUS 噪声</span></label>
+    <label class="switch"><input type="checkbox" data-filter="live" data-pm-ignore checked><span class="switch__track"></span><span class="label">实时追加</span></label>
+  </div>
+</section>
+
+<!-- ------------------------------------------------------------------ timeline -->
+<section class="stack-md" style="margin-bottom:var(--s-2xl)">
+  <div class="row row--between">
+    <span class="label">TIMELINE</span>
+    <span class="caption" data-shown>—</span>
+  </div>
+  <div style="overflow-x:auto;margin-top:var(--s-sm)">
+    <table class="logtable">
+      <thead><tr><th>+MS</th><th>KIND</th><th>PAGE</th><th>MESSAGE</th><th>META</th></tr></thead>
+      <tbody data-log-body>
+        <tr><td colspan="5" class="muted">尚无日志。先到 <a href="login-inline.html">01 同页登录</a> 让管理器填一次，再回来看。</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="hairline">
+
+<!-- --------------------------------------------------------------- per-page map -->
+<section class="stack-lg" style="margin:var(--s-2xl) 0">
+  <span class="label">BY PAGE · 每页发生了什么</span>
+  <div style="overflow-x:auto;margin-top:var(--s-md)">
+    <table class="table">
+      <thead><tr><th>页面</th><th>事件</th><th>填充</th><th>手输</th><th>脚本</th><th>CHECK</th><th>最近</th></tr></thead>
+      <tbody data-page-body></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ------------------------------------------------------------------ storage -->
+<section class="stack-lg" style="margin:var(--s-2xl) 0">
+  <span class="label">STORAGE · 本机持久化了什么（全部 pm.* 键）</span>
+  <p class="caption" style="margin-top:var(--s-sm)">日志与 passkey 元数据只留在本机 localStorage，站点不发任何请求。密码 / 卡号 / OTP 的<strong>值</strong>从不入库，只保留长度与命中判定。</p>
+  <div class="grid-2" style="margin-top:var(--s-md)" data-store-body></div>
+  <div class="row" style="margin-top:var(--s-md)">
+    <button type="button" class="btn btn--sm btn--secondary" data-act="scan-store">RE-SCAN STORAGE</button>
+    <button type="button" class="btn btn--sm btn--danger" data-act="wipe-pm" data-wait="0">WIPE ALL pm.* KEYS…</button>
+    <span class="caption">危险操作需二次点击确认（10 秒内），会连同密码管理器无关的本机测试记录一起删除</span>
+  </div>
+</section>
+
+<!-- ---------------------------------------------------------------- interpretation -->
+<section class="stack-lg" style="margin:var(--s-2xl) 0">
+  <span class="label">INTERPRETATION · 怎么读这些事件</span>
+  <ul class="issues" style="margin-top:var(--s-md)">
+    <li><strong>FILLED</strong>：收到 trusted 的 input 事件，且该输入框在 800ms 内没有键盘事件 → 值来自外部（管理器 / 系统建议 / 复制粘贴的替换）。</li>
+    <li><strong>SILENT-FILL</strong>：值变了但<strong>一个 input 事件都没有</strong>（轮询发现）。某些管理器直接改 <code>.value</code> 并派发 untrusted 事件，或干脆不发事件。这是最容易漏检的填充。</li>
+    <li><strong>CSS :-webkit-autofill 命中</strong>：浏览器自己标记了自动填充态，独立于事件。与 FILLED 同时出现最可信；只出现这一条说明值由浏览器内部状态驱动。</li>
+    <li><strong>SCRIPT</strong>：<code>isTrusted = false</code>，是页面脚本写的，<strong>不算</strong>管理器填充（本页的动态插入 / 格式化脚本可能制造这种噪声）。</li>
+    <li><strong>TYPED</strong>：键盘输入。做对照时先手输一部分，能验证 CHECK 逻辑本身没问题。</li>
+    <li><strong>SUBMIT</strong>：默认被拦截，所以<strong>不会产生保存提示</strong>。要测保存提示请回表单页勾选“允许真导航”。</li>
+    <li><strong>只有 FOCUS、没有 FILLED</strong>：管理器根本没识别出可填字段，或本机没存匹配条目 —— 先看那页的 KNOWN FAILURE MODES。</li>
+  </ul>
+</section>
+
+<section data-pager style="margin-top:var(--s-2xl)"></section>
+</main>
+
+<footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="login-inline.html">01 同页登录</a></span><span>Nothing-inspired testbed · diagnostics.html</span></div></footer>
+<script type="application/json" data-pm-page>{"num":"90","slug":"diagnostics","group":"meta","title":"跨页诊断汇总台"}</script>
+<script type="application/json" data-pm-expected>{}</script>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  var state = { scope: 'all', kind: '', page: '', text: '', hidefocus: false, live: true };
+
+  function src() {
+    return state.scope === 'all' ? PM.allLogs() : PM.logs();
+  }
+  function filtered() {
+    return src().filter(function (e) {
+      if (state.kind && e.kind !== state.kind) return false;
+      if (state.page && e.page !== state.page) return false;
+      if (state.hidefocus && e.kind === 'focus') return false;
+      if (state.text) {
+        var hay = (e.msg + ' ' + (e.page || '') + ' ' + JSON.stringify(e.meta || {})).toLowerCase();
+        if (hay.indexOf(state.text.toLowerCase()) === -1) return false;
+      }
+      return true;
+    });
+  }
+
+  var KIND_TONE = { fill: 'fill', silent: 'fill', type: 'type', script: 'warn', verdict: 'verdict-pass', submit: 'info', focus: 'info', info: 'info', warn: 'warn', error: 'warn' };
+  function hhmmss(t) {
+    var d = new Date(t);
+    return [d.getHours(), d.getMinutes(), d.getSeconds()].map(function (n) { return String(n).padStart(2, '0'); }).join(':');
+  }
+  function metaBrief(m) {
+    if (!m) return '';
+    var keys = Object.keys(m);
+    if (!keys.length) return '';
+    return keys.map(function (k) { return k + '=' + String(m[k]); }).join(' ');
+  }
+
+  function renderTable() {
+    var rows = filtered();
+    var body = document.querySelector('[data-log-body]');
+    if (!rows.length) {
+      body.innerHTML = '<tr><td colspan="5" class="muted">当前过滤条件下没有事件。</td></tr>';
+    } else {
+      body.innerHTML = rows
+        .slice(-400)
+        .map(function (e) {
+          return (
+            '<tr class="' + (e.kind === 'verdict' || e.kind === 'fill' ? 'is-hl' : '') + '">' +
+            '<td class="t">' + hhmmss(e.t) + '<br>+' + e.rel + 'ms</td>' +
+            '<td class="k k--' + (KIND_TONE[e.kind] || 'info') + '">' + PM.esc(e.kind) + '</td>' +
+            '<td class="t">' + PM.esc(e.page || '') + '</td>' +
+            '<td class="m">' + PM.esc(e.msg) + '</td>' +
+            '<td class="meta">' + PM.esc(metaBrief(e.meta)) + '</td>' +
+            '</tr>'
+          );
+        })
+        .join('');
+    }
+    document.querySelector('[data-shown]').textContent =
+      rows.length + ' / ' + src().length + ' 条 · 源 ' + (state.scope === 'all' ? '合并全部文档' : '仅本文档') + ' · 最多显示最近 400 条';
+  }
+
+  function renderStats() {
+    var all = src();
+    var count = {};
+    all.forEach(function (e) { count[e.kind] = (count[e.kind] || 0) + 1; });
+    var pages = {};
+    all.forEach(function (e) { pages[e.page || '(root)'] = (pages[e.page || '(root)'] || 0) + 1; });
+
+    document.querySelector('[data-stat-total]').textContent = String(all.length);
+    document.querySelector('[data-stat-fill]').textContent = (count.fill || 0) + ' / ' + (count.type || 0);
+    document.querySelector('[data-stat-verdict]').textContent = String(count.verdict || 0);
+    document.querySelector('[data-stat-pages]').textContent = String(Object.keys(pages).length);
+    var ts = all.map(function (e) { return e.t; }).filter(Boolean);
+    document.querySelector('[data-stat-window]').textContent = ts.length
+      ? hhmmss(Math.min.apply(null, ts)) + ' → ' + hhmmss(Math.max.apply(null, ts))
+      : '无事件';
+
+    var bar = document.querySelector('[data-kind-bar]');
+    bar.innerHTML = Object.keys(count)
+      .sort(function (a, b) { return count[b] - count[a]; })
+      .map(function (k) {
+        var cls = k === 'fill' ? 'on ok' : k === 'verdict' ? 'on' : k === 'error' || k === 'warn' ? 'on bad' : 'on';
+        return '<i class="' + cls + '" style="flex:' + count[k] + ' 0 0" title="' + PM.esc(k + ' × ' + count[k]) + '"></i>';
+      })
+      .join('');
+
+    /* kind filter chips: only kinds actually present */
+    var seg = document.querySelector('[data-seg="kind"]');
+    var want = [''].concat(Object.keys(count).sort());
+    var have = Array.prototype.map.call(seg.querySelectorAll('button'), function (b) { return b.getAttribute('data-val'); });
+    if (want.join('|') !== have.join('|')) {
+      seg.innerHTML = want
+        .map(function (k) {
+          return '<button type="button" data-val="' + PM.esc(k) + '" aria-pressed="' + (state.kind === k ? 'true' : 'false') + '">' + (k ? PM.esc(k.toUpperCase()) : 'ALL') + '</button>';
+        })
+        .join('');
+    }
+
+    /* page filter */
+    var sel = document.querySelector('[data-filter="page"]');
+    var names = Object.keys(pages).sort();
+    var built = sel.getAttribute('data-built') || '';
+    if (built !== names.join('|')) {
+      sel.innerHTML = '<option value="">ALL PAGES</option>' + names.map(function (n) { return '<option value="' + PM.esc(n) + '">' + PM.esc(n) + ' (' + pages[n] + ')</option>'; }).join('');
+      sel.setAttribute('data-built', names.join('|'));
+    }
+
+    /* per-page table */
+    document.querySelector('[data-page-body]').innerHTML = names
+      .map(function (n) {
+        var evs = all.filter(function (e) { return (e.page || '(root)') === n; });
+        var verdicts = evs.filter(function (e) { return e.kind === 'verdict'; });
+        var last = verdicts.length ? verdicts[verdicts.length - 1] : evs[evs.length - 1];
+        var meta = last && last.meta ? last.meta : {};
+        var score = meta.total == null ? '—' : (meta.pass || 0) + '/' + meta.total;
+        return (
+          '<tr><td>' + PM.esc(n) + '</td>' +
+          '<td class="num">' + evs.length + '</td>' +
+          '<td class="num">' + evs.filter(function (e) { return e.kind === 'fill'; }).length + '</td>' +
+          '<td class="num">' + evs.filter(function (e) { return e.kind === 'type'; }).length + '</td>' +
+          '<td class="num">' + evs.filter(function (e) { return e.kind === 'script'; }).length + '</td>' +
+          '<td class="num">' + score + (meta.controls != null ? ' <span class="caption">(' + meta.controls + ' 控件)</span>' : '') + '</td>' +
+          '<td class="num">' + (last ? hhmmss(last.t) : '—') + '</td></tr>'
+        );
+      })
+      .join('') || '<tr><td colspan="7" class="muted">无数据</td></tr>';
+  }
+
+  function renderKeys() {
+    document.querySelector('[data-keys]').textContent =
+      '发现日志键：' + ((PM.logKeys && PM.logKeys().join(', ')) || '(无)') + ' · 本文档写入 ' + 'pm.diag.main.log / 自定义 data-pm-logkey';
+  }
+
+  function renderStore() {
+    var rows = [];
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (!/^pm\./.test(k)) continue;
+        var v = localStorage.getItem(k) || '';
+        rows.push([k, v]);
+      }
+    } catch (e) {}
+    var host = document.querySelector('[data-store-body]');
+    host.innerHTML = rows
+      .sort(function (a, b) { return a[0].localeCompare(b[0]); })
+      .map(function (r) {
+        var size = r[1].length;
+        var items = 0;
+        try {
+          var parsed = JSON.parse(r[1]);
+          items = Array.isArray(parsed) ? parsed.length : Object.keys(parsed || {}).length;
+        } catch (e) {}
+        var last = '';
+        try {
+          var parsed2 = JSON.parse(r[1]);
+          if (Array.isArray(parsed2) && parsed2.length) {
+            var tail = parsed2[parsed2.length - 1];
+            last = tail && tail.msg ? tail.msg.slice(0, 48) : '';
+          }
+        } catch (e) {}
+        var isSecret = /passkeys/i.test(r[0]);
+        return (
+          '<div class="stat"><span class="stat__k">' + PM.esc(r[0]) + (isSecret ? ' · 含凭据元数据' : '') + '</span>' +
+          '<span class="stat__v">' + size.toLocaleString() + ' B' + (items ? ' · ' + items + ' 项' : '') + '</span></div>' +
+          '<div class="caption" style="margin-top:-6px">' + PM.esc(last || (isSecret ? '仅凭据 id / rpId / 时间，不含私钥' : '无消息文本')) + '</div>'
+        );
+      })
+      .join('') || '<p class="muted">没有 pm.* 键。</p>';
+  }
+
+  function renderAll() {
+    renderStats();
+    renderTable();
+    renderKeys();
+  }
+
+  function refresh() {
+    renderStats();
+    renderTable();
+  }
+
+  document.addEventListener('click', function (e) {
+    var segBtn = e.target.closest('[data-seg] button');
+    if (segBtn) {
+      var group = segBtn.closest('[data-seg]').getAttribute('data-seg');
+      segBtn.closest('[data-seg]').querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+      segBtn.setAttribute('aria-pressed', 'true');
+      if (group === 'scope') {
+        state.scope = segBtn.getAttribute('data-val');
+      } else if (group === 'kind') {
+        state.kind = segBtn.getAttribute('data-val');
+      }
+      renderAll();
+      return;
+    }
+    var btn = e.target.closest('[data-act]');
+    if (!btn) return;
+    var act = btn.getAttribute('data-act');
+    if (act === 'refresh') { renderAll(); PM.log('info', '诊断台刷新', null); }
+    if (act === 'copy') PM.copy(JSON.stringify({ env: PM.env(), scope: state.scope, entries: src() }, null, 2), btn);
+    if (act === 'dl') {
+      var blob = new Blob([JSON.stringify({ env: PM.env(), exported: new Date().toISOString(), entries: src() }, null, 2)], { type: 'application/json' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'pm-diag-merged-' + new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-') + '.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+    if (act === 'clear' || act === 'wipe-pm') {
+      var wait = Number(btn.getAttribute('data-wait') || 0);
+      if (Date.now() - wait < 10000) {
+        btn.setAttribute('data-wait', String(Date.now()));
+        btn.textContent = act === 'clear' ? '再点一次确认清空' : '再点一次确认删除';
+        setTimeout(function () { btn.setAttribute('data-wait', '0'); btn.textContent = act === 'clear' ? 'CLEAR LOGS…' : 'WIPE ALL pm.* KEYS…'; }, 10000);
+        return;
+      }
+      btn.setAttribute('data-wait', '0');
+      if (act === 'clear') {
+        PM.clearLogs();
+      } else {
+        var doomed = [];
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          if (k && /^pm\./.test(k)) doomed.push(k);
+        }
+        doomed.forEach(function (k) { try { localStorage.removeItem(k); } catch (e) {} });
+        PM.write('pm.diag.main.log', []);
+        PM.log('warn', '已删除 ' + doomed.length + ' 个 pm.* 键（passkey 本机注册表一并清空，浏览器内的真实凭据不受影响）');
+      }
+      renderAll();
+      renderStore();
+      btn.textContent = act === 'clear' ? 'CLEAR LOGS…' : 'WIPE ALL pm.* KEYS…';
+    }
+    if (act === 'scan-store') renderStore();
+  });
+
+  document.addEventListener('change', function (e) {
+    var f = e.target.getAttribute && e.target.getAttribute('data-filter');
+    if (!f) return;
+    if (f === 'page') state.page = e.target.value;
+    if (f === 'hidefocus') state.hidefocus = e.target.checked;
+    if (f === 'live') state.live = e.target.checked;
+    refresh();
+  });
+  document.addEventListener('input', function (e) {
+    if (e.target.getAttribute && e.target.getAttribute('data-filter') === 'text') {
+      state.text = e.target.value;
+      renderTable();
+    }
+  });
+
+  /* live tail: re-render on this document's own events */
+  document.addEventListener('DOMContentLoaded', function () {
+    renderAll();
+    renderStore();
+    PM.onLog(function () {
+      if (state.live) refresh();
+    });
+    /* other tabs write while we sit here — poll the merged view cheaply */
+    setInterval(function () {
+      if (state.live && state.scope === 'all') refresh();
+    }, 2000);
+  });
+})();
+</script>
+</body>
+</html>

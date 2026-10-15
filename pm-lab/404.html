@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark" data-pm-nodock>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 · PM Autofill Lab</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+<main id="main" class="wrap">
+<section class="dot-grid-subtle stack-xl" style="padding:var(--s-3xl) 0;text-align:center">
+  <p class="hero">404</p>
+  <p class="h2" style="margin-top:var(--s-lg)">这个路径上没有表单。</p>
+  <p class="body-sm muted" style="margin-top:var(--s-sm)">测试页都在站点根目录，文件名就是编号后的 slug。</p>
+  <div class="row" style="justify-content:center;margin-top:var(--s-xl)">
+    <a class="btn btn--primary" href="index.html">OPEN INDEX</a>
+    <a class="btn btn--secondary" href="diagnostics.html">SESSION LOG</a>
+  </div>
+</section>
+</main>
+<footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a></span><span>Nothing-inspired testbed · 404</span></div></footer>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

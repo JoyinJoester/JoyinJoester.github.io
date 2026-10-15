@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark" data-pm-nodock>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>00 总览 · PM Autofill Lab</title>
+<meta name="description" content="密码管理器自动填充调试台 · 测试矩阵总览">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/nothing.css">
+<script>(function(){try{var t=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pm.theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">PM·LAB</span><span class="brand__sub">AUTOFILL TESTBED</span></a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="index.html">INDEX</a>
+      <a href="diagnostics.html">DIAGNOSTICS</a>
+      <a href="passkey-login.html">PASSKEY</a>
+    </nav>
+    <div class="topbar__tools"><button type="button" class="iconbtn" data-act="theme" aria-label="切换深浅色">◐</button></div>
+  </div>
+</header>
+<main id="main" class="wrap">
+
+<section class="pagehead">
+  <div class="pagehead__id">
+    <span class="pagehead__num">00</span>
+    <h1 class="pagehead__title">密码管理器自动填充调试台</h1>
+  </div>
+  <p class="pagehead__lede">每一页是一种<strong>真实存在的表单形状</strong>：同页登录、分两页登录、注册、改密、OTP、账单地址、支付卡、以及各种故意破坏语义的边界用例。站点是<strong>纯前端静态</strong>的，不上传任何输入；表单被拦截，值只留在本机 localStorage。</p>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">static</span><span class="tag">no-backend</span><span class="tag">webauthn</span>
+    <span class="tag tag--on">GROUP · meta</span></div>
+</section>
+
+<!-- --------------------------------------------------------- the one big number -->
+<section class="panel panel--raised stack-sm" style="margin-bottom:var(--s-2xl)">
+  <div class="row" style="align-items:baseline;gap:var(--s-lg)">
+    <span class="hero" data-page-count>—</span>
+    <span class="stack-xs">
+      <span class="label">PAGES · 页面总数</span>
+      <p class="body-sm muted">按 <strong>auth / passkey / billing / edge / meta</strong> 五组排列，编号即建议测试顺序。</p>
+    </span>
+  </div>
+  <div class="segbar segbar--compact" data-group-bar aria-hidden="true"></div>
+  <div class="row" style="margin-top:var(--s-sm)"><span class="caption" data-group-legend>—</span></div>
+</section>
+
+<!-- ------------------------------------------------------------------ run this -->
+<section class="stack-lg" style="margin-bottom:var(--s-2xl)">
+  <span class="label">PROCEDURE · 一轮完整测试怎么走</span>
+  <ol class="issues" style="margin-top:var(--s-md)">
+    <li><strong>先起服务，别双击打开文件。</strong><code>file://</code> 下 origin 是 <code>null</code>，iframe 判定和 WebAuthn 全部失真（见 <a href="#deploy">DEPLOY</a>）。</li>
+    <li><strong>把 fixture 存进被测管理器。</strong>每页顶部 FIXTURE 表就是该页的期望值，账号密码逐页不同（<code>pm01@example.com</code> / <code>pm05@example.com</code>…），这样一旦填错来源就能看出来。</li>
+    <li><strong>聚焦第一个字段，让管理器自己弹建议。</strong>不要手动粘贴——手动输入会被判成 <code>TYPED</code>，测不出填充行为。</li>
+    <li><strong>点 CHECK FILL。</strong>逐字段判 PASS / PREFIX / FAIL / ABSENT，覆盖率条同步更新。</li>
+    <li><strong>看底部 DIAG 抽屉。</strong><code>FILLED</code> = 无键盘事件的trusted变更（真自动填充）、<code>SILENT-FILL</code> = 连 input 事件都没有、<code>:-webkit-autofill 命中</code> = CSS 探测、<code>SCRIPT</code> = 非可信事件（脚本写入）。</li>
+    <li><strong>换页继续；一轮跑完到 DIAGNOSTICS 看合并日志。</strong></li>
+  </ol>
+</section>
+
+<hr class="hairline">
+
+<!-- ---------------------------------------------------------------- environment -->
+<section class="stack-lg" style="margin:var(--s-2xl) 0">
+  <span class="label">ENVIRONMENT · 当前运行环境</span>
+  <div class="grid-2 stack-sm" style="margin-top:var(--s-md)" data-env-list></div>
+  <p class="caption" style="margin-top:var(--s-sm)">密码管理器能否保存/passkey 是否可用，强依赖 origin、secure context 与 host。这一屏先确认环境没跑偏。</p>
+</section>
+
+<hr class="hairline">
+
+<!-- --------------------------------------------------------------- capabilities -->
+<section class="stack-lg" style="margin:var(--s-2xl) 0">
+  <div class="row row--between">
+    <span class="label">CAPABILITY PROBE · 本浏览器 / 本环境支持什么</span>
+    <button type="button" class="btn btn--sm btn--ghost" data-act="recheck-cap">RE-CHECK</button>
+  </div>
+  <div class="grid-2" style="margin-top:var(--s-md)" data-cap-list></div>
+  <p class="caption" style="margin-top:var(--s-sm)">MISSING 不代表站点坏了，代表那一项<strong>没法在这台机器上测</strong>。例如无平台认证器时，passkey 创建要用“跨平台密钥”分支。</p>
+</section>
+
+<!-- -------------------------------------------------------------------- matrix -->
+<section class="stack-lg" style="margin-bottom:var(--s-2xl)">
+  <div class="row row--between">
+    <span class="label">TEST MATRIX · 全部页面</span>
+    <span class="caption">卡片由 <code>assets/pages.js</code> 注册表生成 · 编号 10、11 保留未用：fixture 值里嵌了页号，重排会让已存进管理器的条目失效</span>
+  </div>
+  <div data-matrix style="margin-top:var(--s-lg)">
+    <noscript><p class="note">未启用 JS 时矩阵不渲染；导航仍可用：01 <a href="login-inline.html">同页登录</a> · 02 <a href="login-step1.html">分步登录</a> · 04 <a href="signup.html">注册</a> · 06 <a href="passkey-signup.html">Passkey 创建</a> · 07 <a href="passkey-login.html">Passkey 验证</a> · 12 <a href="billing-address.html">账单地址</a> · 13 <a href="payment-card.html">支付卡</a> · 90 <a href="diagnostics.html">诊断台</a>。</noscript>
+  </div>
+</section>
+
+<!-- ------------------------------------------------------------------ verdicts -->
+<section class="stack-lg" style="margin-bottom:var(--s-2xl)">
+  <span class="label">HOW TO READ · 判定含义</span>
+  <div class="grid-2" style="margin-top:var(--s-md)">
+    <div class="stat"><span class="stat__k">PASS</span><span class="stat__v stat__v--ok">与 fixture 完全一致（忽略大小写与首尾空白）</span></div>
+    <div class="stat"><span class="stat__k">PREFIX</span><span class="stat__v stat__v--warn">填入值是 fixture 的前缀：截断、分隔符吃掉后半段、或只填了半截</span></div>
+    <div class="stat"><span class="stat__k">FAIL</span><span class="stat__v stat__v--bad">字段存在但值不符：填错了条目、填错字段、或被格式化脚本改写</span></div>
+    <div class="stat"><span class="stat__k">ABSENT</span><span class="stat__v stat__v--bad">fixture 要求的控件在本页 DOM 里找不到</span></div>
+    <div class="stat"><span class="stat__k">无 fixture 页</span><span class="stat__v">覆盖率条改按“控件是否有值”计算，此时 PASS 只表示被填上，不保证填对</span></div>
+    <div class="stat"><span class="stat__k">秘值字段</span><span class="stat__v">password / cc-* / one-time-code 的<strong>值永远不进日志</strong>，只记长度与是否命中；抽屉里 REVEAL 只影响当前屏幕显示</span></div>
+  </div>
+</section>
+
+<!-- -------------------------------------------------------------------- deploy -->
+<section class="stack-lg" id="deploy" style="margin-bottom:var(--s-2xl)">
+  <span class="label">DEPLOY · 为什么必须用 http(s) 起服务</span>
+  <div class="stack-md" style="margin-top:var(--s-md)">
+    <p class="body-sm">本站零依赖，任何静态服务器都行：</p>
+    <pre class="codeblock"><code>npx serve . -l 8443        # 或
+python -m http.server 8000 # 然后访问 http://localhost:8000/</code></pre>
+    <div class="note stack-sm">
+      <p class="body-sm"><strong>三种可达 origin 的差别，直接决定能测什么：</strong></p>
+      <ul class="issues">
+        <li><strong>http://localhost / 127.0.0.1</strong> — 浏览器按 <em>potentially trustworthy</em> 处理，<code>isSecureContext = true</code>，WebAuthn、clipboard、<code>store()</code> 全通。<code>rpId = "localhost"</code> 可用。<strong>日常回归首选。</strong></li>
+        <li><strong>*.github.io（GitHub Pages）</strong> — 表单自动填充完全可用；但 <code>github.io</code> 本身在 Public Suffix List 上，于是 <code>rpId</code> 只能是公共后缀 <code>github.io</code>，浏览器会按“注册在公共后缀上的 RP”更严格处理，且 eTLD+1 分组意味着<strong>全网所有 github.io 站点共用一个填充域</strong>——你无法从“填了哪条”反推是哪本站点存进去的。密码管理器对公共后缀 origin 的保存/填充策略也各自不同。测 passkey 时这里会出现<strong>无法归因于你的代码</strong>的差异。</li>
+        <li><strong>你自己的域名（Pages + 自定义域 / 任意静态托管）</strong> — eTLD+1 干净，passkey 归属明确，是长期回归的最佳选择。若要 passkey 端点探测，把 <code>/.well-known/passkey-endpoints</code> 放到站点根目录（本仓库已带）。</li>
+      </ul>
+      <p class="caption">公共后缀状态不是理论：06 页有一个真实的 PSL 自检，它会当场拉取 public suffix 列表并告诉你当前 host 是否落在公共后缀上。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="hairline">
+
+<!-- ---------------------------------------------------------------- open gaps -->
+<section class="stack-lg" style="margin:var(--s-2xl) 0 0">
+  <span class="label">NOT YET VERIFIED · 本站尚未实机证明的部分</span>
+  <ul class="issues" style="margin-top:var(--s-md)">
+    <li><strong>“填得对不对”依赖真实管理器。</strong>本页只能证明 DOM 侧观测与判定逻辑；各家（Chrome/Edge/1Password/Bitwarden/iCloud/系统键盘）在真机上的表现需要你自己跑一轮并记录。</li>
+    <li><strong>保存提示（save prompt）无法被 JS 观测。</strong>它是浏览器 UI，不在 DOM 里。只能靠“允许真导航”开关走真实提交后肉眼看，因此 01/02/04/05 页留了 REAL NAV 按钮。</li>
+    <li><strong>passkey 结果只能证明断言成立，不等于服务端可验证。</strong>本站没有后端，challenge 由本页生成、也不做校验，所以“验证可用性”指的是客户端链路（创建→枚举→get→签名→flags）。</li>
+    <li><strong>跨浏览器差异未穷举。</strong><code>:-webkit-autofill</code> 探测只对 WebKit/Blink 系有效；Firefox 走 silent-fill 轮询与 change 事件路径。</li>
+    <li><strong>自动化脚本的 fill 不算填充。</strong>实测：CDP / <code>element.fill()</code> 派发的 input 事件 <code>isTrusted=false</code>，本站判为 <code>SCRIPT</code> 而非 <code>FILLED</code>。所以 Playwright/Puppeteer 只能验证 CHECK 逻辑，验证不了管理器的真实行为。</li>
+  </ul>
+</section>
+
+<section data-pager style="margin-top:var(--s-2xl)"></section>
+</main>
+
+<footer class="footer wrap"><div class="row row--between"><span><a href="login-inline.html">START · 01 同页登录</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · index.html</span></div></footer>
+<script type="application/json" data-pm-page>{"num":"00","slug":"index","group":"meta","title":"测试矩阵总览"}</script>
+<script type="application/json" data-pm-expected>{}</script>
+<script src="assets/pages.js"></script>
+<script src="assets/diag.js"></script>
+<script src="assets/site.js"></script>
+<script>
+(function () {
+  var GROUPS = [
+    ['auth', 'AUTH · 认证表单'],
+    ['passkey', 'PASSKEY · 通行密钥与凭证 API'],
+    ['otp', 'OTP · 一次性验证码'],
+    ['billing', 'BILLING · 地址与支付'],
+    ['edge', 'EDGE · 破坏性边界用例'],
+    ['meta', 'META · 站点与诊断']
+  ];
+  var list = window.PM_PAGES || [];
+  var byGroup = {};
+  GROUPS.forEach(function (g) { byGroup[g[0]] = []; });
+  list.forEach(function (p) { (byGroup[p.group] || (byGroup[p.group] = [])).push(p); });
+
+  var host = document.querySelector('[data-matrix]');
+  host.innerHTML = GROUPS.filter(function (g) { return byGroup[g[0]] && byGroup[g[0]].length; })
+    .map(function (g) {
+      var items = byGroup[g[0]].slice().sort(function (a, b) { return a.num.localeCompare(b.num); });
+      return (
+        '<section class="stack-md" style="margin-bottom:var(--s-2xl)">' +
+        '<div class="row row--between"><span class="h3">' + PM.esc(g[1]) + '</span>' +
+        '<span class="caption">' + items.length + ' 页</span></div>' +
+        '<div class="cards">' +
+        items.map(function (p) {
+          return (
+            '<a class="card" href="' + PM.esc(p.slug) + '.html">' +
+            '<div class="card__num">' + PM.esc(p.num) + '</div>' +
+            '<div class="card__title">' + PM.esc(p.title) + '</div>' +
+            '<div class="card__desc">' + PM.esc(p.short) + (p.fields ? ' · ' + p.fields + ' 个 fixture 字段' : ' · 无 fixture，仅计控件覆盖') + '</div>' +
+            '<div class="card__foot">' + (p.tags || []).slice(0, 4).map(function (t) { return '<span class="tag">' + PM.esc(t) + '</span>'; }).join('') + '</div>' +
+            '</a>'
+          );
+        }).join('') +
+        '</div></section>'
+      );
+    }).join('');
+
+  document.querySelector('[data-page-count]').textContent = String(list.length).padStart(2, '0');
+
+  /* group bar: one block per page, group encoded by opacity (not colour) */
+  var GOP = { auth: 1, passkey: 0.82, otp: 0.7, billing: 0.55, edge: 0.38, meta: 0.22 };
+  var bar = document.querySelector('[data-group-bar]');
+  var legend = document.querySelector('[data-group-legend]');
+  bar.innerHTML = list
+    .slice()
+    .sort(function (a, b) { return a.num === '00' ? -1 : b.num === '00' ? 1 : a.num.localeCompare(b.num); })
+    .map(function (p) {
+      return '<i class="on" style="opacity:' + (GOP[p.group] || 1) + '" title="' + PM.esc(p.num + ' · ' + p.group + ' · ' + p.slug) + '"></i>';
+    })
+    .join('');
+  legend.textContent = GROUPS.map(function (g) { return g[1] + ' ' + ((byGroup[g[0]] || []).length); }).join(' · ') + ' · 深浅块 = 分组，顺序 = 编号';
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-act="recheck-cap"]')) {
+      PM.renderCapabilities(document.querySelector('[data-cap-list]'));
+      PM.log('info', '能力探针重新检测', null);
+    }
+  });
+})();
+</script>
+</body>
+</html>
