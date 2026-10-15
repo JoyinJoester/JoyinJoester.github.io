@@ -28,9 +28,7 @@
     <span class="pagehead__num">21</span>
     <h1 class="pagehead__title">DOM 顺序反常 / 结构打断</h1>
   </div>
-  <p class="pagehead__lede">密码在账号之前、按钮夹在两个字段中间、label 与 input 被 div 打断、字段用 <strong>form=</strong> 属性外挂到表单。位置启发式（很多实现的第一依据）在这里全部受考验。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">dom-order</span><span class="tag">heuristic</span>
-    <span class="tag tag--on">GROUP · edge</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">dom-order</span><span class="tag">heuristic</span></div>
 </section>
 
 
@@ -44,11 +42,10 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>p1_password</td><td>Nth0ng!21-Reversed</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="p1_password">COPY</button></td></tr><tr><td>p2_email</td><td>pm21@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="p2_email">COPY</button></td></tr></tbody></table></section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>p1_password</td><td>Nth0ng!21-Reversed</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="p1_password">COPY</button></td></tr><tr><td>p2_email</td><td>pm21@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="p2_email">COPY</button></td></tr></tbody></table></section>
 <form class="panel stack-sm" id="f-21" data-pm-id="reversed">
 <span class="label">变体 1 · PASSWORD 先于 USERNAME</span>
 <div class="field"><div class="field__top"><label class="field__label" for="p1_password">PASSWORD</label><span class="field__ac">current-password</span></div><input class="field__input" id="p1_password" name="p1_password" type="password" autocomplete="current-password" data-pm-uid=""><p class="field__msg"></p></div>
@@ -65,11 +62,11 @@
 <div class="row"><button class="btn btn--secondary" type="submit" form="f-21b">SIGN IN VIA FORM ATTR</button></div>
 </div>
 
-<hr class="hairline">
-<section class="stack-sm" aria-label="已知失败模式">
-  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
-  <ul class="issues"><li><strong>password 在 username 之前</strong>：按位置猜的实现会把密码填进用户名，或整组不填。</li><li>button 夹在中间会<strong>切断"相邻字段"判定</strong>。</li><li><strong>form 属性外联</strong>（input 在 form 标签之外但 form="f-21"）：Chrome 支持，部分扩展管理器忽略——字段看起来在页面里却"不在表单里"。</li></ul>
-</section>
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede">密码在账号之前、按钮夹在两个字段中间、label 与 input 被 div 打断、字段用 <strong>form=</strong> 属性外挂到表单。位置启发式（很多实现的第一依据）在这里全部受考验。</p>
+<ul class="issues"><li><strong>password 在 username 之前</strong>：按位置猜的实现会把密码填进用户名，或整组不填。</li><li>button 夹在中间会<strong>切断"相邻字段"判定</strong>。</li><li><strong>form 属性外联</strong>（input 在 form 标签之外但 form="f-21"）：Chrome 支持，部分扩展管理器忽略——字段看起来在页面里却"不在表单里"。</li></ul>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · odd-order.html</span></div></footer>

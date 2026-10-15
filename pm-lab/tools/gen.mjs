@@ -86,7 +86,7 @@ function fixtureTable(expected) {
   if (!keys.length) return '';
   return (
     `<section class="panel stack-sm" aria-label="Fixture">` +
-    `<div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div>` +
+    `<div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div>` +
     `<table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody>` +
     keys
       .map(
@@ -130,10 +130,8 @@ function page(p) {
   <div class="pagehead__id">
     <span class="pagehead__num">${esc(p.num)}</span>
     <h1 class="pagehead__title">${esc(p.title)}</h1>
-  </div>
-  <p class="pagehead__lede">${p.lede}</p>
-  <div class="row" style="margin-top:var(--s-md)">${(p.tags || []).map((t) => `<span class="tag">${esc(t)}</span>`).join('')}
-    <span class="tag tag--on">GROUP · ${esc(p.group)}</span></div>
+  </div>${(p.tags || []).length ? `
+  <div class="row" style="margin-top:var(--s-md)">${p.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}
 </section>`;
 
   const tools = `
@@ -147,17 +145,18 @@ function page(p) {
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>`;
 
-  const issues = p.issues
-    ? `<hr class="hairline">
-<section class="stack-sm" aria-label="已知失败模式">
-  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
-  <ul class="issues">${p.issues.map((i) => `<li>${i}</li>`).join('')}</ul>
-</section>`
+  /* The per-page essays are reference material, not part of the test surface:
+   * a phone screen should show controls first, so all prose collapses to one line. */
+  const notes = [p.lede ? `<p class="lede">${p.lede}</p>` : '', (p.issues || []).length ? `<ul class="issues">${p.issues.map((i) => `<li>${i}</li>`).join('')}</ul>` : ''].filter(Boolean).join('\n');
+  const issues = notes
+    ? `<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  ${notes}
+</details>`
     : '';
 
   const foot = `

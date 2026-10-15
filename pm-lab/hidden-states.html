@@ -28,9 +28,7 @@
     <span class="pagehead__num">22</span>
     <h1 class="pagehead__title">隐藏、只读、禁用、蜜罐</h1>
   </div>
-  <p class="pagehead__lede">八种"看得见或看不见的字段状态"，逐条验证管理器<strong>会不会往不可交互的字段里写值</strong>——以及隐藏蜜罐字段会不会被填（这是机器人检测常见的坑）。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">hidden</span><span class="tag">readonly</span><span class="tag">honeypot</span>
-    <span class="tag tag--on">GROUP · edge</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">hidden</span><span class="tag">readonly</span><span class="tag">honeypot</span></div>
 </section>
 
 
@@ -44,11 +42,10 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>hp_company</td><td></td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="hp_company">COPY</button></td></tr><tr><td>state_visible</td><td>Nth0ng!22-Visible</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="state_visible">COPY</button></td></tr><tr><td>state_ro</td><td>Nth0ng!22-Readonly</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="state_ro">COPY</button></td></tr></tbody></table></section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>hp_company</td><td></td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="hp_company">COPY</button></td></tr><tr><td>state_visible</td><td>Nth0ng!22-Visible</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="state_visible">COPY</button></td></tr><tr><td>state_ro</td><td>Nth0ng!22-Readonly</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="state_ro">COPY</button></td></tr></tbody></table></section>
 <form class="stack-lg" id="f-22" data-pm-id="states">
 <div class="panel stack-sm"><span class="label">A · 正常可见（对照）</span>
 <div class="field"><div class="field__top"><label class="field__label" for="state_visible">PASSWORD · VISIBLE</label><span class="field__ac">current-password</span></div><input class="field__input" id="state_visible" name="state_visible" type="password" autocomplete="current-password" data-pm-uid=""><p class="field__msg"></p></div></div>
@@ -85,11 +82,11 @@
 <div class="form__foot"><button class="btn btn--secondary" type="submit">SUBMIT STATES</button><span class="formstatus" data-formstatus></span></div>
 </form>
 
-<hr class="hairline">
-<section class="stack-sm" aria-label="已知失败模式">
-  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
-  <ul class="issues"><li><strong>readonly</strong>：规范上仍可被脚本赋值，多数管理器会跳过填充。<strong>disabled</strong>：完全不提交，也基本不填。</li><li><strong>display:none / visibility:hidden / opacity:0 / 移出视口</strong> 四种隐藏方式对管理器的可见性不同，Chrome 对 <strong>offscreen</strong> 的字段仍可能填。</li><li><strong>蜜罐字段（hp_company）期望为空</strong>：一旦被填即视为机器人。本行显示为 FAIL 才是"安全上正常"的结果。</li><li><strong>autocomplete=off / no</strong>：规范要求 off 只是"建议"，多数实现照样填；这是浏览器行为，不是站点能控制的。</li></ul>
-</section>
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede">八种"看得见或看不见的字段状态"，逐条验证管理器<strong>会不会往不可交互的字段里写值</strong>——以及隐藏蜜罐字段会不会被填（这是机器人检测常见的坑）。</p>
+<ul class="issues"><li><strong>readonly</strong>：规范上仍可被脚本赋值，多数管理器会跳过填充。<strong>disabled</strong>：完全不提交，也基本不填。</li><li><strong>display:none / visibility:hidden / opacity:0 / 移出视口</strong> 四种隐藏方式对管理器的可见性不同，Chrome 对 <strong>offscreen</strong> 的字段仍可能填。</li><li><strong>蜜罐字段（hp_company）期望为空</strong>：一旦被填即视为机器人。本行显示为 FAIL 才是"安全上正常"的结果。</li><li><strong>autocomplete=off / no</strong>：规范要求 off 只是"建议"，多数实现照样填；这是浏览器行为，不是站点能控制的。</li></ul>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · hidden-states.html</span></div></footer>

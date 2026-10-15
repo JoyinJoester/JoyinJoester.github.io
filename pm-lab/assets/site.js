@@ -79,7 +79,70 @@
     if (P.copy) P.copy(String(text).trim(), btn);
   }
 
+  /* ------------------------------------------------------------ split OTP */
+  /* A maxlength=1 box gives the keystroke nowhere to go, so without help the
+   * second digit simply never appears and the group reads as "only the first
+   * box works". Managers and Android SMS autofill make it worse by dropping
+   * the whole code into box 1. Both cases need the same two moves: advance the
+   * focus, and spread anything longer than one character. */
+  function wireSplitOtp() {
+    document.querySelectorAll('[data-split-otp]').forEach(function (root) {
+      var boxes = Array.prototype.slice.call(root.querySelectorAll('input'));
+      if (boxes.length < 2) return;
+      var msg = root.parentNode.querySelector('[data-split-msg]');
+      var say = function (t) { if (msg) msg.textContent = t; };
+
+      function spread(from, raw) {
+        var chars = String(raw).replace(/\D/g, '').split('');
+        for (var i = 0; i < chars.length && from + i < boxes.length; i++) boxes[from + i].value = chars[i];
+        var last = Math.min(from + chars.length, boxes.length) - 1;
+        if (last >= from && last < boxes.length) boxes[last].focus();
+        return chars.length;
+      }
+
+      boxes.forEach(function (box, i) {
+        var onInput = function () {
+          if (box.value.length > 1) {
+            var n = spread(i, box.value);
+            say('整码 ' + n + ' 位落进第 ' + (i + 1) + ' 格 → 已分发到后续格');
+            if (P.log) P.log('warn', 'SPLIT-OTP 整码写入第 ' + (i + 1) + ' 格 → 分发 ' + n + ' 位', null);
+          } else if (box.value.length === 1 && i < boxes.length - 1) {
+            boxes[i + 1].focus();
+          }
+        };
+        /* Managers that write the value without an input event still fire change
+         * on blur, so both hooks are needed to catch the whole-code dump. */
+        box.addEventListener('input', onInput);
+        box.addEventListener('change', onInput);
+
+        box.addEventListener('keydown', function (e) {
+          if (e.key === 'Backspace' && !box.value && i > 0) {
+            e.preventDefault();
+            boxes[i - 1].value = '';
+            boxes[i - 1].focus();
+          } else if (e.key === 'ArrowLeft' && i > 0) {
+            e.preventDefault();
+            boxes[i - 1].focus();
+          } else if (e.key === 'ArrowRight' && i < boxes.length - 1) {
+            e.preventDefault();
+            boxes[i + 1].focus();
+          }
+        });
+        box.addEventListener('paste', function (e) {
+          var t = (e.clipboardData || window.clipboardData || {}).getData
+            ? (e.clipboardData || window.clipboardData).getData('text')
+            : '';
+          if (/\d/.test(t)) {
+            e.preventDefault();
+            say('粘贴 ' + spread(0, t) + ' 位已分发');
+          }
+        });
+      });
+    });
+  }
+
   function wire() {
+    wireSplitOtp();
     document.addEventListener('click', function (e) {
       var btn = e.target.closest('[data-act],[data-copy],[data-copy-expected]');
       if (!btn) return;
@@ -95,6 +158,10 @@
       } else if (act === 'reset') {
         document.querySelectorAll('form').forEach(function (f) {
           f.reset();
+        });
+        /* The split group deliberately sits outside every form, so reset() misses it. */
+        document.querySelectorAll('[data-split-otp] input').forEach(function (b) {
+          b.value = '';
         });
         P.log('warn', '所有表单 reset()', null);
         var out = document.querySelector('[data-checkout]');

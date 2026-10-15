@@ -28,9 +28,7 @@
     <span class="pagehead__num">13</span>
     <h1 class="pagehead__title">支付卡 · cc-* 语义与格式化</h1>
   </div>
-  <p class="pagehead__lede"><strong>cc-name / cc-number / cc-exp-month / cc-exp-year / cc-csc</strong>。卡的自动填充受三重限制：<strong>安全上下文、HTTPS、站点是否被识别为"可支付"</strong>。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">payment</span><span class="tag">cc-autofill</span>
-    <span class="tag tag--on">GROUP · billing</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">payment</span><span class="tag">cc-autofill</span></div>
 </section>
 
 
@@ -44,11 +42,10 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>cc-name</td><td>MONICA JOYIN</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-name">COPY</button></td></tr><tr><td>cc-number</td><td>4242424242424242</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-number">COPY</button></td></tr><tr><td>cc-exp-month</td><td>03</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-exp-month">COPY</button></td></tr><tr><td>cc-exp-year</td><td>2031</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-exp-year">COPY</button></td></tr><tr><td>cc-csc</td><td>737</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-csc">COPY</button></td></tr></tbody></table></section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>cc-name</td><td>MONICA JOYIN</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-name">COPY</button></td></tr><tr><td>cc-number</td><td>4242424242424242</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-number">COPY</button></td></tr><tr><td>cc-exp-month</td><td>03</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-exp-month">COPY</button></td></tr><tr><td>cc-exp-year</td><td>2031</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-exp-year">COPY</button></td></tr><tr><td>cc-csc</td><td>737</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="cc-csc">COPY</button></td></tr></tbody></table></section>
 <form class="form" id="f-card" data-pm-id="f-card" method="POST" action="#" autocomplete="on"><div class="formgrid"><div class="field field--8"><div class="field__top"><label class="field__label" for="f-cc-name">NAME ON CARD<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=cc-name</span></div><input class="field__input" id="f-cc-name" name="cc-name" type="text" autocomplete="cc-name" required data-pm-uid=""><p class="field__msg"></p></div>
 <div class="field field--4"><div class="field__top"><label class="field__label" for="f-postal-code">BILLING POSTAL<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=postal-code</span></div><input class="field__input" id="f-postal-code" name="postal-code" type="text" autocomplete="postal-code" required data-pm-uid=""><p class="field__msg"></p></div>
 <div class="field"><div class="field__top"><label class="field__label" for="f-cc-number">CARD NUMBER<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=cc-number</span></div><input class="field__input" id="f-cc-number" name="cc-number" type="text" autocomplete="cc-number" required inputmode="numeric" data-pm-uid=""><p class="caption">4242 4242 4242 4242（VISA 测试号）</p><p class="field__msg"></p></div>
@@ -59,11 +56,11 @@
 <span class="caption">LUHN <span data-luhn>—</span> · BRAND <span data-brand>—</span></span>
 <span class="caption">填充后由格式化脚本重新分格，观察是否出现 SCRIPT 事件</span>
 </div>
-<hr class="hairline">
-<section class="stack-sm" aria-label="已知失败模式">
-  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
-  <ul class="issues"><li>卡号字段必须<strong>type=text + inputmode=numeric + autocomplete=cc-number</strong>。用 type=number 会让管理器放弃填充。</li><li>把 <strong>cc-exp</strong> 拆成 month/year 两个 select 是最常见布局，也是填充失败最多的地方：<strong>期望 cc-exp-month="3"，而 UI 显示 "03"</strong>。</li><li>浏览器保存的卡<strong>默认不弹 CSC</strong>：出于合规，安全码几乎从不自填。这一格保持空是正常的，不是 bug。</li><li>格式化脚本（每 4 位加空格）会在填充后触发<strong>二次 input</strong>，诊断日志里会出现 SCRIPT 事件——注意区分。</li></ul>
-</section>
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede"><strong>cc-name / cc-number / cc-exp-month / cc-exp-year / cc-csc</strong>。卡的自动填充受三重限制：<strong>安全上下文、HTTPS、站点是否被识别为"可支付"</strong>。</p>
+<ul class="issues"><li>卡号字段必须<strong>type=text + inputmode=numeric + autocomplete=cc-number</strong>。用 type=number 会让管理器放弃填充。</li><li>把 <strong>cc-exp</strong> 拆成 month/year 两个 select 是最常见布局，也是填充失败最多的地方：<strong>期望 cc-exp-month="3"，而 UI 显示 "03"</strong>。</li><li>浏览器保存的卡<strong>默认不弹 CSC</strong>：出于合规，安全码几乎从不自填。这一格保持空是正常的，不是 bug。</li><li>格式化脚本（每 4 位加空格）会在填充后触发<strong>二次 input</strong>，诊断日志里会出现 SCRIPT 事件——注意区分。</li></ul>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · payment-card.html</span></div></footer>

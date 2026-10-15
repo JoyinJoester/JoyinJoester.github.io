@@ -191,11 +191,9 @@ img, svg { max-width: 100%; display: block; }
 
 /* ---------- page head ---------- */
 .pagehead { padding: var(--s-2xl) 0 var(--s-xl); }
-.pagehead__id { display: flex; align-items: flex-end; gap: var(--s-md); }
+.pagehead__id { display: flex; align-items: flex-end; gap: var(--s-md); flex-wrap: wrap; }
 .pagehead__num { font-family: var(--font-display); font-size: var(--display-lg); line-height: 0.8; color: var(--text-display); font-weight: 600; letter-spacing: 0.02em; }
-.pagehead__title { font-size: var(--display-md); line-height: 1.1; letter-spacing: -0.02em; color: var(--text-display); font-weight: 500; }
-.pagehead__lede { margin-top: var(--s-md); max-width: 62ch; color: var(--text-secondary); }
-.pagehead__lede strong { color: var(--text-primary); font-weight: 500; }
+.pagehead__title { font-size: var(--display-md); line-height: 1.1; letter-spacing: -0.02em; color: var(--text-display); font-weight: 500; min-width: 0; overflow-wrap: anywhere; }
 
 /* ---------- surfaces ---------- */
 .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); padding: var(--s-lg); }
@@ -252,7 +250,6 @@ img, svg { max-width: 100%; display: block; }
   padding: 4px 12px; font-family: var(--font-mono); font-size: var(--caption); letter-spacing: 0.04em;
   text-transform: uppercase; color: var(--text-secondary); background: transparent;
 }
-.tag--on { border-color: var(--text-display); color: var(--text-display); }
 .tag--bad { border-color: var(--accent); color: var(--accent); }
 .tag--ok { border-color: var(--success); color: var(--success); }
 .tag--warn { border-color: var(--warning); color: var(--warning); }
@@ -288,7 +285,7 @@ img, svg { max-width: 100%; display: block; }
 .field + .field { border-top: 1px solid var(--border); }
 .field__top { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-md); flex-wrap: wrap; }
 .field__label { font-family: var(--font-mono); font-size: var(--label); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); display: block; }
-.field__ac { font-family: var(--font-mono); font-size: var(--label); letter-spacing: 0.04em; color: var(--text-disabled); text-transform: lowercase; white-space: nowrap; }
+.field__ac { font-family: var(--font-mono); font-size: var(--label); letter-spacing: 0.04em; color: var(--text-disabled); text-transform: lowercase; min-width: 0; overflow-wrap: anywhere; }
 .field__ac--none { color: var(--accent); }
 .field__input {
   width: 100%; margin-top: var(--s-sm); padding: 10px 0; background: transparent; border: 0;
@@ -402,7 +399,20 @@ kbd { font-family: var(--font-mono); font-size: var(--caption); border: 1px soli
   .col-span-2, .col-span-3 { grid-column: auto; }
   .topnav { display: none; }
   .wrap { padding: 0 var(--s-md); }
+  .pagehead { padding: var(--s-xl) 0 var(--s-lg); }
+  .dock__bar { padding: var(--s-sm) var(--s-md); gap: var(--s-sm); }
+  /* The origin string is the least useful thing on a phone and it alone wraps
+   * the dock bar onto three lines, costing ~90px of the viewport permanently. */
+  .dock__bar [data-dock-origin] { display: none; }
   .dock__log li { grid-template-columns: 1fr; gap: 2px; }
+}
+@media (max-width: 520px) {
+  /* Segmented controls carry API enum values; at their desktop size three of
+   * them are wider than a phone, which drags the whole page sideways. */
+  .segctrl { display: flex; width: 100%; }
+  .segctrl button { flex: 1 1 0; min-width: 0; padding: 9px 6px; letter-spacing: 0.02em; overflow-wrap: anywhere; }
+  .codes { gap: var(--s-xs); }
+  .codes input { flex: 0 1 44px; min-width: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.001s !important; transition-duration: 0.001s !important; }
@@ -417,14 +427,35 @@ kbd { font-family: var(--font-mono); font-size: var(--caption); border: 1px soli
 .formgrid > .field--8 { grid-column: span 8; }
 .formgrid > .field + .field { border-top: 1px solid var(--border); }
 @media (max-width: 720px) {
+  /* Collapsing the span is not enough: a 12-track grid with grid-column:auto
+   * shoves every field into its own 1/12-wide column and walks off the screen. */
+  .formgrid { grid-template-columns: 1fr; }
   .formgrid > .field, .formgrid > .field--6, .formgrid > .field--4, .formgrid > .field--3, .formgrid > .field--8 { grid-column: auto; }
 }
 
 /* ---------- fixture table ---------- */
-.fixture td:nth-child(2) { font-family: var(--font-mono); color: var(--text-display); word-break: break-all; }
-.fixture td:nth-child(1) { font-family: var(--font-mono); font-size: var(--label); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); white-space: nowrap; }
+/* Fixed tracks, not content-sized: with auto layout the value column's min-content
+ * (one whole email address) is what pushes a phone-width page sideways. */
+.fixture { table-layout: fixed; width: 100%; }
+.fixture th:nth-child(1), .fixture td:nth-child(1) { width: 38%; }
+.fixture th:nth-child(2), .fixture td:nth-child(2) { width: 44%; }
+.fixture th:nth-child(3), .fixture td:nth-child(3) { width: 18%; text-align: right; }
+/* break-word, not break-all: an email must not be cut mid-token unless the cell
+ * genuinely cannot fit it whole. */
+.fixture td:nth-child(2) { font-family: var(--font-mono); color: var(--text-display); overflow-wrap: break-word; }
+.fixture td:nth-child(1) { font-family: var(--font-mono); font-size: var(--label); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); }
 .fixture td { border-bottom: 1px solid var(--border); padding: 8px var(--s-sm); font-size: var(--body-sm); }
 .fixture th { padding: 8px var(--s-sm); }
+
+/* ---------- collapsible page notes ---------- */
+.more { margin-top: var(--s-xl); border-top: 1px solid var(--border); padding-top: var(--s-md); }
+.more summary { cursor: pointer; list-style: none; }
+.more summary::-webkit-details-marker { display: none; }
+.more summary::before { content: '+ '; color: var(--text-disabled); }
+.more[open] summary::before { content: '- '; }
+.more > * + * { margin-top: var(--s-sm); }
+.lede { color: var(--text-secondary); max-width: 62ch; }
+.lede strong { color: var(--text-primary); font-weight: 500; }
 
 /* ---------- known-issue list ---------- */
 .issues { list-style: none; margin: 0; padding: 0; }

@@ -28,9 +28,7 @@
     <span class="pagehead__num">15</span>
     <h1 class="pagehead__title">结账第二步 · 地址</h1>
   </div>
-  <p class="pagehead__lede">只有地址字段，没有支付字段。<strong>这一步能检验管理器的"地址集"与"支付集"是否互相阻塞</strong>。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">wizard</span><span class="tag">step-2</span>
-    <span class="tag tag--on">GROUP · billing</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">wizard</span><span class="tag">step-2</span></div>
 </section>
 <div class="panel panel--raised caption" data-prev-step>上一步经 URL query 传来的数据：<span data-prev>—</span></div>
 
@@ -44,18 +42,20 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>address-line1</td><td>123 Nothing Lane</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="address-line1">COPY</button></td></tr><tr><td>address-level2</td><td>San Francisco</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="address-level2">COPY</button></td></tr><tr><td>postal-code</td><td>94107</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="postal-code">COPY</button></td></tr></tbody></table></section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>address-line1</td><td>123 Nothing Lane</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="address-line1">COPY</button></td></tr><tr><td>address-level2</td><td>San Francisco</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="address-level2">COPY</button></td></tr><tr><td>postal-code</td><td>94107</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="postal-code">COPY</button></td></tr></tbody></table></section>
 <form class="form" id="f-co2" data-pm-id="f-co2" method="get" action="checkout-3-review.html" data-pm-live="1" autocomplete="on"><div class="formgrid"><div class="field field--8"><div class="field__top"><label class="field__label" for="f-address-line1">STREET<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=address-line1</span></div><input class="field__input" id="f-address-line1" name="address-line1" type="text" autocomplete="address-line1" required data-pm-uid=""><p class="field__msg"></p></div>
 <div class="field field--4"><div class="field__top"><label class="field__label" for="f-address-level2">CITY<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=address-level2</span></div><input class="field__input" id="f-address-level2" name="address-level2" type="text" autocomplete="address-level2" required data-pm-uid=""><p class="field__msg"></p></div>
 <div class="field field--4"><div class="field__top"><label class="field__label" for="f-postal-code">POSTAL<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=postal-code</span></div><input class="field__input" id="f-postal-code" name="postal-code" type="text" autocomplete="postal-code" required data-pm-uid=""><p class="field__msg"></p></div>
 <div class="field field--4"><div class="field__top"><label class="field__label" for="f-country">COUNTRY<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=country-name</span></div><select class="field__input" id="f-country" name="country" type="select" autocomplete="country-name" required data-pm-uid=""><option value="US">United States</option><option value="CN">中国</option><option value="JP">日本</option></select><p class="field__msg"></p></div>
 <div class="field field--4"><div class="field__top"><label class="field__label" for="f-email">EMAIL<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=email</span></div><input class="field__input" id="f-email" name="email" type="email" autocomplete="email" required data-pm-uid=""><p class="field__msg"></p></div></div><div class="form__foot"><button class="btn btn--primary" type="submit">CONTINUE TO REVIEW</button><span class="formstatus" data-formstatus></span></div></form>
 
-
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede">只有地址字段，没有支付字段。<strong>这一步能检验管理器的"地址集"与"支付集"是否互相阻塞</strong>。</p>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · checkout-2-address.html</span></div></footer>

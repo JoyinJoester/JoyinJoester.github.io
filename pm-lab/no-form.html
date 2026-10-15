@@ -28,9 +28,7 @@
     <span class="pagehead__num">17</span>
     <h1 class="pagehead__title">没有 &amp;lt;form&amp;gt; 的裸输入框</h1>
   </div>
-  <p class="pagehead__lede">SPA 里极常见：字段直接躺在 <strong>div</strong> 里，靠按钮的 click 事件提交。规范要求登录表单必须在 form 内，多数实现<strong>仍能</strong>识别，但保存提示会丢。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">no-form</span><span class="tag">spa</span>
-    <span class="tag tag--on">GROUP · edge</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">no-form</span><span class="tag">spa</span></div>
 </section>
 
 
@@ -44,11 +42,10 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>email</td><td>pm17@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="email">COPY</button></td></tr><tr><td>password</td><td>Nth0ng!17-NoForm</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="password">COPY</button></td></tr></tbody></table></section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>email</td><td>pm17@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="email">COPY</button></td></tr><tr><td>password</td><td>Nth0ng!17-NoForm</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="password">COPY</button></td></tr></tbody></table></section>
 <div class="panel stack-sm">
 <span class="label">VARIANT A · 无 form（错误示范）</span>
 <div class="field"><div class="field__top"><label class="field__label" for="a-email">EMAIL</label><span class="field__ac">autocomplete=username</span></div>
@@ -70,11 +67,11 @@
 </div>
 <div class="caption">注意：期望值只绑定在 name=email/password 上，两组同名 ⇒ 检查表会各命中一组。用 <strong>CHECK</strong> 时看的是先出现的那个。</div>
 
-<hr class="hairline">
-<section class="stack-sm" aria-label="已知失败模式">
-  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
-  <ul class="issues"><li>无 form ⇒ <strong>没有 submit 事件</strong>，浏览器不会触发"保存密码"流程。自动填充可能仍工作，保存一定不工作。</li><li>用 <strong>button[type=button] + JS</strong> 提交时，Chrome 会把这页判定为"非登录表单"的概率显著上升。</li><li>对照：下方有 form 的对照组若正常、上方失败，即可确认是 <strong>form 缺失</strong>而非字段属性问题。</li></ul>
-</section>
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede">SPA 里极常见：字段直接躺在 <strong>div</strong> 里，靠按钮的 click 事件提交。规范要求登录表单必须在 form 内，多数实现<strong>仍能</strong>识别，但保存提示会丢。</p>
+<ul class="issues"><li>无 form ⇒ <strong>没有 submit 事件</strong>，浏览器不会触发"保存密码"流程。自动填充可能仍工作，保存一定不工作。</li><li>用 <strong>button[type=button] + JS</strong> 提交时，Chrome 会把这页判定为"非登录表单"的概率显著上升。</li><li>对照：下方有 form 的对照组若正常、上方失败，即可确认是 <strong>form 缺失</strong>而非字段属性问题。</li></ul>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · no-form.html</span></div></footer>

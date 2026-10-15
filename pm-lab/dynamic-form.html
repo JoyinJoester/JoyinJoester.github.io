@@ -28,9 +28,7 @@
     <span class="pagehead__num">23</span>
     <h1 class="pagehead__title">延迟 / 动态插入的表单</h1>
   </div>
-  <p class="pagehead__lede">字段<strong>不在初始 HTML 里</strong>：0.5s、2s 后各插入一组，另一个由按钮触发。管理器需要在运行时重新扫描 DOM，否则永远填不上。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">late-dom</span><span class="tag">spa</span>
-    <span class="tag tag--on">GROUP · edge</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">late-dom</span><span class="tag">spa</span></div>
 </section>
 
 
@@ -44,11 +42,10 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>dyn_late</td><td>Nth0ng!23-Late</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="dyn_late">COPY</button></td></tr><tr><td>dyn_click</td><td>Nth0ng!23-OnClick</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="dyn_click">COPY</button></td></tr></tbody></table></section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>dyn_late</td><td>Nth0ng!23-Late</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="dyn_late">COPY</button></td></tr><tr><td>dyn_click</td><td>Nth0ng!23-OnClick</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="dyn_click">COPY</button></td></tr></tbody></table></section>
 <div class="stack-lg">
 <div class="panel stack-sm"><span class="label">A · 初始就在</span>
 <div class="field"><div class="field__top"><label class="field__label" for="dyn_now">PASSWORD · 立即存在</label><span class="field__ac">current-password</span></div><input class="field__input" id="dyn_now" name="dyn_now" type="password" autocomplete="current-password" data-pm-uid=""><p class="field__msg"></p></div></div>
@@ -57,11 +54,11 @@
 <div class="panel stack-sm" data-slot-click><span class="label">D · 点按钮才出现</span><div class="row"><button type="button" class="btn btn--secondary" data-reveal-field>REVEAL FIELD</button></div></div>
 </div>
 
-<hr class="hairline">
-<section class="stack-sm" aria-label="已知失败模式">
-  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
-  <ul class="issues"><li>只扫描一次 DOM 的实现会<strong>完全漏掉晚插入的字段</strong>；扩展类管理器通常靠 MutationObserver 补救。</li><li>点击按钮后才出现的字段（模态框、折叠面板）是最常见的"手动点了密码管理器图标却没反应"来源。</li><li>注意诊断日志里的 <strong>SCRIPT</strong> 事件：脚本赋值与用户填充要分开看。</li></ul>
-</section>
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede">字段<strong>不在初始 HTML 里</strong>：0.5s、2s 后各插入一组，另一个由按钮触发。管理器需要在运行时重新扫描 DOM，否则永远填不上。</p>
+<ul class="issues"><li>只扫描一次 DOM 的实现会<strong>完全漏掉晚插入的字段</strong>；扩展类管理器通常靠 MutationObserver 补救。</li><li>点击按钮后才出现的字段（模态框、折叠面板）是最常见的"手动点了密码管理器图标却没反应"来源。</li><li>注意诊断日志里的 <strong>SCRIPT</strong> 事件：脚本赋值与用户填充要分开看。</li></ul>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · dynamic-form.html</span></div></footer>

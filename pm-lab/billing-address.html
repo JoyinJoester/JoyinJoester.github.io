@@ -28,9 +28,7 @@
     <span class="pagehead__num">12</span>
     <h1 class="pagehead__title">账单地址 · CN / US / JP 语义切换</h1>
   </div>
-  <p class="pagehead__lede">地址自动填充靠的是 <strong>street-address / address-level1-3 / postal-code / country-name</strong> 这套语义。不同国家字段数不同，这里用分段控件切换三种布局。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">address-autofill</span><span class="tag">locale</span>
-    <span class="tag tag--on">GROUP · billing</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">address-autofill</span><span class="tag">locale</span></div>
 </section>
 <div class="row row--between" style="margin-bottom:var(--s-md)">
 <span class="label">地址布局</span>
@@ -50,11 +48,10 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>name</td><td>Monica Joyin</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="name">COPY</button></td></tr><tr><td>organization</td><td>Nothing Labs Test</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="organization">COPY</button></td></tr><tr><td>email</td><td>pm.address@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="email">COPY</button></td></tr><tr><td>tel</td><td>+14155550102</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="tel">COPY</button></td></tr><tr><td>country</td><td>US</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="country">COPY</button></td></tr><tr><td>address-level1</td><td>CA</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="address-level1">COPY</button></td></tr><tr><td>address-level2</td><td>San Francisco</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="address-level2">COPY</button></td></tr><tr><td>address-line1</td><td>123 Nothing Lane</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="address-line1">COPY</button></td></tr><tr><td>address-line2</td><td>Apt 4B</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="address-line2">COPY</button></td></tr><tr><td>postal-code</td><td>94107</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="postal-code">COPY</button></td></tr></tbody></table></section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>name</td><td>Monica Joyin</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="name">COPY</button></td></tr><tr><td>organization</td><td>Nothing Labs Test</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="organization">COPY</button></td></tr><tr><td>email</td><td>pm.address@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="email">COPY</button></td></tr><tr><td>tel</td><td>+14155550102</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="tel">COPY</button></td></tr><tr><td>country</td><td>US</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="country">COPY</button></td></tr><tr><td>address-level1</td><td>CA</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="address-level1">COPY</button></td></tr><tr><td>address-level2</td><td>San Francisco</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="address-level2">COPY</button></td></tr><tr><td>address-line1</td><td>123 Nothing Lane</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="address-line1">COPY</button></td></tr><tr><td>address-line2</td><td>Apt 4B</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="address-line2">COPY</button></td></tr><tr><td>postal-code</td><td>94107</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="postal-code">COPY</button></td></tr></tbody></table></section>
 <form class="form" id="f-addr" data-pm-id="f-addr" method="POST" action="#" autocomplete="on"><div class="formgrid"><div class="field field--6"><div class="field__top"><label class="field__label" for="f-name">FULL NAME<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=name</span></div><input class="field__input" id="f-name" name="name" type="text" autocomplete="name" required data-pm-uid=""><p class="field__msg"></p></div>
 <div class="field field--6"><div class="field__top"><label class="field__label" for="f-organization">COMPANY (OPTIONAL)</label><span class="field__ac">autocomplete=organization</span></div><input class="field__input" id="f-organization" name="organization" type="text" autocomplete="organization" data-pm-uid=""><p class="field__msg"></p></div>
 <div class="field field--6"><div class="field__top"><label class="field__label" for="f-email">EMAIL<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=email</span></div><input class="field__input" id="f-email" name="email" type="email" autocomplete="email" required data-pm-uid=""><p class="field__msg"></p></div>
@@ -67,11 +64,11 @@
 <div class="field field--4"><div class="field__top"><label class="field__label" for="f-address-line2">APT / SUITE</label><span class="field__ac">autocomplete=address-line2</span></div><input class="field__input" id="f-address-line2" name="address-line2" type="text" autocomplete="address-line2" data-pm-uid=""><p class="field__msg"></p></div>
 <div class="field field--4"><div class="field__top"><label class="field__label" for="f-postal-code">POSTAL CODE<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=postal-code</span></div><input class="field__input" id="f-postal-code" name="postal-code" type="text" autocomplete="postal-code" required data-pm-uid=""><p class="field__msg"></p></div></div><div class="form__foot"><button class="btn btn--primary" type="submit">SAVE ADDRESS</button><span class="formstatus" data-formstatus></span></div></form>
 
-<hr class="hairline">
-<section class="stack-sm" aria-label="已知失败模式">
-  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
-  <ul class="issues"><li><strong>address-level1/2/3</strong> 的含义按国家不同：美国 level1=州、level2=城市；中国 level1=省、level2=市、level3=区。管理器按 <strong>country 值</strong>决定映射，国家字段填错→地址错乱。</li><li><strong>tel 与 email</strong> 属于身份类，很多管理器与地址分属两个"填充集"，需要分别授权。</li><li><strong>postal-code 与 region</strong> 的联动校验（邮编 vs 省下拉选项）常导致填充后表单报错。</li></ul>
-</section>
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede">地址自动填充靠的是 <strong>street-address / address-level1-3 / postal-code / country-name</strong> 这套语义。不同国家字段数不同，这里用分段控件切换三种布局。</p>
+<ul class="issues"><li><strong>address-level1/2/3</strong> 的含义按国家不同：美国 level1=州、level2=城市；中国 level1=省、level2=市、level3=区。管理器按 <strong>country 值</strong>决定映射，国家字段填错→地址错乱。</li><li><strong>tel 与 email</strong> 属于身份类，很多管理器与地址分属两个"填充集"，需要分别授权。</li><li><strong>postal-code 与 region</strong> 的联动校验（邮编 vs 省下拉选项）常导致填充后表单报错。</li></ul>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · billing-address.html</span></div></footer>

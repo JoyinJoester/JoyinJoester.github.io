@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>SHOT · 定宽取景</title>
+<style>
+  body { margin: 0; padding: 24px; background: #111; font: 12px ui-monospace, monospace; color: #888; }
+  iframe { display: block; border: 1px solid #333; background: #000; }
+  #cap { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<div id="cap"></div>
+<iframe id="f"></iframe>
+<script>
+/* Headless Chrome ignores narrow --window-size values (it floors at ~512 CSS px),
+ * so phone widths have to be framed by an exact-size iframe instead. */
+var Q = new URLSearchParams(location.search);
+var W = Number(Q.get('w')) || 390, H = Number(Q.get('h')) || 844;
+var U = Q.get('u') || 'index.html';
+var f = document.getElementById('f');
+f.style.width = W + 'px';
+f.style.height = H + 'px';
+f.src = (U.indexOf('http') === 0 ? U : '../' + U) + (U.indexOf('?') < 0 ? '?' : '&') + 'theme=dark';
+document.getElementById('cap').textContent = U + ' @ ' + W + 'x' + H;
+</script>
+</body>
+</html>

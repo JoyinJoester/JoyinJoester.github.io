@@ -28,9 +28,7 @@
     <span class="pagehead__num">25</span>
     <h1 class="pagehead__title">iframe 内的表单</h1>
   </div>
-  <p class="pagehead__lede">同域 iframe 里的登录框，以及一个<strong>跨域 iframe</strong>（指向本站之外）。第三方支付/登录组件全是这个结构。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">iframe</span><span class="tag">same-origin</span><span class="tag">cross-origin</span>
-    <span class="tag tag--on">GROUP · edge</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">iframe</span><span class="tag">same-origin</span><span class="tag">cross-origin</span></div>
 </section>
 
 
@@ -44,11 +42,10 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>frame_email</td><td>pm25@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="frame_email">COPY</button></td></tr><tr><td>frame_password</td><td>Nth0ng!25-Frame</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="frame_password">COPY</button></td></tr></tbody></table></section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>frame_email</td><td>pm25@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="frame_email">COPY</button></td></tr><tr><td>frame_password</td><td>Nth0ng!25-Frame</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="frame_password">COPY</button></td></tr></tbody></table></section>
 <div class="stack-lg">
 <div class="panel stack-sm"><span class="label">A · 同域 IFRAME（iframe-inner.html）</span>
 <iframe src="iframe-inner.html" title="同域登录框" data-frame-same style="width:100%;height:340px;border:1px solid var(--border-visible);border-radius:var(--radius-field);background:var(--bg)"></iframe>
@@ -58,11 +55,11 @@
 <p class="caption">尝试访问 contentDocument：<span data-frame-cross-status>检测中…</span> — 预期 SecurityError。若这里连累页面报错，说明实现没做保护。</p></div>
 </div>
 
-<hr class="hairline">
-<section class="stack-sm" aria-label="已知失败模式">
-  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
-  <ul class="issues"><li>同域 iframe：<strong>Chrome 原生管理器能填</strong>，扩展类管理器往往只扫顶层 document → 失败。</li><li>跨域 iframe：<strong>页面脚本完全读不到</strong>（SecurityError），只有浏览器本体可能填；诊断台只能记录"存在一个不可见的 iframe"。</li><li><strong>file:// 协议下 iframe 的 origin 是 null</strong>，同域判定失效——必须用 http(s) 打开本站。</li></ul>
-</section>
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede">同域 iframe 里的登录框，以及一个<strong>跨域 iframe</strong>（指向本站之外）。第三方支付/登录组件全是这个结构。</p>
+<ul class="issues"><li>同域 iframe：<strong>Chrome 原生管理器能填</strong>，扩展类管理器往往只扫顶层 document → 失败。</li><li>跨域 iframe：<strong>页面脚本完全读不到</strong>（SecurityError），只有浏览器本体可能填；诊断台只能记录"存在一个不可见的 iframe"。</li><li><strong>file:// 协议下 iframe 的 origin 是 null</strong>，同域判定失效——必须用 http(s) 打开本站。</li></ul>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · iframe-form.html</span></div></footer>

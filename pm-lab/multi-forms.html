@@ -28,9 +28,7 @@
     <span class="pagehead__num">20</span>
     <h1 class="pagehead__title">同页多个表单 / 多组凭据</h1>
   </div>
-  <p class="pagehead__lede">三个独立 <strong>form</strong>：两组登录 + 一个订阅。再加一组"同页两套账号密码"。管理器必须决定<strong>建议填哪一组、往哪一组写</strong>。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">multiple-forms</span><span class="tag">ambiguity</span>
-    <span class="tag tag--on">GROUP · edge</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">multiple-forms</span><span class="tag">ambiguity</span></div>
 </section>
 
 
@@ -44,11 +42,10 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>email_a</td><td>pm20-a@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="email_a">COPY</button></td></tr><tr><td>password_a</td><td>Nth0ng!20-A</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="password_a">COPY</button></td></tr><tr><td>email_b</td><td>pm20-b@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="email_b">COPY</button></td></tr><tr><td>password_b</td><td>Nth0ng!20-B</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="password_b">COPY</button></td></tr></tbody></table></section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>email_a</td><td>pm20-a@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="email_a">COPY</button></td></tr><tr><td>password_a</td><td>Nth0ng!20-A</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="password_a">COPY</button></td></tr><tr><td>email_b</td><td>pm20-b@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="email_b">COPY</button></td></tr><tr><td>password_b</td><td>Nth0ng!20-B</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="password_b">COPY</button></td></tr></tbody></table></section>
 <div class="stack-lg">
 <form class="panel stack-sm" id="f-20a" data-pm-id="form-a">
 <span class="label">FORM A · 主账号登录</span>
@@ -69,11 +66,11 @@
 </form>
 </div>
 
-<hr class="hairline">
-<section class="stack-sm" aria-label="已知失败模式">
-  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
-  <ul class="issues"><li>两组 current-password 同页 ⇒ 管理器的建议<strong>只会指向其中一个</strong>；观察它选中哪一组、另一组是否被清空。</li><li><strong>newsletter 只有一个 email</strong>：某些实现会把它当登录邮箱，弹出账号建议——这是误判。</li><li>表单顺序影响判断：<strong>先出现的 form 通常获胜</strong>。</li></ul>
-</section>
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede">三个独立 <strong>form</strong>：两组登录 + 一个订阅。再加一组"同页两套账号密码"。管理器必须决定<strong>建议填哪一组、往哪一组写</strong>。</p>
+<ul class="issues"><li>两组 current-password 同页 ⇒ 管理器的建议<strong>只会指向其中一个</strong>；观察它选中哪一组、另一组是否被清空。</li><li><strong>newsletter 只有一个 email</strong>：某些实现会把它当登录邮箱，弹出账号建议——这是误判。</li><li>表单顺序影响判断：<strong>先出现的 form 通常获胜</strong>。</li></ul>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · multi-forms.html</span></div></footer>

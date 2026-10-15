@@ -28,9 +28,7 @@
     <span class="pagehead__num">01</span>
     <h1 class="pagehead__title">账号 + 密码 · 同一页单表单</h1>
   </div>
-  <p class="pagehead__lede">最基础的组合：<strong>username 与 password 在同一个 form 内</strong>，账号在前、密码在后。这是密码管理器的对照组——如果这一页都填不上，问题在识别，不在场景。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">baseline</span><span class="tag">single-form</span>
-    <span class="tag tag--on">GROUP · auth</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">baseline</span><span class="tag">single-form</span></div>
 </section>
 
 
@@ -44,19 +42,18 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>email</td><td>pm01@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="email">COPY</button></td></tr><tr><td>password</td><td>Nth0ng!01-Pm-Test</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="password">COPY</button></td></tr></tbody></table></section>
-<form class="form" id="f-login" data-pm-id="f-login" method="POST" action="#" autocomplete="on"><div class="formgrid"><div class="field"><div class="field__top"><label class="field__label" for="f-email">EMAIL / USERNAME<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=username</span></div><input class="field__input" id="f-email" name="email" type="email" autocomplete="username" placeholder="you@example.com" required data-pm-uid=""><p class="caption">autocomplete=username</p><p class="field__msg"></p></div>
-<div class="field"><div class="field__top"><label class="field__label" for="f-password">PASSWORD<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=current-password</span></div><input class="field__input" id="f-password" name="password" type="password" autocomplete="current-password" required data-pm-uid=""><p class="caption">autocomplete=current-password（登录用 current，不是 new）</p><p class="field__msg"></p></div></div><div class="form__foot"><button class="btn btn--primary" type="submit">SIGN IN</button><button class="btn btn--secondary" type="submit" formaction="#" data-pm-live-trigger>SIGN IN (REAL NAV)</button><span class="formstatus" data-formstatus></span></div><label class="switch"><input type="checkbox" data-act="toggle-live" data-pm-uid=""><span class="switch__track"></span><span class="label">允许真导航（测保存提示）</span></label></form>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>email</td><td>pm01@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="email">COPY</button></td></tr><tr><td>password</td><td>Nth0ng!01-Pm-Test</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="password">COPY</button></td></tr></tbody></table></section>
+<form class="form" id="f-login" data-pm-id="f-login" method="POST" action="#" autocomplete="on"><div class="formgrid"><div class="field"><div class="field__top"><label class="field__label" for="f-email">EMAIL / USERNAME<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=username</span></div><input class="field__input" id="f-email" name="email" type="email" autocomplete="username" placeholder="you@example.com" required data-pm-uid=""><p class="field__msg"></p></div>
+<div class="field"><div class="field__top"><label class="field__label" for="f-password">PASSWORD<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=current-password</span></div><input class="field__input" id="f-password" name="password" type="password" autocomplete="current-password" required data-pm-uid=""><p class="caption">登录用 current，不是 new</p><p class="field__msg"></p></div></div><div class="form__foot"><button class="btn btn--primary" type="submit">SIGN IN</button><button class="btn btn--secondary" type="submit" formaction="#" data-pm-live-trigger>SIGN IN (REAL NAV)</button><span class="formstatus" data-formstatus></span></div><label class="switch"><input type="checkbox" data-act="toggle-live" data-pm-uid=""><span class="switch__track"></span><span class="label">允许真导航（测保存提示）</span></label></form>
 
-<hr class="hairline">
-<section class="stack-sm" aria-label="已知失败模式">
-  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
-  <ul class="issues"><li><strong>正确姿势</strong>：两个字段都在同一个 <strong>&lt;form&gt;</strong> 内，<strong>autocomplete=username</strong> + <strong>autocomplete=current-password</strong>。</li><li>若管理器没弹提示：检查是否 <strong>input 在 DOM 加载后才出现</strong>，或表单被 <strong>overflow:hidden</strong> 裁到视口外。</li><li>保存提示（save prompt）通常在<strong>提交后真实导航</strong>才出现。本页默认拦截提交，点 <strong>SIGN IN (REAL NAV)</strong> 那个版本才会走真导航。</li></ul>
-</section>
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede">最基础的组合：<strong>username 与 password 在同一个 form 内</strong>，账号在前、密码在后。这是密码管理器的对照组——如果这一页都填不上，问题在识别，不在场景。</p>
+<ul class="issues"><li><strong>正确姿势</strong>：两个字段都在同一个 <strong>&lt;form&gt;</strong> 内，<strong>autocomplete=username</strong> + <strong>autocomplete=current-password</strong>。</li><li>若管理器没弹提示：检查是否 <strong>input 在 DOM 加载后才出现</strong>，或表单被 <strong>overflow:hidden</strong> 裁到视口外。</li><li>保存提示（save prompt）通常在<strong>提交后真实导航</strong>才出现。本页默认拦截提交，点 <strong>SIGN IN (REAL NAV)</strong> 那个版本才会走真导航。</li></ul>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · login-inline.html</span></div></footer>

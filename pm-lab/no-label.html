@@ -28,9 +28,7 @@
     <span class="pagehead__num">18</span>
     <h1 class="pagehead__title">标签缺失的四种变体</h1>
   </div>
-  <p class="pagehead__lede">管理器判断"这是哪个字段"依赖 <strong>label[for] / aria-label / placeholder / name / id / autocomplete</strong>。这里逐条剥掉，看还剩什么能用。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">label-less</span><span class="tag">a11y</span><span class="tag">heuristic</span>
-    <span class="tag tag--on">GROUP · edge</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">label-less</span><span class="tag">a11y</span><span class="tag">heuristic</span></div>
 </section>
 
 
@@ -44,11 +42,10 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>v1</td><td>pm18-v1@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="v1">COPY</button></td></tr><tr><td>v2</td><td>pm18-v2@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="v2">COPY</button></td></tr><tr><td>v3</td><td>pm18-v3@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="v3">COPY</button></td></tr><tr><td>z9x_kf_input</td><td>pm18-v4@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="z9x_kf_input">COPY</button></td></tr></tbody></table></section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>v1</td><td>pm18-v1@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="v1">COPY</button></td></tr><tr><td>v2</td><td>pm18-v2@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="v2">COPY</button></td></tr><tr><td>v3</td><td>pm18-v3@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="v3">COPY</button></td></tr><tr><td>z9x_kf_input</td><td>pm18-v4@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="z9x_kf_input">COPY</button></td></tr></tbody></table></section>
 <div class="stack-lg">
 <div class="panel stack-sm"><span class="label">A · label[for] + autocomplete（最好情况）</span>
 <div class="field"><div class="field__top"><label class="field__label" for="v1">EMAIL</label><span class="field__ac">autocomplete=username</span></div>
@@ -69,11 +66,11 @@
 <div class="field"><input class="field__input" name="zz_pw_field_88" type="password" id="k1l0m" data-pm-uid=""><p class="field__msg"></p></div></div>
 </div>
 
-<hr class="hairline">
-<section class="stack-sm" aria-label="已知失败模式">
-  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
-  <ul class="issues"><li><strong>variant C 只有 placeholder</strong>：可访问性上 placeholder 不是标签；且部分管理器<strong>忽略 placeholder</strong>，只按 name/autocomplete 猜。</li><li><strong>variant D 全部剥离</strong>（随机 name/id、无 autocomplete、无 label）：此时只剩<strong>DOM 顺序与相邻文本</strong>，各实现分歧最大。</li><li>若 A/B 正常、C 失败 ⇒ 该管理器<strong>不读 placeholder</strong>；若 D 也正常 ⇒ 它在按位置猜，可靠性差。</li></ul>
-</section>
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede">管理器判断"这是哪个字段"依赖 <strong>label[for] / aria-label / placeholder / name / id / autocomplete</strong>。这里逐条剥掉，看还剩什么能用。</p>
+<ul class="issues"><li><strong>variant C 只有 placeholder</strong>：可访问性上 placeholder 不是标签；且部分管理器<strong>忽略 placeholder</strong>，只按 name/autocomplete 猜。</li><li><strong>variant D 全部剥离</strong>（随机 name/id、无 autocomplete、无 label）：此时只剩<strong>DOM 顺序与相邻文本</strong>，各实现分歧最大。</li><li>若 A/B 正常、C 失败 ⇒ 该管理器<strong>不读 placeholder</strong>；若 D 也正常 ⇒ 它在按位置猜，可靠性差。</li></ul>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · no-label.html</span></div></footer>

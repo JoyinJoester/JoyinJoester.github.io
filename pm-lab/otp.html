@@ -28,9 +28,7 @@
     <span class="pagehead__num">09</span>
     <h1 class="pagehead__title">一次性验证码 · 单框 / 分格 / WebOTP</h1>
   </div>
-  <p class="pagehead__lede"><strong>autocomplete=one-time-code</strong> 是安卓 SMS 自动读取的开关，也是 iOS 短信码建议的开关。单框与分格（6 个 input）行为差异极大。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">one-time-code</span><span class="tag">sms</span><span class="tag">split-input</span>
-    <span class="tag tag--on">GROUP · otp</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">one-time-code</span><span class="tag">sms</span><span class="tag">split-input</span></div>
 </section>
 
 
@@ -44,11 +42,10 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>code</td><td>246813</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="code">COPY</button></td></tr></tbody></table></section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>code</td><td>246813</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="code">COPY</button></td></tr></tbody></table></section>
 <form class="form" id="f-otp" data-pm-id="f-otp" method="POST" action="#" autocomplete="on"><div class="formgrid"><div class="field"><div class="field__top"><label class="field__label" for="f-code">SMS CODE (SINGLE BOX)<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=one-time-code</span></div><input class="field__input" id="f-code" name="code" type="text" autocomplete="one-time-code" required inputmode="numeric" pattern="[0-9]{6}" maxlength="6" data-pm-uid=""><p class="caption">maxlength=6 · inputmode=numeric</p><p class="field__msg"></p></div></div><div class="form__foot"><button class="btn btn--primary" type="submit">VERIFY</button><span class="formstatus" data-formstatus></span></div></form>
 <hr class="hairline">
 <div class="field">
@@ -61,13 +58,13 @@
 <input class="field__input" aria-label="验证码第 5 位" autocomplete="off" inputmode="numeric" pattern="[0-9]" maxlength="1" name="otp5" id="otp5" data-pm-uid="">
 <input class="field__input" aria-label="验证码第 6 位" autocomplete="off" inputmode="numeric" pattern="[0-9]" maxlength="1" name="otp6" id="otp6" data-pm-uid="">
 </div>
-<p class="field__msg" data-split-msg>观察：整码是否只落进第 1 格</p>
+<p class="field__msg" data-split-msg>逐格输入自动跳下一格 · 粘贴/整码写入会自动分发</p>
 </div>
-<hr class="hairline">
-<section class="stack-sm" aria-label="已知失败模式">
-  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
-  <ul class="issues"><li>分格输入通常<strong>只有第一格带 one-time-code</strong>，安卓会把整码塞进第一格，出现"1 格里 6 位数"的已知现象。</li><li><strong>WebOTP</strong>（OTPCredential）只走 HTTPS + 真实短信域名校验，本地 http 不会触发；此处仅登记 API 可用性。</li><li><strong>inputmode=numeric + pattern + maxlength=1</strong> 的组合会阻止某些管理器写超长值。</li></ul>
-</section>
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede"><strong>autocomplete=one-time-code</strong> 是安卓 SMS 自动读取的开关，也是 iOS 短信码建议的开关。单框与分格（6 个 input）行为差异极大。</p>
+<ul class="issues"><li>分格输入通常<strong>只有第一格带 one-time-code</strong>，安卓会把整码塞进第一格，出现"1 格里 6 位数"的已知现象。</li><li><strong>WebOTP</strong>（OTPCredential）只走 HTTPS + 真实短信域名校验，本地 http 不会触发；此处仅登记 API 可用性。</li><li><strong>inputmode=numeric + pattern + maxlength=1</strong> 的组合会阻止某些管理器写超长值。</li></ul>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · otp.html</span></div></footer>
@@ -77,15 +74,7 @@
 <script src="assets/diag.js"></script>
 <script src="assets/site.js"></script>
 <script>
-document.querySelector('[data-split-otp]').addEventListener('input', function (e) {
-  var t = e.target; if (t.value.length > 1 && /^otp1$/.test(t.id)) {
-    var chars = t.value.replace(/[^0-9]/g,'').split('');
-    t.value = chars.shift() || '';
-    var boxes = Array.prototype.slice.call(document.querySelectorAll('[data-split-otp] input'));
-    var i = 1; chars.forEach(function (c) { if (boxes[i]) { boxes[i].value = c; i++; } });
-    PM.log('warn','分格被写入 ' + chars.length + ' 位，已手动拆格（真实站点通常不拆 → 显示异常）', null);
-  }
-});
+/* 分格跳格 / 整码分发在 assets/site.js 里统一处理 */
 if (window.OTPCredential && navigator.credentials) {
   navigator.credentials.get({ otp: { supported: ['sms'] }, signal: (window.AbortSignal && AbortSignal.timeout) ? AbortSignal.timeout(12000) : undefined })
    .then(function (c) { if (c && c.code) { PM.log('fill','WebOTP 收到短信码 → ' + c.code, null); document.querySelector('#f-code').value = c.code; } })

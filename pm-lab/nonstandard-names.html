@@ -28,9 +28,7 @@
     <span class="pagehead__num">26</span>
     <h1 class="pagehead__title">非标准 name / id / 类型伪装</h1>
   </div>
-  <p class="pagehead__lede">没有 autocomplete 时，实现只能读 <strong>name/id 关键字</strong>。这里用 12 种真实世界出现过的写法，包括<strong>把密码放在 type=text 里</strong>的移动端骗术。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">heuristic</span><span class="tag">name-keyword</span>
-    <span class="tag tag--on">GROUP · edge</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">heuristic</span><span class="tag">name-keyword</span></div>
 </section>
 
 
@@ -44,11 +42,10 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>pwd</td><td>Nth0ng!26-A</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="pwd">COPY</button></td></tr><tr><td>user_name</td><td>pm26@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="user_name">COPY</button></td></tr><tr><td>upwd</td><td>Nth0ng!26-B</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="upwd">COPY</button></td></tr></tbody></table></section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>pwd</td><td>Nth0ng!26-A</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="pwd">COPY</button></td></tr><tr><td>user_name</td><td>pm26@example.com</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="user_name">COPY</button></td></tr><tr><td>upwd</td><td>Nth0ng!26-B</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="upwd">COPY</button></td></tr></tbody></table></section>
 <div class="stack-lg">
 <div class="panel stack-sm"><span class="label">组 1 · 关键字命中（无 autocomplete）</span>
 <div class="grid-2">
@@ -69,11 +66,11 @@
 <div class="field"><div class="field__top"><label class="field__label" for="login_password">name=q2 / id=login_password</label></div><input class="field__input" id="login_password" name="q2" type="password" data-pm-uid=""><p class="field__msg"></p></div>
 </div></div>
 
-<hr class="hairline">
-<section class="stack-sm" aria-label="已知失败模式">
-  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
-  <ul class="issues"><li><strong>pwd / upwd / pass / user_name / login_email</strong> 这类缩写命中靠字典；字典里没有的实现就完全不填。</li><li><strong>type=text 冒充密码框</strong>（iOS 常见：为避免系统键盘遮挡而用 text + 自定义掩码）会让管理器<strong>认不出这是密码字段</strong>——这是可预期失败。</li><li><strong>name 带中文/全角</strong> 与 <strong>name 是 UUID</strong> 是启发式的两个死角。</li></ul>
-</section>
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede">没有 autocomplete 时，实现只能读 <strong>name/id 关键字</strong>。这里用 12 种真实世界出现过的写法，包括<strong>把密码放在 type=text 里</strong>的移动端骗术。</p>
+<ul class="issues"><li><strong>pwd / upwd / pass / user_name / login_email</strong> 这类缩写命中靠字典；字典里没有的实现就完全不填。</li><li><strong>type=text 冒充密码框</strong>（iOS 常见：为避免系统键盘遮挡而用 text + 自定义掩码）会让管理器<strong>认不出这是密码字段</strong>——这是可预期失败。</li><li><strong>name 带中文/全角</strong> 与 <strong>name 是 UUID</strong> 是启发式的两个死角。</li></ul>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · nonstandard-names.html</span></div></footer>

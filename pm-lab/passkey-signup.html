@@ -29,10 +29,9 @@
       <span class="pagehead__num">06</span>
       <h1 class="pagehead__title">Passkey 创建 · navigator.credentials.create()</h1>
     </div>
-    <p class="pagehead__lede">这一页测的不是"能不能签出签名"，而是 <strong>密码管理器是否愿意在这个 origin 上帮你建 passkey</strong>：它有没有弹选择器、有没有把凭据存进自己的库、以及 <strong>discoverable / userVerification / attachment</strong> 三个参数怎么改变它的行为。</p>
+    <p class="lede">测的是<strong>管理器愿不愿意在这个 origin 上帮你建 passkey</strong>：弹不弹选择器、存不存进自己的库。</p>
     <div class="row" style="margin-top:var(--s-md)">
       <span class="tag">webauthn</span><span class="tag">create()</span><span class="tag">no-server</span>
-      <span class="tag tag--on">GROUP · passkey</span>
     </div>
   </section>
 
@@ -137,8 +136,8 @@
     <div data-cap-list class="stack-xs" style="margin-top:var(--s-sm)"></div>
   </section>
 
-  <section class="stack-sm" aria-label="已知失败模式">
-    <span class="label">KNOWN FAILURE MODES</span>
+  <details class="more">
+    <summary class="label">KNOWN FAILURE MODES</summary>
     <ul class="issues">
       <li><strong>SecurityError</strong>：不在 HTTPS（或 localhost）下必然出现，<strong>file:// 打开本站一定失败</strong>。</li>
       <li><strong>NotAllowedError</strong> 最常见：用户取消、超时、或本机没有平台认证器却指定了 <strong>attachment=platform</strong>。</li>
@@ -146,7 +145,7 @@
       <li>某些管理器把 <strong>discoverable credential</strong> 视为"账号"，创建完立刻出现在密码建议里；另一些只在 <strong>rp.id 完全一致</strong>时才列出来。切子域去对比。</li>
       <li>带 <strong>att=enterprise/direct</strong> 时，企业受管设备可能弹额外同意框，或整体被策略禁用。</li>
     </ul>
-  </section>
+  </details>
 
   <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>

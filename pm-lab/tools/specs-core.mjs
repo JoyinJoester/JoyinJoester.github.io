@@ -65,8 +65,8 @@ export const PAGES = [
     form: {
       id: 'f-login',
       fields: [
-        { key: 'email', label: 'EMAIL / USERNAME', type: 'email', name: 'email', ac: 'username', ph: 'you@example.com', req: true, hint: 'autocomplete=username' },
-        { key: 'password', label: 'PASSWORD', type: 'password', name: 'password', ac: 'current-password', req: true, hint: 'autocomplete=current-password（登录用 current，不是 new）' }
+        { key: 'email', label: 'EMAIL / USERNAME', type: 'email', name: 'email', ac: 'username', ph: 'you@example.com', req: true },
+        { key: 'password', label: 'PASSWORD', type: 'password', name: 'password', ac: 'current-password', req: true, hint: '登录用 current，不是 new' }
       ],
       submit: 'SIGN IN',
       second: 'SIGN IN (REAL NAV)',
@@ -211,17 +211,9 @@ var hidden = document.createElement('input'); hidden.type='hidden'; hidden.name=
 <input class="field__input" aria-label="验证码第 5 位" autocomplete="off" inputmode="numeric" pattern="[0-9]" maxlength="1" name="otp5" id="otp5" data-pm-uid="">
 <input class="field__input" aria-label="验证码第 6 位" autocomplete="off" inputmode="numeric" pattern="[0-9]" maxlength="1" name="otp6" id="otp6" data-pm-uid="">
 </div>
-<p class="field__msg" data-split-msg>观察：整码是否只落进第 1 格</p>
+<p class="field__msg" data-split-msg>逐格输入自动跳下一格 · 粘贴/整码写入会自动分发</p>
 </div>`,
-    script: `document.querySelector('[data-split-otp]').addEventListener('input', function (e) {
-  var t = e.target; if (t.value.length > 1 && /^otp1$/.test(t.id)) {
-    var chars = t.value.replace(/[^0-9]/g,'').split('');
-    t.value = chars.shift() || '';
-    var boxes = Array.prototype.slice.call(document.querySelectorAll('[data-split-otp] input'));
-    var i = 1; chars.forEach(function (c) { if (boxes[i]) { boxes[i].value = c; i++; } });
-    PM.log('warn','分格被写入 ' + chars.length + ' 位，已手动拆格（真实站点通常不拆 → 显示异常）', null);
-  }
-});
+    script: `/* 分格跳格 / 整码分发在 assets/site.js 里统一处理 */
 if (window.OTPCredential && navigator.credentials) {
   navigator.credentials.get({ otp: { supported: ['sms'] }, signal: (window.AbortSignal && AbortSignal.timeout) ? AbortSignal.timeout(12000) : undefined })
    .then(function (c) { if (c && c.code) { PM.log('fill','WebOTP 收到短信码 → ' + c.code, null); document.querySelector('#f-code').value = c.code; } })

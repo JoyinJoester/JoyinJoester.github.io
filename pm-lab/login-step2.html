@@ -28,9 +28,7 @@
     <span class="pagehead__num">03</span>
     <h1 class="pagehead__title">密码 · 第二页（只有密码）</h1>
   </div>
-  <p class="pagehead__lede">上一步的账号写在页面顶部（<strong>只读展示，不是 input</strong>），下方只有一个密码框。真实站点常这样做——但很多密码管理器<strong>要求同页存在可提交的账号字段</strong>才肯填充。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">split-flow</span><span class="tag">password-only-page</span>
-    <span class="tag tag--on">GROUP · auth</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">split-flow</span><span class="tag">password-only-page</span></div>
 </section>
 <div class="panel panel--raised stack-xs" data-identity-box>
 <span class="label">SIGNING IN AS</span>
@@ -48,14 +46,16 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>password</td><td>Nth0ng!02-Split-Test</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="password">COPY</button></td></tr></tbody></table></section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>password</td><td>Nth0ng!02-Split-Test</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="password">COPY</button></td></tr></tbody></table></section>
 <form class="form" id="f-step2" data-pm-id="f-step2" method="POST" action="#" autocomplete="on"><div class="formgrid"><div class="field"><div class="field__top"><label class="field__label" for="f-password">PASSWORD<span class="badge-required"> *</span></label><span class="field__ac">autocomplete=current-password</span></div><input class="field__input" id="f-password" name="password" type="password" autocomplete="current-password" required data-pm-uid=""><p class="caption">没有同页 username input——观察建议是否出现</p><p class="field__msg"></p></div></div><div class="form__foot"><button class="btn btn--primary" type="submit">SIGN IN</button><span class="formstatus" data-formstatus></span></div></form>
 
-
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede">上一步的账号写在页面顶部（<strong>只读展示，不是 input</strong>），下方只有一个密码框。真实站点常这样做——但很多密码管理器<strong>要求同页存在可提交的账号字段</strong>才肯填充。</p>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · login-step2.html</span></div></footer>

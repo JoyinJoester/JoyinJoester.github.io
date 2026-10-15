@@ -29,10 +29,9 @@
       <span class="pagehead__num">07</span>
       <h1 class="pagehead__title">Passkey 验证 · get() 与"自动建议"</h1>
     </div>
-    <p class="pagehead__lede">两条完全不同的路径：<strong>按钮触发（弹窗选择器）</strong>与 <strong>conditional（passkey 出现在密码管理器下拉建议里，点一下就登录）</strong>。后者才是"可用性"的真实指标——用户不会去找按钮。</p>
+    <p class="lede">两条路径：<strong>按钮触发（弹窗选择器）</strong>与 <strong>conditional（出现在密码管理器建议里，点一下就登录）</strong>。</p>
     <div class="row" style="margin-top:var(--s-md)">
       <span class="tag">webauthn</span><span class="tag">get()</span><span class="tag">conditional</span>
-      <span class="tag tag--on">GROUP · passkey</span>
     </div>
   </section>
 
@@ -110,8 +109,8 @@
     <div data-stored></div>
   </section>
 
-  <section class="stack-sm" aria-label="已知失败模式">
-    <span class="label">KNOWN FAILURE MODES</span>
+  <details class="more">
+    <summary class="label">KNOWN FAILURE MODES</summary>
     <ul class="issues">
       <li><strong>CONDITIONAL 需要安全上下文 + 可发现凭据</strong>（residentKey=required 建的那批）。用 discouraged 建的 key 不会出现在建议里。</li>
       <li><strong>SILENT</strong> 在没有凭据时立刻 NotAllowedError，这正是"无 UI 静默登录"的判定方式。</li>
@@ -119,7 +118,7 @@
       <li>没有后端：challenge 由本页生成、由本页比对。<strong>签名与 counter 未做服务端校验</strong>，counter 回退（克隆密钥检测）只能人工看趋势。</li>
       <li>反复点 GET 会累积多条同源凭据；某些管理器的建议列表会开始重复显示，这是它的去重策略问题，不是本站的。</li>
     </ul>
-  </section>
+  </details>
 
   <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>

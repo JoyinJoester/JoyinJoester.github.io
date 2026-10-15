@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>HIT TEST · 控件可点性探针</title>
+<style>
+  body { background:#000; color:#e8e8e8; font:12px/1.5 ui-monospace,monospace; margin:0; padding:16px; }
+  #host iframe { border:0; display:block; background:#111; }
+  table { border-collapse:collapse; width:100%; }
+  th,td { border-bottom:1px solid #222; padding:4px 6px; text-align:left; vertical-align:top; }
+  th { color:#999; font-size:10px; text-transform:uppercase; letter-spacing:.08em; }
+  .bad { color:#d71921; } .ok { color:#4a9e5c; } .warn { color:#d4a843; }
+</style>
+</head>
+<body>
+<h2>HIT TEST</h2>
+<p>逐控件 scrollIntoView → elementFromPoint(中心) → focus() 实测。BLOCKED = 中心点命中的不是它自己；FOCUSFAIL = 拿不到焦点；OVERFLOW = 页面横向溢出视口。</p>
+<div id="status">RUNNING…</div>
+<table id="tbl"><thead><tr><th>PAGE</th><th>W</th><th>CTRL</th><th>BLOCKED</th><th>FOCUSFAIL</th><th>NARROW</th><th>OVERFLOW</th><th>DETAIL</th></tr></thead><tbody></tbody></table>
+<h3>RAW</h3>
+<pre id="out"></pre>
+<div id="host"></div>
+<script src="../assets/pages.js"></script>
+<script>
+(function () {
+  var Q = new URLSearchParams(location.search);
+  var W = Number(Q.get('w')) || 390, H = Number(Q.get('h')) || 844;
+  var SLUGS = (window.PM_PAGES || []).map(function (p) { return p.slug; })
+    .filter(function (s) { return s !== 'index' && s !== 'diagnostics'; })
+    .concat(['iframe-inner', 'diagnostics']);
+
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+  function load(slug) {
+    return new Promise(function (resolve) {
+      var f = document.createElement('iframe');
+      f.style.cssText = 'width:' + W + 'px;height:' + H + 'px';
+      f.src = '../' + slug + '.html?theme=dark';
+      var done = false, finish = function () { if (!done) { done = true; resolve(f); } };
+      f.onload = function () { setTimeout(finish, 250); };
+      document.getElementById('host').appendChild(f);
+      setTimeout(finish, 8000);
+    });
+  }
+
+  function probe(f, slug) {
+    var w = f.contentWindow, d = w.document;
+    var de = d.documentElement;
+    var r = { page: slug, blocked: [], focusfail: [], narrow: [], offenders: [], overflow: Math.max(de.scrollWidth, d.body.scrollWidth) - W };
+    if (r.overflow > 2) {
+      var sel = function (el) {
+        return el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') +
+          (el.className && typeof el.className === 'string' ? '.' + el.className.trim().split(/\s+/).slice(0, 2).join('.') : '');
+      };
+      Array.from(d.querySelectorAll('body *')).forEach(function (el) {
+        var b = el.getBoundingClientRect();
+        if (b.right > W + 1 && b.width > 0) {
+          var own = parseFloat(getComputedStyle(el).width) > W;
+          r.offenders.push(sel(el) + ' w=' + Math.round(b.width) + ' right=' + Math.round(b.right) + (own ? ' SELF' : ''));
+        }
+      });
+      r.offenders = r.offenders.filter(function (s, i) { return r.offenders.indexOf(s) === i; }).slice(0, 8);
+    }
+    var els = Array.from(d.querySelectorAll('input,select,textarea,button[type=submit]'));
+    r.controls = els.length;
+    els.forEach(function (el) {
+      el.scrollIntoView({ block: 'center' });
+      var b = el.getBoundingClientRect();
+      var tag = el.id || el.name || (el.type + ':' + (el.textContent || '').trim().slice(0, 12));
+      if (b.width < 24 && b.height > 0) r.narrow.push(tag + ' w=' + Math.round(b.width));
+      if (b.width === 0 || b.height === 0) { r.blocked.push(tag + ' ZERO-SIZE'); return; }
+      var hit = d.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2);
+      if (!hit || (hit !== el && !el.contains(hit) && !hit.contains(el))) {
+        r.blocked.push(tag + ' by ' + (hit ? hit.tagName.toLowerCase() + (hit.className ? '.' + String(hit.className).split(' ')[0] : '') : 'null')
+          + ' @' + Math.round(b.top) + ' of ' + H);
+      }
+      try { el.focus(); } catch (e) {}
+      var act = d.activeElement === el || (d.activeElement && d.activeElement.contains && d.activeElement.contains(el));
+      if (!act) r.focusfail.push(tag);
+    });
+    return r;
+  }
+
+  async function main() {
+    var rows = [];
+    for (var i = 0; i < SLUGS.length; i++) {
+      var f = await load(SLUGS[i]);
+      var r;
+      try { r = probe(f, SLUGS[i]); } catch (e) { r = { page: SLUGS[i], fatal: String(e.message), blocked: [], focusfail: [], narrow: [] }; }
+      rows.push(r);
+      f.remove();
+      document.getElementById('status').textContent = 'RUNNING… ' + (i + 1) + '/' + SLUGS.length + ' @' + W + 'x' + H;
+    }
+    document.getElementById('out').textContent = JSON.stringify(rows, null, 1);
+    document.querySelector('#tbl tbody').innerHTML = rows.map(function (r) {
+      var bad = r.blocked.length + r.focusfail.length;
+      var cls = r.fatal || bad ? 'bad' : (r.overflow > 2 || r.narrow.length ? 'warn' : 'ok');
+      return '<tr class="' + cls + '"><td>' + r.page + '</td><td>' + W + '</td><td>' + (r.controls || '-') + '</td><td>' + r.blocked.length +
+        '</td><td>' + r.focusfail.length + '</td><td>' + r.narrow.length + '</td><td>' + (r.overflow > 2 ? r.overflow + 'px' : '—') + '</td><td>' +
+        (r.blocked.slice(0, 6).join(' | ') || '') + (r.focusfail.length ? ' FOCUS: ' + r.focusfail.slice(0, 6).join(',') : '') + '</td></tr>';
+    }).join('');
+    document.getElementById('status').textContent = 'DONE ' + rows.length + ' pages @' + W + 'x' + H;
+    document.title = 'HIT TEST DONE';
+  }
+  main();
+})();
+</script>
+</body>
+</html>

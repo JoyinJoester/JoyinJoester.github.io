@@ -28,9 +28,7 @@
     <span class="pagehead__num">24</span>
     <h1 class="pagehead__title">Shadow DOM 内外的表单</h1>
   </div>
-  <p class="pagehead__lede">三种容器：<strong>light DOM 对照</strong>、<strong>open shadow root</strong>、<strong>closed shadow root</strong>。多数密码管理器<strong>不会穿透 shadow 边界</strong>，这是组件库/Web Component 的头号填充杀手。</p>
-  <div class="row" style="margin-top:var(--s-md)"><span class="tag">shadow-dom</span><span class="tag">web-components</span>
-    <span class="tag tag--on">GROUP · edge</span></div>
+  <div class="row" style="margin-top:var(--s-md)"><span class="tag">shadow-dom</span><span class="tag">web-components</span></div>
 </section>
 
 
@@ -44,11 +42,10 @@
     <button type="button" class="btn btn--sm btn--secondary" data-act="check">CHECK FILL</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="scan">RE-SCAN DOM</button>
     <button type="button" class="btn btn--sm btn--ghost" data-act="reset">RESET FORMS</button>
-    <span class="caption">CHECK 依据下方 fixture 逐字段判定 PASS / PREFIX / FAIL / ABSENT</span>
   </div>
   <div data-checkout></div>
 </section>
-<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE · 先把这条存进密码管理器</span><span class="caption">测试专用假数据</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>light_pass</td><td>Nth0ng!24-Light</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="light_pass">COPY</button></td></tr></tbody></table></section>
+<section class="panel stack-sm" aria-label="Fixture"><div class="row row--between"><span class="label">FIXTURE</span><span class="caption">先存进管理器</span></div><table class="fixture table"><thead><tr><th>字段</th><th>期望值</th><th></th></tr></thead><tbody><tr><td>light_pass</td><td>Nth0ng!24-Light</td><td><button type="button" class="btn btn--sm btn--ghost" data-copy-expected="light_pass">COPY</button></td></tr></tbody></table></section>
 <div class="stack-lg">
 <div class="panel stack-sm"><span class="label">A · LIGHT DOM（对照）</span>
 <div class="field"><div class="field__top"><label class="field__label" for="light_pass">PASSWORD</label><span class="field__ac">current-password</span></div><input class="field__input" id="light_pass" name="light_pass" type="password" autocomplete="current-password" data-pm-uid=""><p class="field__msg"></p></div></div>
@@ -56,11 +53,11 @@
 <div class="panel stack-sm"><span class="label">C · CLOSED SHADOW ROOT（&lt;pm-closed-field&gt;）</span><pm-closed-field></pm-closed-field><p class="caption">host.shadowRoot === <span data-closed-可见性>—</span> · 诊断台需手动登记 <button type="button" class="btn btn--sm btn--ghost" data-register-closed>[ REGISTER ]</button></p></div>
 </div>
 
-<hr class="hairline">
-<section class="stack-sm" aria-label="已知失败模式">
-  <span class="label">KNOWN FAILURE MODES · 本页该观察到什么</span>
-  <ul class="issues"><li><strong>open</strong>：脚本能访问 <strong>host.shadowRoot</strong>，本诊断台可以登记它；浏览器原生填充通常<strong>仍然失败</strong>。</li><li><strong>closed</strong>：连 <strong>host.shadowRoot === null</strong>，扩展类管理器彻底看不见；只有本页面自己保留了引用（见下方 [REGISTER] 按钮）。</li><li>结论判法：若 light 能填、open 不能 ⇒ 该管理器<strong>不支持 shadow DOM</strong>，组件化表单要退回 light DOM 或 slot 外部渲染。</li></ul>
-</section>
+<details class="more">
+  <summary class="label">NOTES · 本页说明</summary>
+  <p class="lede">三种容器：<strong>light DOM 对照</strong>、<strong>open shadow root</strong>、<strong>closed shadow root</strong>。多数密码管理器<strong>不会穿透 shadow 边界</strong>，这是组件库/Web Component 的头号填充杀手。</p>
+<ul class="issues"><li><strong>open</strong>：脚本能访问 <strong>host.shadowRoot</strong>，本诊断台可以登记它；浏览器原生填充通常<strong>仍然失败</strong>。</li><li><strong>closed</strong>：连 <strong>host.shadowRoot === null</strong>，扩展类管理器彻底看不见；只有本页面自己保留了引用（见下方 [REGISTER] 按钮）。</li><li>结论判法：若 light 能填、open 不能 ⇒ 该管理器<strong>不支持 shadow DOM</strong>，组件化表单要退回 light DOM 或 slot 外部渲染。</li></ul>
+</details>
 <section data-pager style="margin-top:var(--s-2xl)"></section>
 </main>
 <footer class="footer wrap"><div class="row row--between"><span><a href="index.html">INDEX</a> · <a href="diagnostics.html">SESSION LOG</a></span><span>Nothing-inspired testbed · shadow-dom.html</span></div></footer>
