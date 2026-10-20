@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 23,
-    "total_stars": 1213
+    "total_stars": 1217
   },
   "repos": [
     {
@@ -16,11 +16,11 @@
       "description": " Monica Pass，Password Management, 2FA Generator",
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
-      "stargazers_count": 1154,
+      "stargazers_count": 1156,
       "forks_count": 63,
       "open_issues_count": 16,
-      "updated_at": "2026-10-19T21:04:44Z",
-      "pushed_at": "2026-10-17T14:18:27Z",
+      "updated_at": "2026-10-20T14:41:44Z",
+      "pushed_at": "2026-10-20T14:55:56Z",
       "license": "GPL-3.0",
       "topics": [
         "android",
@@ -42,10 +42,10 @@
       "description": null,
       "html_url": "https://github.com/Monica-Pass/Monica-by-Avalonia",
       "language": "C#",
-      "stargazers_count": 29,
+      "stargazers_count": 30,
       "forks_count": 3,
       "open_issues_count": 2,
-      "updated_at": "2026-10-20T07:10:16Z",
+      "updated_at": "2026-10-20T14:26:50Z",
       "pushed_at": "2026-10-20T08:57:11Z",
       "license": "GPL-3.0",
       "topics": []
@@ -59,8 +59,8 @@
       "stargazers_count": 17,
       "forks_count": 0,
       "open_issues_count": 1,
-      "updated_at": "2026-10-17T14:04:45Z",
-      "pushed_at": "2026-10-17T14:04:41Z",
+      "updated_at": "2026-10-20T14:42:27Z",
+      "pushed_at": "2026-10-20T14:42:22Z",
       "license": "NOASSERTION",
       "topics": []
     },
@@ -70,10 +70,10 @@
       "description": "Monica for Extension",
       "html_url": "https://github.com/Monica-Pass/Monica-for-Extension",
       "language": "TypeScript",
-      "stargazers_count": 11,
+      "stargazers_count": 12,
       "forks_count": 2,
       "open_issues_count": 0,
-      "updated_at": "2026-10-20T05:43:33Z",
+      "updated_at": "2026-10-20T14:26:58Z",
       "pushed_at": "2026-10-20T05:43:36Z",
       "license": "GPL-3.0",
       "topics": []
@@ -87,8 +87,8 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-10-19T14:11:26Z",
-      "pushed_at": "2026-10-19T14:11:21Z",
+      "updated_at": "2026-10-20T14:42:25Z",
+      "pushed_at": "2026-10-20T14:42:20Z",
       "license": "GPL-3.0",
       "topics": []
     },
@@ -107,5 +107,5 @@
       "topics": []
     }
   ],
-  "updated_at": "2026-10-20T10:07:30.525Z"
+  "updated_at": "2026-10-20T15:08:20.039Z"
 }
