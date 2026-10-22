@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 23,
-    "total_stars": 1221
+    "total_stars": 1222
   },
   "repos": [
     {
@@ -70,10 +70,10 @@
       "description": "Monica for Extension",
       "html_url": "https://github.com/Monica-Pass/Monica-for-Extension",
       "language": "TypeScript",
-      "stargazers_count": 12,
+      "stargazers_count": 13,
       "forks_count": 2,
       "open_issues_count": 0,
-      "updated_at": "2026-10-21T19:18:52Z",
+      "updated_at": "2026-10-21T23:47:08Z",
       "pushed_at": "2026-10-21T19:43:59Z",
       "license": "GPL-3.0",
       "topics": []
@@ -107,5 +107,5 @@
       "topics": []
     }
   ],
-  "updated_at": "2026-10-21T23:42:27.033Z"
+  "updated_at": "2026-10-22T01:56:17.420Z"
 }
