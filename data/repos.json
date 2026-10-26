@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 23,
-    "total_stars": 1245
+    "total_stars": 1246
   },
   "repos": [
     {
@@ -17,10 +17,10 @@
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
       "stargazers_count": 1177,
-      "forks_count": 64,
+      "forks_count": 63,
       "open_issues_count": 16,
-      "updated_at": "2026-10-26T05:06:32Z",
-      "pushed_at": "2026-10-26T03:21:56Z",
+      "updated_at": "2026-10-26T07:52:41Z",
+      "pushed_at": "2026-10-26T07:52:36Z",
       "license": "GPL-3.0",
       "topics": [
         "android",
@@ -56,10 +56,10 @@
       "description": "Monica for Extension",
       "html_url": "https://github.com/Monica-Pass/Monica-for-Extension",
       "language": "TypeScript",
-      "stargazers_count": 18,
+      "stargazers_count": 19,
       "forks_count": 2,
-      "open_issues_count": 1,
-      "updated_at": "2026-10-26T04:31:23Z",
+      "open_issues_count": 2,
+      "updated_at": "2026-10-26T08:23:32Z",
       "pushed_at": "2026-10-26T00:33:10Z",
       "license": "GPL-3.0",
       "topics": []
@@ -87,8 +87,8 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-10-26T03:08:29Z",
-      "pushed_at": "2026-10-26T03:08:25Z",
+      "updated_at": "2026-10-26T13:45:33Z",
+      "pushed_at": "2026-10-26T13:45:28Z",
       "license": "GPL-3.0",
       "topics": []
     },
@@ -107,5 +107,5 @@
       "topics": []
     }
   ],
-  "updated_at": "2026-10-26T07:51:37.978Z"
+  "updated_at": "2026-10-26T15:14:33.293Z"
 }
