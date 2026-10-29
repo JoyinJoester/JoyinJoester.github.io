@@ -17,9 +17,9 @@
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
       "stargazers_count": 1184,
-      "forks_count": 63,
+      "forks_count": 65,
       "open_issues_count": 16,
-      "updated_at": "2026-10-29T08:36:55Z",
+      "updated_at": "2026-10-29T15:10:56Z",
       "pushed_at": "2026-10-29T08:36:50Z",
       "license": "GPL-3.0",
       "topics": [
@@ -87,8 +87,8 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-10-29T08:36:57Z",
-      "pushed_at": "2026-10-29T08:36:52Z",
+      "updated_at": "2026-10-29T13:51:20Z",
+      "pushed_at": "2026-10-29T13:51:16Z",
       "license": "GPL-3.0",
       "topics": []
     },
@@ -107,5 +107,5 @@
       "topics": []
     }
   ],
-  "updated_at": "2026-10-29T08:56:48.812Z"
+  "updated_at": "2026-10-29T16:12:47.829Z"
 }
