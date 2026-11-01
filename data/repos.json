@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 23,
-    "total_stars": 1260
+    "total_stars": 1266
   },
   "repos": [
     {
@@ -16,11 +16,11 @@
       "description": " Monica Pass，Password Management, 2FA Generator",
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
-      "stargazers_count": 1191,
+      "stargazers_count": 1192,
       "forks_count": 66,
       "open_issues_count": 16,
-      "updated_at": "2026-11-01T09:21:20Z",
-      "pushed_at": "2026-11-01T09:21:16Z",
+      "updated_at": "2026-11-01T13:29:37Z",
+      "pushed_at": "2026-11-01T13:29:32Z",
       "license": "GPL-3.0",
       "topics": [
         "android",
@@ -45,8 +45,8 @@
       "stargazers_count": 30,
       "forks_count": 3,
       "open_issues_count": 9,
-      "updated_at": "2026-10-20T14:26:50Z",
-      "pushed_at": "2026-10-25T19:37:48Z",
+      "updated_at": "2026-11-01T13:19:42Z",
+      "pushed_at": "2026-11-01T13:19:38Z",
       "license": "GPL-3.0",
       "topics": []
     },
@@ -59,8 +59,8 @@
       "stargazers_count": 19,
       "forks_count": 3,
       "open_issues_count": 1,
-      "updated_at": "2026-11-01T05:24:57Z",
-      "pushed_at": "2026-11-01T05:24:54Z",
+      "updated_at": "2026-11-01T13:21:40Z",
+      "pushed_at": "2026-11-01T13:53:30Z",
       "license": "GPL-3.0",
       "topics": []
     },
@@ -79,6 +79,20 @@
       "topics": []
     },
     {
+      "name": "Monica-for-iOS",
+      "full_name": "Monica-Pass/Monica-for-iOS",
+      "description": "Monica iOS 客户端",
+      "html_url": "https://github.com/Monica-Pass/Monica-for-iOS",
+      "language": "Swift",
+      "stargazers_count": 6,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "updated_at": "2026-11-01T13:19:37Z",
+      "pushed_at": "2026-11-01T13:19:33Z",
+      "license": "GPL-3.0",
+      "topics": []
+    },
+    {
       "name": "MonicaDocs",
       "full_name": "Monica-Pass/MonicaDocs",
       "description": "Monica DocsWebsite Repoistory",
@@ -87,25 +101,11 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-11-01T09:21:22Z",
-      "pushed_at": "2026-11-01T09:21:18Z",
-      "license": "GPL-3.0",
-      "topics": []
-    },
-    {
-      "name": "Monica-cli",
-      "full_name": "Monica-Pass/Monica-cli",
-      "description": null,
-      "html_url": "https://github.com/Monica-Pass/Monica-cli",
-      "language": "Rust",
-      "stargazers_count": 1,
-      "forks_count": 0,
-      "open_issues_count": 1,
-      "updated_at": "2026-10-21T12:51:30Z",
-      "pushed_at": "2026-10-28T05:22:36Z",
+      "updated_at": "2026-11-01T14:43:26Z",
+      "pushed_at": "2026-11-01T14:43:22Z",
       "license": "GPL-3.0",
       "topics": []
     }
   ],
-  "updated_at": "2026-11-01T09:23:57.407Z"
+  "updated_at": "2026-11-01T16:26:36.090Z"
 }
