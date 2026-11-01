@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 23,
-    "total_stars": 1266
+    "total_stars": 1267
   },
   "repos": [
     {
@@ -44,9 +44,9 @@
       "language": "C#",
       "stargazers_count": 30,
       "forks_count": 3,
-      "open_issues_count": 9,
+      "open_issues_count": 12,
       "updated_at": "2026-11-01T13:19:42Z",
-      "pushed_at": "2026-11-01T13:19:38Z",
+      "pushed_at": "2026-11-01T19:39:07Z",
       "license": "GPL-3.0",
       "topics": []
     },
@@ -56,10 +56,10 @@
       "description": "Monica for Extension",
       "html_url": "https://github.com/Monica-Pass/Monica-for-Extension",
       "language": "TypeScript",
-      "stargazers_count": 19,
+      "stargazers_count": 20,
       "forks_count": 3,
       "open_issues_count": 1,
-      "updated_at": "2026-11-01T13:21:40Z",
+      "updated_at": "2026-11-01T17:10:43Z",
       "pushed_at": "2026-11-01T13:53:30Z",
       "license": "GPL-3.0",
       "topics": []
@@ -107,5 +107,5 @@
       "topics": []
     }
   ],
-  "updated_at": "2026-11-01T16:26:36.090Z"
+  "updated_at": "2026-11-01T20:51:45.660Z"
 }
