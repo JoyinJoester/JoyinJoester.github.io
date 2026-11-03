@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 23,
-    "total_stars": 1281
+    "total_stars": 1286
   },
   "repos": [
     {
@@ -16,10 +16,10 @@
       "description": " Monica Pass，Password Management, 2FA Generator",
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
-      "stargazers_count": 1204,
+      "stargazers_count": 1207,
       "forks_count": 66,
       "open_issues_count": 16,
-      "updated_at": "2026-11-03T05:53:26Z",
+      "updated_at": "2026-11-03T14:10:49Z",
       "pushed_at": "2026-11-03T03:48:00Z",
       "license": "GPL-3.0",
       "topics": [
@@ -42,10 +42,10 @@
       "description": null,
       "html_url": "https://github.com/Monica-Pass/Monica-by-Avalonia",
       "language": "C#",
-      "stargazers_count": 31,
+      "stargazers_count": 32,
       "forks_count": 3,
       "open_issues_count": 12,
-      "updated_at": "2026-11-02T11:12:24Z",
+      "updated_at": "2026-11-03T07:51:05Z",
       "pushed_at": "2026-11-01T19:39:07Z",
       "license": "GPL-3.0",
       "topics": []
@@ -56,10 +56,10 @@
       "description": "Monica for Extension",
       "html_url": "https://github.com/Monica-Pass/Monica-for-Extension",
       "language": "TypeScript",
-      "stargazers_count": 21,
+      "stargazers_count": 22,
       "forks_count": 3,
       "open_issues_count": 1,
-      "updated_at": "2026-11-02T11:10:22Z",
+      "updated_at": "2026-11-03T09:27:38Z",
       "pushed_at": "2026-11-01T13:53:30Z",
       "license": "GPL-3.0",
       "topics": []
@@ -101,11 +101,11 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-11-03T03:48:18Z",
-      "pushed_at": "2026-11-03T03:48:13Z",
+      "updated_at": "2026-11-03T14:46:10Z",
+      "pushed_at": "2026-11-03T14:46:05Z",
       "license": "GPL-3.0",
       "topics": []
     }
   ],
-  "updated_at": "2026-11-03T06:54:34.224Z"
+  "updated_at": "2026-11-03T15:15:27.232Z"
 }
