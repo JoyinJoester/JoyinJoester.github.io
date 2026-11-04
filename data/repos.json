@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 24,
-    "total_stars": 1289
+    "total_stars": 1253
   },
   "repos": [
     {
@@ -16,10 +16,10 @@
       "description": " Monica Pass，Password Management, 2FA Generator",
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
-      "stargazers_count": 1209,
+      "stargazers_count": 1210,
       "forks_count": 66,
       "open_issues_count": 17,
-      "updated_at": "2026-11-04T16:02:08Z",
+      "updated_at": "2026-11-04T20:02:27Z",
       "pushed_at": "2026-11-04T16:02:01Z",
       "license": "GPL-3.0",
       "topics": [
@@ -35,20 +35,6 @@
         "privacy",
         "totp"
       ]
-    },
-    {
-      "name": "Monica-by-Avalonia",
-      "full_name": "Monica-Pass/Monica-by-Avalonia",
-      "description": null,
-      "html_url": "https://github.com/Monica-Pass/Monica-by-Avalonia",
-      "language": "C#",
-      "stargazers_count": 32,
-      "forks_count": 3,
-      "open_issues_count": 12,
-      "updated_at": "2026-11-03T07:51:05Z",
-      "pushed_at": "2026-11-01T19:39:07Z",
-      "license": "GPL-3.0",
-      "topics": []
     },
     {
       "name": "Monica-for-Extension",
@@ -79,17 +65,17 @@
       "topics": []
     },
     {
-      "name": "Monica-for-iOS",
-      "full_name": "Monica-Pass/Monica-for-iOS",
-      "description": "Monica iOS 客户端",
-      "html_url": "https://github.com/Monica-Pass/Monica-for-iOS",
-      "language": "Swift",
-      "stargazers_count": 6,
-      "forks_count": 0,
+      "name": "Monica-Cloud",
+      "full_name": "Monica-Pass/Monica-Cloud",
+      "description": null,
+      "html_url": "https://github.com/Monica-Pass/Monica-Cloud",
+      "language": "Rust",
+      "stargazers_count": 1,
+      "forks_count": 1,
       "open_issues_count": 0,
-      "updated_at": "2026-11-01T13:19:37Z",
-      "pushed_at": "2026-11-01T13:19:33Z",
-      "license": "GPL-3.0",
+      "updated_at": "2026-11-04T19:07:29Z",
+      "pushed_at": "2026-11-04T19:07:22Z",
+      "license": "AGPL-3.0",
       "topics": []
     },
     {
@@ -107,5 +93,5 @@
       "topics": []
     }
   ],
-  "updated_at": "2026-11-04T16:22:25.075Z"
+  "updated_at": "2026-11-04T22:15:08.890Z"
 }
