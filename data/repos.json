@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 24,
-    "total_stars": 1254
+    "total_stars": 1258
   },
   "repos": [
     {
@@ -16,10 +16,10 @@
       "description": " Monica Pass，Password Management, 2FA Generator",
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
-      "stargazers_count": 1211,
-      "forks_count": 66,
+      "stargazers_count": 1214,
+      "forks_count": 67,
       "open_issues_count": 17,
-      "updated_at": "2026-11-05T09:12:44Z",
+      "updated_at": "2026-11-05T16:02:46Z",
       "pushed_at": "2026-11-05T02:40:40Z",
       "license": "GPL-3.0",
       "topics": [
@@ -44,7 +44,7 @@
       "language": "TypeScript",
       "stargazers_count": 23,
       "forks_count": 3,
-      "open_issues_count": 1,
+      "open_issues_count": 2,
       "updated_at": "2026-11-04T15:09:13Z",
       "pushed_at": "2026-11-04T15:09:08Z",
       "license": "GPL-3.0",
@@ -56,26 +56,12 @@
       "description": null,
       "html_url": "https://github.com/Monica-Pass/Monica-Fdroid",
       "language": "Kotlin",
-      "stargazers_count": 18,
+      "stargazers_count": 19,
       "forks_count": 0,
       "open_issues_count": 1,
-      "updated_at": "2026-11-05T02:40:46Z",
+      "updated_at": "2026-11-05T11:49:00Z",
       "pushed_at": "2026-11-05T02:40:40Z",
       "license": "NOASSERTION",
-      "topics": []
-    },
-    {
-      "name": "Monica-Cloud",
-      "full_name": "Monica-Pass/Monica-Cloud",
-      "description": null,
-      "html_url": "https://github.com/Monica-Pass/Monica-Cloud",
-      "language": "Rust",
-      "stargazers_count": 1,
-      "forks_count": 1,
-      "open_issues_count": 0,
-      "updated_at": "2026-11-04T19:07:29Z",
-      "pushed_at": "2026-11-05T08:31:02Z",
-      "license": "AGPL-3.0",
       "topics": []
     },
     {
@@ -87,11 +73,25 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-11-04T15:06:51Z",
-      "pushed_at": "2026-11-04T15:06:39Z",
+      "updated_at": "2026-11-05T15:03:41Z",
+      "pushed_at": "2026-11-05T15:03:36Z",
       "license": "GPL-3.0",
+      "topics": []
+    },
+    {
+      "name": "Monica-Cloud",
+      "full_name": "Monica-Pass/Monica-Cloud",
+      "description": null,
+      "html_url": "https://github.com/Monica-Pass/Monica-Cloud",
+      "language": "Rust",
+      "stargazers_count": 1,
+      "forks_count": 2,
+      "open_issues_count": 1,
+      "updated_at": "2026-11-05T14:28:26Z",
+      "pushed_at": "2026-11-05T14:29:33Z",
+      "license": "AGPL-3.0",
       "topics": []
     }
   ],
-  "updated_at": "2026-11-05T09:52:19.919Z"
+  "updated_at": "2026-11-05T18:04:32.978Z"
 }
