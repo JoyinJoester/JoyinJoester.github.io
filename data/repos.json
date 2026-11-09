@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 25,
-    "total_stars": 1265
+    "total_stars": 1272
   },
   "repos": [
     {
@@ -19,7 +19,7 @@
       "stargazers_count": 1220,
       "forks_count": 67,
       "open_issues_count": 20,
-      "updated_at": "2026-11-09T08:47:37Z",
+      "updated_at": "2026-11-09T19:33:00Z",
       "pushed_at": "2026-11-08T15:17:09Z",
       "license": "GPL-3.0",
       "topics": [
@@ -65,6 +65,20 @@
       "topics": []
     },
     {
+      "name": "Monica-for-iOS",
+      "full_name": "Monica-Pass/Monica-for-iOS",
+      "description": "Monica iOS 客户端",
+      "html_url": "https://github.com/Monica-Pass/Monica-for-iOS",
+      "language": "Swift",
+      "stargazers_count": 7,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "updated_at": "2026-11-09T19:38:05Z",
+      "pushed_at": "2026-11-01T13:19:33Z",
+      "license": "GPL-3.0",
+      "topics": []
+    },
+    {
       "name": "MonicaDocs",
       "full_name": "Monica-Pass/MonicaDocs",
       "description": "Monica DocsWebsite Repoistory",
@@ -73,8 +87,8 @@
       "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
-      "updated_at": "2026-11-08T15:27:36Z",
-      "pushed_at": "2026-11-08T15:27:32Z",
+      "updated_at": "2026-11-09T16:59:40Z",
+      "pushed_at": "2026-11-09T16:59:34Z",
       "license": "GPL-3.0",
       "topics": []
     },
@@ -93,5 +107,5 @@
       "topics": []
     }
   ],
-  "updated_at": "2026-11-09T09:52:46.538Z"
+  "updated_at": "2026-11-09T20:48:13.191Z"
 }
