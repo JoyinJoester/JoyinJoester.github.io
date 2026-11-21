@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 25,
-    "total_stars": 1313
+    "total_stars": 1341
   },
   "repos": [
     {
@@ -16,10 +16,10 @@
       "description": " Monica Pass，Password Management, 2FA Generator",
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
-      "stargazers_count": 1261,
+      "stargazers_count": 1259,
       "forks_count": 68,
       "open_issues_count": 16,
-      "updated_at": "2026-11-20T16:19:32Z",
+      "updated_at": "2026-11-21T03:45:08Z",
       "pushed_at": "2026-11-20T15:02:39Z",
       "license": "GPL-3.0",
       "topics": [
@@ -35,6 +35,20 @@
         "privacy",
         "totp"
       ]
+    },
+    {
+      "name": "Monica-by-Avalonia",
+      "full_name": "Monica-Pass/Monica-by-Avalonia",
+      "description": null,
+      "html_url": "https://github.com/Monica-Pass/Monica-by-Avalonia",
+      "language": "C#",
+      "stargazers_count": 31,
+      "forks_count": 4,
+      "open_issues_count": 15,
+      "updated_at": "2026-11-21T03:45:06Z",
+      "pushed_at": "2026-11-08T19:03:56Z",
+      "license": "GPL-3.0",
+      "topics": []
     },
     {
       "name": "Monica-for-Extension",
@@ -72,9 +86,9 @@
       "language": "Swift",
       "stargazers_count": 7,
       "forks_count": 0,
-      "open_issues_count": 42,
+      "open_issues_count": 34,
       "updated_at": "2026-11-12T16:03:09Z",
-      "pushed_at": "2026-11-20T22:48:44Z",
+      "pushed_at": "2026-11-21T03:57:26Z",
       "license": "GPL-3.0",
       "topics": []
     },
@@ -88,24 +102,10 @@
       "forks_count": 0,
       "open_issues_count": 0,
       "updated_at": "2026-11-12T16:34:49Z",
-      "pushed_at": "2026-11-20T22:32:22Z",
+      "pushed_at": "2026-11-21T02:16:16Z",
       "license": "GPL-3.0",
-      "topics": []
-    },
-    {
-      "name": "Monica-Cloud",
-      "full_name": "Monica-Pass/Monica-Cloud",
-      "description": null,
-      "html_url": "https://github.com/Monica-Pass/Monica-Cloud",
-      "language": "Rust",
-      "stargazers_count": 1,
-      "forks_count": 2,
-      "open_issues_count": 1,
-      "updated_at": "2026-11-05T14:28:26Z",
-      "pushed_at": "2026-11-05T14:29:33Z",
-      "license": "AGPL-3.0",
       "topics": []
     }
   ],
-  "updated_at": "2026-11-20T22:49:37.006Z"
+  "updated_at": "2026-11-21T03:59:54.218Z"
 }
