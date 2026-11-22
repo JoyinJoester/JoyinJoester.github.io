@@ -7,7 +7,7 @@
     "html_url": "https://github.com/Monica-Pass",
     "public_repos": 10,
     "followers": 25,
-    "total_stars": 1346
+    "total_stars": 1347
   },
   "repos": [
     {
@@ -16,11 +16,11 @@
       "description": " Monica Pass，Password Management, 2FA Generator",
       "html_url": "https://github.com/Monica-Pass/Monica",
       "language": "Kotlin",
-      "stargazers_count": 1264,
+      "stargazers_count": 1265,
       "forks_count": 68,
       "open_issues_count": 16,
-      "updated_at": "2026-11-22T06:00:23Z",
-      "pushed_at": "2026-11-21T13:04:56Z",
+      "updated_at": "2026-11-22T11:04:47Z",
+      "pushed_at": "2026-11-22T09:52:53Z",
       "license": "GPL-3.0",
       "topics": [
         "android",
@@ -102,10 +102,10 @@
       "forks_count": 1,
       "open_issues_count": 0,
       "updated_at": "2026-11-12T16:34:49Z",
-      "pushed_at": "2026-11-22T06:48:11Z",
+      "pushed_at": "2026-11-22T14:58:30Z",
       "license": "GPL-3.0",
       "topics": []
     }
   ],
-  "updated_at": "2026-11-22T07:30:09.174Z"
+  "updated_at": "2026-11-22T15:42:08.516Z"
 }
